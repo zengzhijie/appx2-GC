@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.category.domain.CategorySystemPropertyValue">
+
+    <!-- ================================================================================== -->
+    <!-- SQL新增																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL删除																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL更新																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL查询																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 通过类目ID、属性名ID和模糊查询关键字查询系统属性值信息列表 -->
+    <select id="findPropertyValues" parameterType="Map" resultMap="categorySystemPropertyValueResultMap">
+        SELECT cspv.ctg_id,cspv.pro_nam_id,cspv.remark
+                spv.id AS spv_id,spv.name AS spv_name,spv.remark AS spv_remark
+        FROM ctgr_ctg_sys_pro_val AS cspv
+        LEFT JOIN ctgi_sys_pro_nam AS spv ON cspv.pro_val_id = spv.id
+        WHERE cspv.ctg_id = #{categoryId} AND cspv.pro_nam_id = #{propertyNameId}
+        <if test="keyword != null">
+            AND spv.name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        ORDER BY cspv.cre_tim DESC
+    </select>
+
+    <!-- 通过类目ID、属性名ID和模糊查询关键字查询系统属性值信息总数 -->
+    <select id="getPropertyValueCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(spv.id)
+        FROM ctgr_ctg_sys_pro_val AS cspv
+        LEFT JOIN ctgi_sys_pro_nam AS spv ON cspv.pro_val_id = spv.id
+        WHERE cspv.ctg_id = #{categoryId} AND cspv.pro_nam_id = #{propertyNameId}
+        <if test="keyword != null">
+            AND spv.name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <!-- 通过类目ID、属性名ID和属性值名称查询系统属性值信息 -->
+    <select id="findPropertyValueByName" parameterType="Map" resultMap="categorySystemPropertyValueResultMap">
+        SELECT cspv.ctg_id,cspv.pro_nam_id,cspv.remark
+        spv.id AS spv_id,spv.name AS spv_name,spv.remark AS spv_remark
+        FROM ctgr_ctg_sys_pro_val AS cspv
+        LEFT JOIN ctgi_sys_pro_nam AS spv ON cspv.pro_val_id = spv.id
+        WHERE cspv.ctg_id = #{categoryId} AND cspv.pro_nam_id = #{propertyNameId} AND spv.name = #{name}
+    </select>
+
+    <!-- ================================================================================== -->
+    <!-- 公用SQL定义																			-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- 结果集映射																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本结果映射 -->
+    <resultMap id="categorySystemPropertyValueResultMap" type="CategorySystemPropertyValue">
+        <result property="categoryId" column="ctg_id"/>
+        <result property="propertyName.id" column="pro_nam_id"/>
+        <result property="propertyValue.id" column="pro_val_id"/>
+        <result property="createrId" column="crer_id"/>
+        <result property="createTime" column="cre_tim"/>
+        <result property="updaterId" column="updr_id"/>
+        <result property="updateTime" column="upd_tim"/>
+        <result property="remark" column="remark"/>
+        <collection property="propertyValue" columnPrefix="spv_" resultMap="com.dreawer.category.domain.SystemPropertyValue.systemPropertyValueResultMap"/>
+    </resultMap>
+
+</mapper>

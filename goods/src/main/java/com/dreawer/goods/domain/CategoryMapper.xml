@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.category.domain.Category">
+
+    <!-- ================================================================================== -->
+    <!-- SQL新增																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 新增类目 -->
+    <insert id="insert" parameterType="Category">
+        INSERT INTO ctgi_category(id,name,sequence,par_id,is_par,crer_id, remark)
+        VALUES (#{id},#{name},#{squence},#{parentId},#{is_par},#{createrId},#{remark})
+    </insert>
+
+    <!-- ================================================================================== -->
+    <!-- SQL删除																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 根据类目ID删除类目 -->
+    <!-- <delete id="deleteById" parameterType="String">
+		DELETE ctg, ctg_pro_nam, ctg_pro_val
+		FROM ctgi_category AS ctg
+			   LEFT JOIN ctgr_ctg_pro_nam AS ctg_pro_nam ON ctg.id = ctg_pro_nam.ctg_id
+			   LEFT JOIN ctgr_ctg_pro_val AS ctg_pro_val ON ctg_pro_nam.ctg_id = ctg_pro_val.ctg_id
+		WHERE ctg.id = #{id}
+	</delete> -->
+
+    <!-- 根据父类目ID删除类目 -->
+    <!-- <delete id="deleteByParentId" parameterType="String">
+		DELETE ctg, ctg_pro_nam, ctg_pro_val
+		FROM ctgi_category AS ctg
+			   LEFT JOIN ctgr_ctg_pro_nam AS ctg_pro_nam ON ctg.id = ctg_pro_nam.ctg_id
+			   LEFT JOIN ctgr_ctg_pro_val AS ctg_pro_val ON ctg_pro_nam.ctg_id = ctg_pro_val.ctg_id
+		WHERE ctg.par_id = #{parentId}
+	</delete> -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL更新																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 更新类目基本信息 -->
+    <update id="updateBasicInfo" parameterType="Category">
+        UPDATE ctgi_category
+        SET
+        <if test="name != null">
+            name = #{name},
+        </if>
+        <if test="sequence != null">
+            sequence = #{sequence},
+        </if>
+        <if test="parentId != null">
+            par_id = #{parentId},
+        </if>
+        <if test="is_par != null">
+            is_par= #{isParent},
+        </if>
+        updr_id = #{updaterId},upd_tim = #{updateTime}
+        WHERE id = #{id}
+    </update>
+
+    <!-- ================================================================================== -->
+    <!-- SQL查询																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 查询类目列表 -->
+    <select id="findCategories" parameterType="Map" resultMap="categoryResultMap">
+        SELECT <include refid="basicFields"/>
+        FROM ctgi_category
+        WHERE par_id = #{parentId}
+        <if test="keyword != null">
+            AND name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        ORDER BY sequence ASC
+    </select>
+
+    <!-- 查询类目总数 -->
+    <select id="getCategoryCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(1)
+        FROM ctgi_category
+        WHERE
+        <if test="parentId != null">
+            par_id = #{parentId}
+        </if>
+        <if test="parentId == null">
+            par_id IS NULL
+        </if>
+        <if test="keyword != null">
+            AND name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <!-- 根据ID查询类目 -->
+    <select id="findCategoryById" parameterType="String" resultMap="categoryResultMap">
+        SELECT <include refid="basicFields"/>
+        FROM ctgi_category
+        WHERE id = #{id}
+    </select>
+
+    <!-- ================================================================================== -->
+    <!-- 公用SQL定义																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本信息 -->
+    <sql id="basicFields">
+        id,name,sequence,par_id,is_par,remark
+    </sql>
+
+    <!-- ================================================================================== -->
+    <!-- 结果集映射																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本结果映射 -->
+    <resultMap id="categoryResultMap" type="Category">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sequence" column="sequence"/>
+        <result property="parentId" column="par_id"/>
+        <result property="isParent" column="is_par"/>
+        <result property="createrId" column="crer_id"/>
+        <result property="createTime" column="cre_tim"/>
+        <result property="updaterId" column="updr_id"/>
+        <result property="updateTime" column="upd_tim"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+</mapper>

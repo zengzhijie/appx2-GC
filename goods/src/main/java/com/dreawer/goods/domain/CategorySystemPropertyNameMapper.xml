@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.category.domain.CategorySystemPropertyName">
+
+    <!-- ================================================================================== -->
+    <!-- SQL新增																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL删除																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL更新																				-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- SQL查询																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 通过类目ID和模糊查询关键字查询系统属性名信息列表 -->
+    <select id="findPropertyNames" parameterType="Map" resultMap="categorySystemPropertyNameResultMap">
+        SELECT cspn.ctg_id,cspn.sequence,cspn.is_req,cspn.is_sal,cspn.is_basc,cspn.is_key,cspn.remark
+                spn.id AS spn_id,spn.name AS spn_name,spn.is_srch AS spn_is_srch,spn.is_rad AS spn_is_rad,spn.is_chk AS spn_is_chk,
+                spn.is_inp AS spn_is_inp,spn.is_sel AS spn_is_sel,spn.is_ve AS spn_is_ve,spn.is_colr AS spn_is_colr,spn.remark AS spn_remark
+        FROM ctgr_ctg_sys_pro_nam AS cspn
+        LEFT JOIN ctgi_sys_pro_nam AS spn ON cspn.pro_nam_id = spn.id
+        WHERE cspn.ctg_id = #{categoryId}
+        <if test="keyword != null">
+            AND spn.name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        ORDER BY cspn.sequence ASC
+    </select>
+
+    <!-- 通过类目ID和模糊查询关键字查询系统属性名信息总数 -->
+    <select id="getPropertyNameCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(spn.id)
+        FROM ctgr_ctg_sys_pro_nam AS cspn
+        LEFT JOIN ctgi_sys_pro_nam AS spn ON cspn.pro_nam_id = spn.id
+        WHERE cspn.ctg_id = #{categoryId}
+        <if test="keyword != null">
+            AND spn.name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <!-- 通过类目ID和属性名称查询系统属性名信息 -->
+    <select id="findPropertyNameByName" parameterType="Map" resultMap="categorySystemPropertyNameResultMap">
+        SELECT cspn.ctg_id,cspn.sequence,cspn.is_req,cspn.is_sal,cspn.is_basc,cspn.is_key,cspn.remark
+        spn.id AS spn_id,spn.name AS spn_name,spn.is_srch AS spn_is_srch,spn.is_rad AS spn_is_rad,spn.is_chk AS spn_is_chk,
+        spn.is_inp AS spn_is_inp,spn.is_sel AS spn_is_sel,spn.is_ve AS spn_is_ve,spn.is_colr AS spn_is_colr,spn.remark AS spn_remark
+        FROM ctgr_ctg_sys_pro_nam AS cspn
+        LEFT JOIN ctgi_sys_pro_nam AS spn ON cspn.pro_nam_id = spn.id
+        WHERE cspn.ctg_id = #{categoryId} AND spn.name = #{name}
+    </select>
+
+    <!-- ================================================================================== -->
+    <!-- 公用SQL定义																			-->
+    <!-- ================================================================================== -->
+
+    <!-- ================================================================================== -->
+    <!-- 结果集映射																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本结果映射 -->
+    <resultMap id="categorySystemPropertyNameResultMap" type="CategorySystemPropertyName">
+        <result property="categoryId" column="ctg_id"/>
+        <result property="propertyName.id" column="pro_nam_id"/>
+        <result property="squence" column="squence"/>
+        <result property="isRequired" column="is_req"/>
+        <result property="isSales" column="is_sal"/>
+        <result property="isBasic" column="is_basc"/>
+        <result property="isKey" column="is_key"/>
+        <result property="createrId" column="crer_id"/>
+        <result property="createTime" column="cre_tim"/>
+        <result property="updaterId" column="updr_id"/>
+        <result property="updateTime" column="upd_tim"/>
+        <result property="remark" column="remark"/>
+        <collection property="propertyName" columnPrefix="spn_" resultMap="com.dreawer.category.domain.SystemPropertyName.systemPropertyNameResultMap"/>
+    </resultMap>
+
+</mapper>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.category.domain.CustomerPropertyValue">
+
+    <!-- ================================================================================== -->
+    <!-- SQL新增																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 新增属性值 -->
+    <insert id="insert" parameterType="CustomerPropertyValue">
+        INSERT INTO ctgi_cust_pro_val (id,sto_id,ctg_id,pro_nam_typ,pro_nam_id,name,crer_id, remark)
+        VALUES (#{id},#{storeId},#{categoryId},#{propertyNameType},#{propertyNameId},#{name},#{createrId},#{remark})
+    </insert>
+
+    <!-- 批量新增属性值 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO ctgi_cust_pro_val (id,sto_id,ctg_id,pro_nam_typ,pro_nam_id,name,crer_id, remark)
+        VALUES
+        <foreach collection="list" item="pv" index="index" separator=",">
+            (#{pv.id},#{pv.storeId},#{pv.categoryId},#{pv.propertyNameType},#{pv.propertyNameId},#{pv.name},#{pv.createrId},#{pv.remark})
+        </foreach>
+    </insert>
+
+    <!-- ================================================================================== -->
+    <!-- SQL删除																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 删除属性值 -->
+    <delete id="delete" parameterType="String">
+        DELETE FROM ctgi_cust_pro_val WHERE id = #{id}
+    </delete>
+
+    <!-- 删除属性值 -->
+    <delete id="deleteByPropertyNameId" parameterType="String">
+        DELETE FROM ctgi_cust_pro_val WHERE pro_nam_id = #{propertyNameId}
+    </delete>
+
+    <!-- 批量删除属性值 -->
+    <delete id="deleteBatch" parameterType="Map">
+        DELETE FROM ctgi_cust_pro_val WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- ================================================================================== -->
+    <!-- SQL更新																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 更新属性值信息 -->
+    <update id="update" parameterType="CustomerPropertyName">
+        UPDATE ctgi_cust_pro_val
+        SET updr_id = #{updaterId},upd_tim = #{updateTime}
+        <if test="name != null">
+            ,name = #{name}
+        </if>
+        <if test="remark != null">
+            ,remark = #{remark}
+        </if>
+        WHERE id = #{id}
+    </update>
+
+    <!-- ================================================================================== -->
+    <!-- SQL查询																				-->
+    <!-- ================================================================================== -->
+
+    <!-- 根据类目ID、店铺ID、属性名ID和模糊查询关键字查询客户属性值信息列表 -->
+    <select id="findPropertyValues" parameterType="Map" resultMap="customerPropertyValueResultMap">
+        SELECT <include refid="basicFields"/>
+        FROM ctgi_cust_pro_val
+        WHERE ctg_id = #{categoryId} AND pro_nam_id = #{propertyNameId} AND sto_id = #{storeId}
+        <if test="keyword != null">
+            AND name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+        ORDER BY cre_tim DESC
+    </select>
+
+    <!-- 根据类目ID、店铺ID、属性名ID和模糊查询关键字查询客户属性值信息总数 -->
+    <select id="getPropertyValueCount" parameterType="Map" resultType="Integer">
+        SELECT COUNT(1)
+        FROM ctgi_cust_pro_val
+        WHERE ctg_id = #{categoryId} AND pro_nam_id = #{propertyNameId} AND sto_id = #{storeId}
+        <if test="keyword != null">
+            AND name LIKE CONCAT('%',#{keyword},'%')
+        </if>
+    </select>
+
+    <!-- 根据类目ID、店铺ID、属性名ID和属性值名称查询客户属性值信息 -->
+    <select id="findPropertyValueByName" parameterType="Map" resultMap="customerPropertyValueResultMap">
+        SELECT <include refid="basicFields"/>
+        FROM ctgi_cust_pro_nam
+        WHERE ctg_id = #{categoryId} AND pro_nam_id = #{propertyNameId} AND sto_id = #{storeId} AND name = #{name}
+    </select>
+
+    <!-- 根据ID查询客户属性值信息 -->
+    <select id="findPropertyValueById" parameterType="String" resultMap="customerPropertyValueResultMap">
+        SELECT <include refid="basicFields"/>
+        FROM ctgi_cust_pro_nam
+        WHERE id = #{id}
+    </select>
+
+    <!-- ================================================================================== -->
+    <!-- 公用SQL定义																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本信息 -->
+    <sql id="basicFields">
+        id,sto_id,ctg_id,pro_nam_typ,pro_nam_id,name,remark
+    </sql>
+
+    <!-- ================================================================================== -->
+    <!-- 结果集映射																			-->
+    <!-- ================================================================================== -->
+
+    <!-- 基本结果映射 -->
+    <resultMap id="customerPropertyValueResultMap" type="CustomerPropertyValue">
+        <result property="id" column="id"/>
+        <result property="storeId" column="sto_id"/>
+        <result property="categoryId" column="ctg_id"/>
+        <result property="propertyNameType" column="pro_nam_typ"/>
+        <result property="propertyNameId" column="pro_nam_id"/>
+        <result property="createrId" column="crer_id"/>
+        <result property="createTime" column="cre_tim"/>
+        <result property="updaterId" column="updr_id"/>
+        <result property="updateTime" column="upd_tim"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+</mapper>
