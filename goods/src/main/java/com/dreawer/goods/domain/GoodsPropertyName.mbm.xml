@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.GoodsPropertyName">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 新增商品属性名信息 -->
+	<insert id="saveBatch" parameterType="java.util.List">
+		INSERT INTO godsi_gods_pro_nam(id, pro_nam_id, gods_id, name, ctg_id, type, squence, is_srch, is_rad,
+		                               is_chk, is_inp, is_sel, is_ve, is_colr, is_req, is_sal, is_basc, is_key,
+		                               is_img, crer_id, cre_tim)
+        VALUES
+        <foreach collection="goodsPropertyNames" item="gpn" index="index" separator=",">
+              (#{gpn.id}, #{gpn.propertyNameId}, #{gpn.goodsId}, #{gpn.name}, #{gpn.categoryId}, #{gpn.type}, #{gpn.squence},
+        	   #{gpn.isSearch}, #{gpn.isRadio}, #{gpn.isCheckbox}, #{gpn.isInput}, #{gpn.isSelect}, #{gpn.isVisualEditor},
+               #{gpn.isColor}, #{gpn.isRequired}, #{gpn.isSales}, #{gpn.isBasic}, #{gpn.isKey}, #{gpn.isImage}, #{gpn.createrId}, #{gpn.createTime})
+        </foreach>
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据属性名ID删除商品属性名和属性值 -->
+	<delete id="deleteByPropertyNameId" parameterType="String">
+		DELETE gpn, gpv 
+		FROM godsi_gods_pro_nam AS gpn
+		LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.pro_nam_id = gpv.pro_nam_id
+		WHERE gpn.pro_nam_id = #{propertyNameId}
+	</delete>
+	
+	<!-- 根据商品ID删除商品属性名和属性值 -->
+	<delete id="deleteByGoodsId" parameterType="String">
+		DELETE gpn, gpv 
+		FROM godsi_gods_pro_nam AS gpn
+		LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
+		WHERE gpn.gods_id = #{goodsId}
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 通过属性名ID更新商品属性名信息 -->
+	<update id="updateByPropertyNameId" parameterType="GoodsPropertyName">
+		UPDATE godsi_gods_pro_nam
+		SET 1 = 1
+        <if test="name != null">
+            ,name = #{name}
+        </if>
+        <if test="squence != null">
+            ,squence = #{squence}
+        </if>
+        <if test="isSearch != null">
+            ,is_srch = #{isSearch}
+        </if>
+        <if test="isRadio != null">
+            ,is_rad = #{isRadio}
+        </if>
+        <if test="isCheckbox != null">
+            ,is_chk = #{isCheckbox}
+        </if>
+        <if test="isInput != null">
+            ,is_inp = #{isInput}
+        </if>
+        <if test="isSelect != null">
+            ,is_sel = #{isSelect}
+        </if>
+        <if test="isVisualEditor != null">
+            ,is_ve = #{isVisualEditor}
+        </if>
+        <if test="isSelect != null">
+            ,is_sel = #{isSelect}
+        </if>
+        <if test="isColor != null">
+            ,is_colr = #{isColor}
+        </if>
+        <if test="isRequired != null">
+            ,is_req = #{isRequired}
+        </if>
+        <if test="isSales != null">
+            ,is_sal = #{isSales}
+        </if>
+        <if test="isBasic != null">
+            ,is_basc = #{isBasic}
+        </if>
+        <if test="isKey != null">
+            ,is_key = #{isKey}
+        </if>
+		<if test="isImage != null">
+			,is_img = #{isImage}
+		</if>
+		WHERE pro_nam_id = #{propertyNameId}
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据商品ID、属性名ID查询商品属性名列表(根据排列序号正序)  -->
+	<select id="findGoodsPropertyNames" parameterType="Map" resultMap="goodsPropertyNameResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_gods_pro_nam
+	  WHERE 1 = 1
+	  <if test="goodsId != null">
+	  	AND gods_id = #{goodsId} 
+	  </if>
+	  <if test="propertyNameId != null">
+	  	AND pro_nam_id = #{propertyNameId} 
+	  </if>
+	</select>
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, pro_nam_id, gods_id, name, ctg_id, type, squence, is_srch, is_rad,
+		is_chk, is_inp, is_sel, is_ve, is_colr, is_req, is_sal, is_basc, is_key, is_img, crer_id, cre_tim
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="goodsPropertyNameResultMap" type="GoodsPropertyName">
+		<result property="id" column="id" />
+		<result property="propertyNameId" column="pro_nam_id" />
+		<result property="goodsId" column="gods_id" />
+		<result property="name" column="name" />
+		<result property="categoryId" column="ctg_id" />
+		<result property="type" column="type" />
+		<result property="squence" column="squence" />
+        <result property="isSearch" column="is_srch"/>
+        <result property="isRadio" column="is_rad"/>
+        <result property="isCheckbox" column="is_chk"/>
+        <result property="isInput" column="is_inp"/>
+        <result property="isSelect" column="is_sel"/>
+        <result property="isVisualEditor" column="is_ve"/>
+        <result property="isColor" column="is_colr"/>
+        <result property="isRequired" column="is_req"/>
+        <result property="isSales" column="is_sal"/>
+        <result property="isBasic" column="is_basc"/>
+        <result property="isKey" column="is_key"/>
+		<result property="isImage" column="is_img" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<collection property="propertyValues" resultMap="com.dreawer.goods.domain.GoodsPropertyValue.goodsPropertyValueResultMap" columnPrefix="gpv_" />
+	</resultMap>
+</mapper>

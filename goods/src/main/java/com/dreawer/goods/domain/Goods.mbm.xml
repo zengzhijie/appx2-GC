@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.Goods">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 新增商品信息 -->
+	<insert id="save" parameterType="Goods">
+		INSERT INTO godsi_goods(id, sto_id, name, ctg_id, min_pr, min_orig_pr, inv_typ, main_dig, detail, service, type, status, is_rcd, crer_id, cre_tim, remark)
+        VALUES(#{id}, #{storeId}, #{name}, #{categoryId}, #{minPrice}, #{minOriginalPrice}, #{inventoryType}, #{mainDiagram}, #{detail}, #{service}, #{type}, #{status}, #{isRecommend}, #{createrId}, #{createTime}, #{remark})
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量删除商品 -->
+	<delete id="deleteBatch" parameterType="Map">
+		DELETE gods, gr_gods, gods_frt, frt_par, sku, gpn, gpv
+		FROM godsi_goods AS gods
+		LEFT JION godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+		LEFT JION godsr_gods_frt AS gods_frt ON gr_gods.gods_id = gods_frt.gods_id
+		LEFT JION godsi_frt_par AS frt_par ON gods_frt.gods_id = frt_par.gods_id
+		LEFT JION godsi_sku AS sku ON frt_par.gods_id = sku.gods_id
+		LEFT JION godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+		LEFT JION godsi_gods_pro_val AS gpv ON gpn.gods_id = gpv.gods_id
+		WHERE gg.id IN
+		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+	</delete>
+
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量更新商品状态 -->
+	<update id="updateBatchStatus" parameterType="java.util.List">
+		UPDATE godsi_goods
+		SET status = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.status}
+    	</foreach>,
+    		updr_id = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.updaterId}
+    	</foreach>,
+    		upd_tim = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.updateTime}
+    	</foreach>
+		WHERE id IN
+    	<foreach collection="goodses" item="goods" index="index" separator="," open="(" close=")">
+        	#{goods.id}
+   	 	</foreach>
+	</update>
+	
+	<!-- 批量更新商品推荐状态 -->
+	<update id="updateBatchRecommend" parameterType="java.util.List">
+		UPDATE godsi_goods
+		SET is_rcd = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.isRecommend}
+    	</foreach>,
+    		updr_id = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.updaterId}
+    	</foreach>,
+    		upd_tim = 
+		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
+        	when #{goods.id} then #{goods.updateTime}
+    	</foreach>
+		WHERE id IN
+    	<foreach collection="goodses" item="goods" index="index" separator="," open="(" close=")">
+        	#{goods.id}
+   	 	</foreach>
+	</update>
+	
+	<!-- 更新商品基本信息（名称、最低售价、最低原价、库存类型、总库存、主图、详情、售后服务、销量、推荐状态、备注等） -->
+	<update id="update" parameterType="Goods">
+		UPDATE godsi_goods
+		SET updr_id = #{updaterId}, upd_tim = #{updateTime}
+		<if test="name != null">
+			,name = #{name}
+		</if>
+		<if test="minPrice != null">
+			,min_pr = #{minPrice}
+		</if>
+		<if test="minOriginalPrice != null">
+			,min_orig_pr = #{minOriginalPrice}
+		</if>
+		<if test="inventoryType != null">
+			,inv_typ = #{inventoryType}
+		</if>
+		<if test="mainDiagram != null">
+			,main_dig = #{mainDiagram}
+		</if>
+		<if test="detail != null">
+			,detail = #{detail}
+		</if>
+		<if test="service != null">
+			,service = #{service}
+		</if>
+		<if test="status != null">
+			,status = #{status}
+		</if>
+		<if test="isRecommend != null">
+			,is_rcd = #{isRecommend}
+		</if>
+		<if test="remark != null">
+			,remark = #{remark}
+		</if>
+		WHERE id = #{id}
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询商品列表(根据创建时间倒叙)  -->
+	<select id="findGoodses" parameterType="Map" resultMap="goodsResultMap">
+	  SELECT gods.id, gods.sto_id, gods.name, gods.ctg_id, gods.min_pr, gods.min_orig_pr, gods.inv_typ, gods.main_dig, gods.detail, gods.service, gods.status, gods.is_rcd, gods.crer_id, gods.cre_tim, gods.remark,
+	  		 gr.id AS gr_id, gr.name AS gr_name
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
+	  WHERE gods.sto_id = #{storeId}
+	  <if test="groupId != null">
+	  	AND gr_gods.gr_id = #{groupId}
+	  </if>
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>	
+	  <if test="status != null">
+	  	AND gods.status = #{status}
+	  </if>	
+	  <if test="isRecommend != null">
+	  	AND gods.is_rcd = #{isRecommend}
+	  </if>
+	  <if test="categoryId != null">
+	  	AND gods.ctg_id = #{categoryId}
+	  </if>		
+	  <if test="keyword != null">
+	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	  ORDER BY gods.cre_tim DESC
+	  <if test="start != null">
+	  	<if test="pageSize != null">
+	  		LIMIT #{start}, #{pageSize}
+	  	</if>
+	  </if>
+	</select>
+	
+	<!-- 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页获取商品总数  -->
+	<select id="getGoodsCount" parameterType="Map" resultType="Integer">
+	  SELECT COUNT(gods.id)
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  WHERE gods.sto_id = #{storeId}
+	  <if test="groupId != null">
+	  	AND gr_gods.gr_id = #{groupId}
+	  </if>
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>	
+	  <if test="status != null">
+	  	AND gods.status = #{status}
+	  </if>	
+	  <if test="isRecommend != null">
+	  	AND gods.is_rcd = #{isRecommend}
+	  </if>
+	  <if test="categoryId != null">
+	  	AND gods.ctg_id = #{categoryId}
+	  </if>	  	
+	  <if test="keyword != null">
+	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	</select>
+	
+	<!-- 根据店铺ID、分组ID、推荐状态、类目ID、模糊查询关键字分页查询正在销售的商品列表(根据创建时间倒叙，正在销售即商品库存、状态均为正常) -->
+	<select id="findSellingGoodses" parameterType="Map" resultMap="goodsResultMap">
+	  SELECT gods.id, gods.sto_id, gods.name, gods.ctg_id, gods.min_pr, gods.min_orig_pr, gods.inv_typ, gods.main_dig, gods.detail, gods.service, gods.status, gods.is_rcd, gods.crer_id, gods.cre_tim, gods.remark,
+	  		 gr.id AS gr_id, gr.name AS gr_name
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
+	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR gods.tot_inv != 0)
+	  <if test="groupId != null">
+	  	AND gr_gods.gr_id = #{groupId}
+	  </if>
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>	
+	  <if test="isRecommend != null">
+	  	AND gods.is_rcd = #{isRecommend}
+	  </if>
+	  <if test="categoryId != null">
+	  	AND gods.ctg_id = #{categoryId}
+	  </if>	
+	  <if test="keyword != null">
+	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	  ORDER BY gods.cre_tim DESC
+	  <if test="start != null">
+	  	<if test="pageSize != null">
+	  		LIMIT #{start}, #{pageSize}
+	  	</if>
+	  </if>
+	</select>
+	
+	<!-- 根据店铺ID、分组ID、推荐状态、类目ID、模糊查询关键字分页获取正在销售的商品总数(正在销售即商品库存、状态均为正常)  -->
+	<select id="getSellingGoodsCount" parameterType="Map" resultMap="Integer">
+	  SELECT COUNT(gods.id)
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR gods.tot_inv != 0)
+	  <if test="groupId != null">
+	  	AND gr_gods.gr_id = #{groupId}
+	  </if>
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>	
+	  <if test="isRecommend != null">
+	  	AND gods.is_rcd = #{isRecommend}
+	  </if>
+	  <if test="categoryId != null">
+	  	AND gods.ctg_id = #{categoryId}
+	  </if>	
+	  <if test="keyword != null">
+	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	  ORDER BY gods.cre_tim DESC
+	  <if test="start != null">
+	  	<if test="pageSize != null">
+	  		LIMIT #{start}, #{pageSize}
+	  	</if>
+	  </if>	
+	</select>
+	
+	<!-- 根据商品ID查询商品信息  -->
+	<select id="findGoodsById" parameterType="Map" resultMap="goodsResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_goods
+	  WHERE id = #{id}
+	  <if test="type != null">
+	  	AND type = #{type}
+	  </if>	
+	</select>
+	
+	<!-- 根据商品ID查询商品详细信息（根据属性名排列序号正序、属性值排列序号正序）  -->
+	<select id="findGoodsDetailById" parameterType="Map" resultMap="goodsResultMap">
+	  SELECT gods.id, gods.sto_id, gods.name, gods.ctg_id, gods.min_pr, gods.min_orig_pr, gods.inv_typ, gods.main_dig, gods.detail, gods.service, gods.status, gods.is_rcd, gods.crer_id, gods.cre_tim, gods.remark,
+	  		 sku.id AS sku_id, sku.inv_typ AS sku_inv_typ, sku.inventory AS sku_inventory, sku.lock_inv AS sku_lock_inv, sku.sal_vol AS sku_sal_vol, sku.ori_pr AS sku_ori_pr, sku.price AS sku_price, sku.description AS sku_description, sku.code AS sku_code, sku.barcode AS sku_barcode, sku.remark AS sku_remark,
+	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
+	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
+	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
+	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gpv.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
+	  WHERE gods.id = #{id}
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>
+	  ORDER BY gpn.squence ASC, gpn.squence ASC
+	</select>
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, sto_id, name, ctg_id, min_pr, min_orig_pr, inv_typ, main_dig, detail,service, type, status, is_rcd, crer_id, cre_tim, remark
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="goodsResultMap" type="Goods">
+		<result property="id" column="id" />
+		<result property="storeId" column="sto_id" />
+		<result property="name" column="name" />
+		<result property="categoryId" column="ctg_id" />
+		<result property="minPrice" column="min_pr" />
+		<result property="minOriginalPrice" column="min_orig_pr" />
+		<result property="inventoryType" column="inv_typ" />
+		<result property="mainDiagram" column="main_dig" />
+		<result property="detail" column="detail" />
+		<result property="service" column="service" />
+		<result property="type" column="type" />
+		<result property="status" column="status" />
+		<result property="isRecommend" column="is_rcd" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<result property="updaterId" column="updr_id" />
+		<result property="updateTime" column="upd_tim" />
+		<collection property="groups" resultMap="com.dreawer.goods.domain.Group.groupResultMap" columnPrefix="gr_" />
+		<collection property="skus" resultMap="com.dreawer.goods.domain.Sku.skuResultMap" columnPrefix="sku_" />
+		<collection property="propertyNames" resultMap="com.dreawer.goods.domain.GoodsPropertyName.goodsPropertyNameResultMap" columnPrefix="gpn_" />
+	</resultMap>
+</mapper>

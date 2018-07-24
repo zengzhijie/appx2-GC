@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.City">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量添加城市信息 -->
+	<insert id="saveBatch" parameterType="java.util.List">
+		INSERT INTO godsi_city(id, log_meth_id, name, par_id, cty_id, crer_id)
+        VALUES
+		<foreach collection="cities" item="city" index="index" separator=",">
+            (#{city.id}, #{city.logisticsMethodId}, #{city.name}, #{city.parentId}, #{city.cityId}, #{city.createrId})
+        </foreach>
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, log_meth_id, name, par_id, cty_id
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="cityResultMap" type="City">
+		<result property="id" column="id" />
+		<result property="logisticsMethodId" column="log_meth_id" />
+		<result property="name" column="name" />
+		<result property="parentId" column="par_id" />
+		<result property="cityId" column="cty_id" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+	</resultMap>
+</mapper>

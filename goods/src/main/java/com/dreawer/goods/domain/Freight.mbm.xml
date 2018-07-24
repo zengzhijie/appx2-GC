@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.Freight">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 新增运费模板信息 -->
+	<insert id="save" parameterType="Freight">
+		INSERT INTO godsi_freight(id, sto_id, name, dlvr_add, dlvr_tim, payer, pr_meth, crer_id, cre_tim)
+        VALUES(#{id}, #{storeId}, #{name}, #{deliveryAddress}, #{deliveryTime}, #{payer}, #{pricingMethod}, #{createrId}, #{createTime})
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+ 	
+	<!-- 根据运费模板ID列表批量删除运费模板信息 -->
+ 	<delete id="deleteBatch" parameterType="Map">
+		DELETE frt, log_meth, city 
+		FROM godsi_freight AS frt 
+			   LEFT JOIN godsi_log_meth AS log_meth ON frt.id = log_meth.frt_id 
+			   LEFT JOIN godsi_city AS city ON log_meth.id = city.log_meth_id
+		WHERE frt.id IN
+        <foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 更新运费模板信息 -->
+	<update id="update" parameterType="Freight">
+		UPDATE godsi_freight
+		SET updr_id = #{updaterId}, upd_tim = #{updateTime}
+		<if test="name != null">
+			,name = #{name}
+		</if>
+		<if test="deliveryAddress != null">
+			,dlvr_add = #{deliveryAddress}
+		</if>
+		<if test="deliveryTime != null">
+			,dlvr_tim = #{deliveryTime}
+		</if>
+		<if test="payer != null">
+			,payer = #{payer}
+		</if>
+		<if test="pricingMethod != null">
+			,pr_meth = #{pricingMethod}
+		</if>
+		<if test="name != null">
+			,name = #{name}
+		</if>	
+		WHERE id = #{id}
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据店铺ID分页查询运费模板详情列表(按照创建时间倒叙) -->
+	<select id="findFreightDetails"  parameterType="Map" resultMap="freightResultMap">
+	  SELECT frt.id, frt.name, frt.dlvr_add, frt.dlvr_tim, frt.payer, frt.pr_meth, frt.cre_tim, 
+	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr,
+	  		 city.id AS log_meth_city_id, city.name AS log_meth_city_name, city.cty_id AS log_meth_city_cty_id, city.par_id AS log_meth_city_par_id
+	  FROM (SELECT * FROM godsi_freight
+	  WHERE sto_id = #{storeId}
+	  ORDER BY cre_tim DESC 
+	  LIMIT #{start}, #{pageSize}
+	  )AS frt 
+	  LEFT JOIN godsi_log_meth AS log_meth ON frt.id = log_meth.frt_id
+	  LEFT JOIN godsi_city AS city ON log_meth.id = city.log_meth_id
+	</select>
+	
+	<!-- 根据店铺ID查询运费模板总数  -->
+	<select id="getFreightCount" parameterType="String" resultType="Integer">
+	  SELECT COUNT(*)
+	  FROM godsi_freight
+	  WHERE sto_id = #{storeId}
+	</select>
+	
+	<!-- 根据ID查询运费模板信息  -->
+	<select id="findFreightById" parameterType="String" resultMap="freightResultMap">
+	  SELECT frt.id, frt.name, frt.dlvr_add, frt.dlvr_tim, frt.payer, frt.pr_meth, frt.cre_tim, 
+	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr,
+	  		 city.id AS log_meth_city_id, city.name AS log_meth_city_name, city.cty_id AS log_meth_city_cty_id, city.par_id AS log_meth_city_par_id
+	  FROM godsi_freight AS frt 
+	  LEFT JOIN godsi_log_meth AS log_meth ON frt.id = log_meth.frt_id
+	  LEFT JOIN godsi_city AS city ON log_meth.id = city.log_meth_id
+	  WHERE frt.id = #{id}
+	</select>
+	
+	<!-- 根据店铺ID和运费模板名称查询运费模板信息  -->
+	<select id="findFreightByName" parameterType="Map" resultMap="freightResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_freight
+	  WHERE sto_id = #{storeId} AND name = #{name}
+	</select>
+	
+	<!-- 根据店铺ID查询运费模板列表(按照创建时间倒叙)  -->
+	<select id="findFreights"  parameterType="String" resultMap="freightResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_freight
+	  WHERE sto_id = #{storeId} 
+	  ORDER BY cre_tim DESC
+	</select>
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, sto_id, name, dlvr_add, dlvr_tim, payer, pr_meth, crer_id, cre_tim
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="freightResultMap" type="Freight">
+		<result property="id" column="id" />
+		<result property="storeId" column="sto_id" />
+		<result property="name" column="name" />
+		<result property="deliveryAddress" column="dlvr_add" />
+		<result property="deliveryTime" column="dlvr_tim" />
+		<result property="payer" column="payer" />
+		<result property="pricingMethod" column="pr_meth" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<result property="updaterId" column="updr_id" />
+		<result property="updateTime" column="upd_tim" />
+		<collection property="logisticsMethods" resultMap="com.dreawer.goods.domain.LogisticsMethod.logisticsMethodResultMap" columnPrefix="log_meth_"/>
+	</resultMap>
+</mapper>

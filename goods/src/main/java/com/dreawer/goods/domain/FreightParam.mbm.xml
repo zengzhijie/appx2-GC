@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.FreightParam">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	<!-- 新增运费参数信息 -->
+	<insert id="save" parameterType="FreightParam">
+		INSERT INTO godsi_frt_par(gods_id, type, price, frt_id, amount, crer_id, cre_tim)
+        VALUES(#{goodsId}, #{type}, #{price}, #{freightId}, #{amount}, #{createrId}, #{createTime})
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 更新运费参数信息 -->
+	<update id="update" parameterType="FreightParam">
+		UPDATE godsi_frt_par
+		SET type = #{type}, price = #{price}, frt_id = #{freightId}, amount = #{amount}, updr_id = #{updaterId}, upd_tim = #{updateTime}
+		WHERE gods_id = #{goodsId}
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 通过商品ID查询运费参数信息  -->
+	<select id="findFreightParam" parameterType="String" resultMap="freightParamResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_frt_par 
+	  WHERE gods_id = #{goodsId}
+	</select>
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		gods_id, type, price, frt_id, amount
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="freightParamResultMap" type="FreightParam">
+		<result property="goodsId" column="gods_id" />
+		<result property="type" column="type" />
+		<result property="price" column="price" />
+		<result property="freightId" column="frt_id" />
+		<result property="amount" column="amount" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<result property="updaterId" column="updr_id" />
+		<result property="updateTime" column="upd_tim" />
+	</resultMap>
+</mapper>

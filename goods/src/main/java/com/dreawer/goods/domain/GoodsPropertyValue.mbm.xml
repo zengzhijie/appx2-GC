@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.GoodsPropertyValue">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 新增商品属性值信息 -->
+	<insert id="saveBatch" parameterType="GoodsPropertyValue">
+		INSERT INTO godsi_gods_pro_val(id, gods_pro_nam_id, pro_val_id, pro_nam_id, gods_id, pro_nam_typ, squence, type, name, is_dflt_img, img_url, crer_id, cre_tim, remark)
+        VALUES
+        <foreach collection="goodsPropertyValues" item="gpv" index="index" separator=",">
+            (#{gpv.id}, #{gpv.goodsPropertyNameId}, #{gpv.propertyValueId}, #{gpv.propertyNameId}, #{gpv.goodsId}, #{gpv.propertyNameType}, #{gpv.squence}, #{gpv.type}, #{gpv.name}, #{gpv.isDefaultImage}, #{gpv.imageUrl}, #{gpv.createrId}, #{gpv.createTime}, #{gpv.remark})
+        </foreach>
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据属性值ID删除商品属性值-->
+	<delete id="deleteByPropertyValueId" parameterType="String">
+		DELETE FROM godsi_gods_pro_val
+		WHERE pro_val_id = #{propertyValueId}
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据属性值ID更新商品属性值基本信息 -->
+	<update id="updateByPropertyValueId" parameterType="GoodsPropertyValue">
+		UPDATE godsi_gods_pro_val
+		SET 1 = 1
+		<if test="name != null">
+			name = #{name}
+		</if> 
+		<if test="remark != null">
+			remark = #{remark}
+		</if> 
+		WHERE pro_val_id = #{propertyValueId}
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据商品ID、商品属性名ID、属性值ID查询商品属性值列表(根据排列序号正序)  -->
+	<select id="findGoodsPropertyValues" parameterType="String" resultMap="goodsPropertyValueResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_gods_pro_val
+	  WHERE 1 = 1
+	  <if test="goodsId != null">
+	  	AND gods_id = #{goodsId} 
+	  </if>
+	  <if test="propertyNameId != null">
+	  	AND gods_pro_nam_id = #{goodsPropertyNameId} 
+	  </if>
+	  <if test="propertyNameId != null">
+	  	AND pro_val_id = #{propertyValueId} 
+	  </if>	  
+	  ORDER BY squence ASC
+	</select>
+    
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, gods_pro_nam_id, pro_val_id, pro_nam_id, gods_id, pro_nam_typ, squence, type, name, is_dflt_img, img_url, crer_id, cre_tim, remark
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="goodsPropertyValueResultMap" type="GoodsPropertyValue">
+		<result property="id" column="id" />
+		<result property="goodsPropertyNameId" column="gods_pro_nam_id" />
+		<result property="propertyNameId" column="pro_nam_id" />
+		<result property="propertyValueId" column="pro_val_id" />
+		<result property="goodsId" column="gods_id" />
+		<result property="propertyNameType" column="pro_nam_typ" />
+		<result property="squence" column="squence" />
+		<result property="type" column="type" />
+		<result property="name" column="name" />
+		<result property="isDefaultImage" column="is_dflt_img" />
+		<result property="imageUrl" column="img_url" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<result property="remark" column="remark" />
+	</resultMap>
+</mapper>

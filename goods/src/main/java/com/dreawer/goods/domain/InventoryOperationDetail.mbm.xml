@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.InventoryOperationDetail">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量添加锁定库存信息 -->
+	<insert id="saveBatch" parameterType="java.util.List">
+		INSERT INTO godsi_inv_op_dtl(ord_id, sku_id, inventory, status, crer_id, cre_tim)
+        VALUES
+        <foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=",">
+            (#{inv_op_dtl.ord_id}, #{inv_op_dtl.sku_id}, #{inv_op_dtl.inventory}, #{inv_op_dtl.status}, #{inv_op_dtl.crer_id}, #{inv_op_dtl.cre_tim})
+        </foreach>
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量修改库存状态 -->
+	<update id="updateBatchStatus" parameterType="java.util.List">
+	    UPDATE godsi_inv_op_dtl
+  		SET status = 
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
+        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.status}
+    	</foreach>
+    		,updr_id = 
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
+        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.updaterId}
+    	</foreach>
+    		,upd_tim = 
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
+        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.updateTime}
+    	</foreach>
+    	WHERE sku_id IN
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=" ">
+        	#{inv_op_dtl.skuId}
+   	 	</foreach>
+   	 	AND ord_id IN
+   	 	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=" ">
+        	#{inv_op_dtl.orderId}
+   	 	</foreach>
+	</update>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 根据订单ID和SKUID查询库存操作明细 -->
+	<select id="findInventoryOperationDetail" parameterType="Map" resultMap="inventoryOperationDetailResult">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_inv_op_dtl
+	  WHERE ord_id = #{orderId} AND sku_id = #{skuId}
+	  FOR UPDATE
+	</select>
+    
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		ord_id, sku_id, inventory, status
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="inventoryOperationDetailResult" type="InventoryOperationDetail">
+		<result property="orderId" column="ord_id" />
+		<result property="skuId" column="sku_id" />
+		<result property="inventory" column="inventory" />
+		<result property="status" column="status" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<result property="updaterId" column="updr_id" />
+		<result property="updateTime" column="upd_tim" />
+	</resultMap>
+</mapper>

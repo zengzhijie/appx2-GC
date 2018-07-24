@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.LogisticsMethod">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 批量添加物流方式信息 -->
+	<insert id="saveBatch" parameterType="java.util.List">
+		INSERT INTO godsi_log_meth(id, frt_id, is_dflt, type, strt_qty, strt_pr, inc_qty, inc_pr, crer_id)
+        VALUES
+	    <foreach collection="logisticsMethods" item="log_meth" index="index" separator=",">
+            (#{log_meth.id}, #{log_meth.freightId}, #{log_meth.isDefault}, #{log_meth.type}, #{log_meth.startQuantity}, #{log_meth.startPrice}, #{log_meth.incrementQuantity}, #{log_meth.incrementPrice}, #{log_meth.createrId})
+        </foreach>
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+ 	
+ 	<!-- 根据运费模板ID删除物流方式信息 -->
+ 	<delete id="deleteByFreightId" parameterType="String">
+		DELETE log_meth, city 
+		FROM godsi_log_meth AS log_meth 
+			   LEFT JOIN godsi_city AS city ON log_meth.id = city.log_meth_id
+		WHERE log_meth.frt_id = #{freightId}
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		id, frt_id, is_dflt, type, strt_qty, strt_pr, inc_qty, inc_pr
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="logisticsMethodResultMap" type="LogisticsMethod">
+		<result property="id" column="id" />
+		<result property="freightId" column="frt_id" />
+		<result property="isDefault" column="is_dflt" />
+		<result property="type" column="type" />
+		<result property="startQuantity" column="strt_qty" />
+		<result property="startPrice" column="strt_pr" />
+		<result property="incrementQuantity" column="inc_qty" />
+		<result property="incrementPrice" column="inc_pr" />
+		<result property="createrId" column="crer_id" />
+		<result property="createTime" column="cre_tim" />
+		<collection property="cities" resultMap="com.dreawer.goods.domain.City.cityResultMap" columnPrefix="city_"/>
+	</resultMap>
+</mapper>
