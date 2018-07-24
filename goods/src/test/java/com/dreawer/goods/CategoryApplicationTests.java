@@ -1,4 +1,4 @@
-package com.dreawer.category;
+package com.dreawer.goods;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

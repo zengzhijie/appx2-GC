@@ -1,7 +1,7 @@
-package com.dreawer.category.constants;
+package com.dreawer.goods.constants;
 
 /**
- * <CODE>MessageConstants</CODE> 信息常量类。<br/>
+ * <CODE>MessageConstants</CODE> 信息常量类。
  * @author kael
 
  */
@@ -25,6 +25,9 @@ public final class MessageConstants {
     
     /** 交互信息（输入字段格式不正确） */
     public static final String ENTRY_ERROR_FORMAT = "EntryError.FORMAT";
+    
+    /** 交互信息（输入字段格式不正确） */
+    public static final String PERMISSIONS_ERROR_DATA_NOT_ALLOW = "PermissionsError.DATA_NO_ALLOW";
 
     // --------------------------------------------------------------------------------
     // 验证信息

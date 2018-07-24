@@ -1,4 +1,4 @@
-package com.dreawer.category.constants;
+package com.dreawer.goods.constants;
 
 /**
  * <CODE>ControllerConstants</CODE> 控制器层常量类。
@@ -17,70 +17,106 @@ public final class ControllerConstants {
     // 请求地址
     // --------------------------------------------------------------------------------
   
-    /** 请求“类目” */
-    public static final String REQ_CATEGORY = "/category";
-
-    /** 请求“类目属性” */
-    public static final String REQ_CATEGORY_PROPERTY = "/categoryProperty";
-
-    /** 请求“客户属性” */
-    public static final String REQ_CUSTOMER_PROPERTY = "/customerProperty";
-
+    /** 请求“运费” */
+    public static final String REQ_FREIGHT = "/freight";
+    
+    /** 请求“分组” */
+    public static final String REQ_GROUP = "/group";
+    
     /** 请求“添加” */
     public static final String REQ_ADD = "/add";
-
-    /** 请求“添加属性值” */
-    public static final String REQ_ADD_PROPERTY_VALUE = "/addPropertyValue";
-
+    
     /** 请求“编辑” */
     public static final String REQ_EDIT = "/edit";
-
-    /** 请求“编辑属性值” */
-    public static final String REQ_EDIT_PROPERTY_VALUE = "/editPropertyValue";
-
+    
     /** 请求“删除” */
     public static final String REQ_DELETE = "/delete";
 
-    /** 请求“删除属性值” */
-    public static final String REQ_DELETE_PROPERTY_VALUE = "/deletePropertyValue";
-
     /** 请求“列表” */
     public static final String REQ_LIST = "/list";
+    
+    /** 请求“批量删除” */
+    public static final String REQ_DELETE_BATCH = "/deleteBatch";
+    
+    /** 请求“详情列表” */
+    public static final String REQ_DETAILS = "/details";
+    
+    /** 请求“详情” */
+    public static final String REQ_DETAIL = "/detail";
+    
+    /** 请求“设置参数” */
+    public static final String REQ_SET_PARAM = "/setParam";
 
+    /** 请求“参数” */
+    public static final String REQ_PARAM = "/param";
+
+    /** 请求“计算” */
+    public static final String REQ_CACULATE = "/calculate";
+    
     /** 请求“模糊查询列表” */
     public static final String REQ_SUGGEST = "/suggest";
-
-    /** 请求“属性名列表” */
-    public static final String REQ_PROPERTY_NAMES = "/propertyNames";
-
-    /** 请求“模糊查询属性名列表” */
-    public static final String REQ_SUGGEST_PROPERTY_NAMES = "/suggestPropertyNames";
-
-    /** 请求“属性值列表” */
-    public static final String REQ_PROPERTY_VALUES = "/propertyValues";
-
-    /** 请求“模糊查询属性值列表” */
-    public static final String REQ_SUGGEST_PROPERTY_VALUES = "/suggestPropertyValues";
-
-
-
-
-
 
     /** 请求“属性” */
     public static final String REQ_PROPERTY = "/property";
     
-    /** 请求“店铺分类” */
-    public static final String REQ_GROUP = "/group";
+    /** 请求“添加商品列表” */
+    public static final String REQ_ADD_GOODSES = "/addGoodses";
+    
+    /** 请求“更新商品列表” */
+    public static final String REQ_UPDATE_GOODSES = "/updateGoodses";
+    
+    /** 请求“更新排序” */
+    public static final String REQ_UPDATE_SQUENCE = "/updateSquence";
+    
+    /** 请求“更新状态” */
+    public static final String REQ_UPDATE_STATUS = "/updateStatus";
+    
+    /** 请求“数量” */
+    public static final String REQ_COUNT = "/count";
+    
+    /** 请求“商品分组列表” */
+    public static final String REQ_GOODS_GROUPS = "/goodsGroups";
     
     /** 请求“商品” */
-    public static final String REQ_MERCHANDISE = "/merchandise";
+    public static final String REQ_GOODS = "/goods";
+    
+    /** 请求“绑定的商品（不单独销售）” */
+    public static final String REQ_BUNDLE_GOODS = "/bundleGoods";
+    
+    /** 请求“上架” */
+    public static final String REQ_SHELVE = "/shelve";
+    
+    /** 请求“下架” */
+    public static final String REQ_APPLY = "/apply";
+    
+    /** 请求“移除” */
+    public static final String REQ_REMOVE = "/remove";
+
+    /** 请求“更新推荐状态” */
+    public static final String REQ_UPDATE_RECOMMEND = "/updateRecommend";
+    
+    /** 请求“正销售商品列表” */
+    public static final String REQ_SELLING_LIST = "/SellingList";
+
+    /** 请求“购买信息详情” */
+    public static final String REQ_PURCHASE_DETAIL = "/purchaseDetail";
+    
+    /** 请求“扣减库存” */
+    public static final String REQ_LOCK_INVENTORY = "/lockInventory";
+    
+    /** 请求“锁定库存” */
+    public static final String REQ_RELEASE_INVENTORY = "/releaseInventory";
+    
+    /** 请求“释放库存” */
+    public static final String REQ_DEDUCTION_INVENTORY = "/deductionBatchInventory";
+    
+
+    
     
     /** 请求“包装” */
     public static final String REQ_PACKING = "/packing";
     
-    /** 请求“运费” */
-    public static final String REQ_FREIGHT = "/freight";
+
     
     /** 请求“查询能否生成订单” */
     public static final String ORDER_QUERY = "/order/query";
@@ -100,8 +136,7 @@ public final class ControllerConstants {
     /** 请求“查询sku排序” */
     public static final String PROPERTY_SCREENING = "/property/screening";
     
-    /** 请求“添加” */
-    public static final String ADD = "/add";
+
     
     /** 请求“添加值” */
     public static final String ADD_VALUE = "/addValue";
@@ -109,14 +144,7 @@ public final class ControllerConstants {
     /** 请求“更新店铺分类、商品关系” */
     public static final String UPDATE_GROUP = "/updateGroup";
     
-    /** 请求“编辑” */
-    public static final String EDIT = "/edit";
-    
-    /** 请求“更新” */
-    public static final String UPDATE = "/update";
-    
-    /** 请求“删除” */
-    public static final String DELETE = "/delete";
+
     
     /** 请求“上架” */
     public static final String SHELF = "/shelf";
@@ -144,9 +172,6 @@ public final class ControllerConstants {
     /** 请求“模糊查询值列表” */
     public static final String VALUE_SUGGEST = "/valueSuggest";
     
-    /** 请求“详情” */
-    public static final String DETAIL = "/detail";
-
     /** 请求“名称” */
     public static final String REQ_NAME = "/name";
     
