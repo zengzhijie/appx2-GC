@@ -187,7 +187,7 @@
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
-	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR gods.tot_inv != 0)
+	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(sku.Inventory)-SUM(sku.lock_inv) FROM godsi_sku AS sku WHERE sku.gods_id = gods.id) != 0)
 	  <if test="groupId != null">
 	  	AND gr_gods.gr_id = #{groupId}
 	  </if>
@@ -216,7 +216,7 @@
 	  SELECT COUNT(gods.id)
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
-	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR gods.tot_inv != 0)
+	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(sku.Inventory)-SUM(sku.lock_inv) FROM godsi_sku AS sku WHERE sku.gods_id = gods.id) != 0)
 	  <if test="groupId != null">
 	  	AND gr_gods.gr_id = #{groupId}
 	  </if>
