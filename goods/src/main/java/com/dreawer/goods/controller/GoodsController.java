@@ -113,7 +113,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//获取SKU表单列表
-    		List<SkuForm> skuForms = form.getSkuForms();
+    		List<SkuForm> skuForms = form.getSkus();
     		
     		//判断SKU表单列表是否为空
     		if(skuForms == null || skuForms.size()<=0){
@@ -287,7 +287,7 @@ public class GoodsController extends BaseController{
     		goods.setPropertyNames(goodsPropertyNames);
     		
     		//获取属性名表单列表
-    		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNameForms();
+    		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNames();
     		
     		//判断属性名表单列表是否为空
     		if(goodsPropertyNameForms != null && goodsPropertyNameForms.size()>0){
@@ -427,7 +427,7 @@ public class GoodsController extends BaseController{
         			goodsPropertyName.setPropertyValues(goodsPropertyValues);
         			
         			//获取商品属性值表单列表
-        			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValueForms();
+        			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValues();
     			
         			//判断属性值表单列表是否为空
         			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <=0){
@@ -506,7 +506,7 @@ public class GoodsController extends BaseController{
     		}
 
     		//获取设置运费参数表单
-    		SetFreightParamForm freightParamForm = form.getSetFreightParamForm();
+    		SetFreightParamForm freightParamForm = form.getFreightParam();
     		
     		//创建运费参数实体类
     		FreightParam freightParam = new FreightParam();
@@ -624,7 +624,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//获取SKU表单列表
-    		List<SkuForm> skuForms = form.getSkuForms();
+    		List<SkuForm> skuForms = form.getSkus();
     		
     		//判断SKU表单列表是否为空
     		if(skuForms == null || skuForms.size()<=0){
@@ -804,7 +804,7 @@ public class GoodsController extends BaseController{
     		goods.setPropertyNames(goodsPropertyNames);
     		
     		//获取属性名表单列表
-    		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNameForms();
+    		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNames();
     		
     		//判断属性名表单列表是否为空
     		if(goodsPropertyNameForms != null && goodsPropertyNameForms.size()>0){
@@ -948,7 +948,7 @@ public class GoodsController extends BaseController{
         			goodsPropertyName.setPropertyValues(goodsPropertyValues);
         			
         			//获取商品属性值表单列表
-        			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValueForms();
+        			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValues();
     			
         			//判断属性值表单列表是否为空
         			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <=0){
@@ -1030,7 +1030,7 @@ public class GoodsController extends BaseController{
     		}
 
     		//获取设置运费参数表单
-    		SetFreightParamForm freightParamForm = form.getSetFreightParamForm();
+    		SetFreightParamForm freightParamForm = form.getFreightParam();
     		
     		//创建运费参数实体类
     		FreightParam freightParam = new FreightParam();
@@ -1359,8 +1359,11 @@ public class GoodsController extends BaseController{
         }
     	try {
     		
+    		//计算分页起始
+    		int start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), form.getStart(), form.getPageSize());
+    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, form.getPageSize());
         	
             //返回查询结果
             return responseCode;
@@ -1383,8 +1386,11 @@ public class GoodsController extends BaseController{
         }
     	try {
     		
+    		//计算分页起始
+    		int start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findSellingGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), form.getStart(), form.getPageSize());
+    		ResponseCode responseCode = goodsService.findSellingGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, form.getPageSize());
         	
             //返回查询结果
             return responseCode;

@@ -33,7 +33,7 @@ public class AddGoodsForm {
 	@Length(min=1, max=50000, message=ENTRY_ERROR_OVERRANGE)
 	private String detail = null; // 详情
 	
-	@Length(min=1, max=50000, message=ENTRY_ERROR_OVERRANGE)
+	@Length(min=1, max=20000, message=ENTRY_ERROR_OVERRANGE)
 	private String service = null; // 售后服务
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
@@ -50,11 +50,11 @@ public class AddGoodsForm {
     
 	private List<String> groupIds = null; // 分组ID列表
 	
-	private List<SkuForm> skuForms = null; // 添加SKU表单列表
+	private List<SkuForm> skus = null; // 添加SKU表单列表
 	
-	private List<GoodsPropertyNameForm> goodsPropertyNameForms = null; //添加商品属性名表单列表
+	private List<GoodsPropertyNameForm> goodsPropertyNames = null; //添加商品属性名表单列表
 
-	private SetFreightParamForm setFreightParamForm = null; // 设置运费参数表单
+	private SetFreightParamForm freightParam = null; // 设置运费参数表单
 	
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
@@ -156,20 +156,20 @@ public class AddGoodsForm {
 		this.groupIds = groupIds;
 	}
 
-	public List<SkuForm> getSkuForms() {
-		return skuForms;
+	public List<SkuForm> getSkus() {
+		return skus;
 	}
 
-	public void setSkuForms(List<SkuForm> skuForms) {
-		this.skuForms = skuForms;
+	public void setSkus(List<SkuForm> skus) {
+		this.skus = skus;
 	}
 
-	public List<GoodsPropertyNameForm> getGoodsPropertyNameForms() {
-		return goodsPropertyNameForms;
+	public List<GoodsPropertyNameForm> getGoodsPropertyNames() {
+		return goodsPropertyNames;
 	}
 
-	public void setGoodsPropertyNameForms(List<GoodsPropertyNameForm> goodsPropertyNameForms) {
-		this.goodsPropertyNameForms = goodsPropertyNameForms;
+	public void setGoodsPropertyNames(List<GoodsPropertyNameForm> goodsPropertyNames) {
+		this.goodsPropertyNames = goodsPropertyNames;
 	}
 
 	public void setInventoryType(InventoryType inventoryType) {
@@ -184,12 +184,12 @@ public class AddGoodsForm {
 		this.source = source;
 	}
 
-	public SetFreightParamForm getSetFreightParamForm() {
-		return setFreightParamForm;
+	public SetFreightParamForm getFreightParam() {
+		return freightParam;
 	}
 
-	public void setSetFreightParamForm(SetFreightParamForm setFreightParamForm) {
-		this.setFreightParamForm = setFreightParamForm;
+	public void setFreightParam(SetFreightParamForm freightParam) {
+		this.freightParam = freightParam;
 	}
-	
+
 }

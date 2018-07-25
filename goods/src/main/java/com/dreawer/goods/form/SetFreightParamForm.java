@@ -23,9 +23,6 @@ public class SetFreightParamForm {
 	
 	private String amount = null; // 重量或体积
 
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String userId = null; // 用户ID
-
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
@@ -70,11 +67,4 @@ public class SetFreightParamForm {
 		this.amount = amount;
 	}
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
 }

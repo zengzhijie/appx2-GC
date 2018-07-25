@@ -17,7 +17,7 @@ public class UpdateGroupStatusForm {
 	private List<String> ids = null; // 分组ID列表
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private GroupStatus status = null; // 排列序号
+	private GroupStatus status = null; // 分组状态
 	
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法

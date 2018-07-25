@@ -62,7 +62,7 @@ public class GoodsPropertyNameForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private Boolean isImage = null; // 是否图片属性
 	
-	private List<GoodsPropertyValueForm> goodsPropertyValueForms = null; // 商品属性值列表
+	private List<GoodsPropertyValueForm> goodsPropertyValues = null; // 商品属性值列表
 
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
@@ -204,12 +204,12 @@ public class GoodsPropertyNameForm {
 		this.isImage = isImage;
 	}
 
-	public List<GoodsPropertyValueForm> getGoodsPropertyValueForms() {
-		return goodsPropertyValueForms;
+	public List<GoodsPropertyValueForm> getGoodsPropertyValues() {
+		return goodsPropertyValues;
 	}
 
-	public void setGoodsPropertyValueForms(List<GoodsPropertyValueForm> goodsPropertyValueForms) {
-		this.goodsPropertyValueForms = goodsPropertyValueForms;
+	public void setGoodsPropertyValues(List<GoodsPropertyValueForm> goodsPropertyValues) {
+		this.goodsPropertyValues = goodsPropertyValues;
 	}
-
+	
 }

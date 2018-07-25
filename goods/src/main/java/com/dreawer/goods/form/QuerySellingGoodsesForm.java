@@ -13,15 +13,15 @@ public class QuerySellingGoodsesForm {
 	
 	private String groupId = null; // 分组ID
 	
-	private Boolean isRecommend = null; // 库存类型
+	private Boolean isRecommend = null; // 是否推荐
 	
-	private String categoryId = null; // 主图
+	private String categoryId = null; // 类目ID
 	
-	private String keyword = null; // 详情
+	private String keyword = null; // 模糊查询关键字
 	
-	private Integer start = null; // 状态
+	private Integer pageNo = null; // 当前页码
 	
-	private Integer pageSize = null; //是否推荐
+	private Integer pageSize = null; // 每页显示记录数
 
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
@@ -67,12 +67,12 @@ public class QuerySellingGoodsesForm {
 		this.keyword = keyword;
 	}
 
-	public Integer getStart() {
-		return start;
+	public Integer getPageNo() {
+		return pageNo;
 	}
 
-	public void setStart(Integer start) {
-		this.start = start;
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
 	}
 
 	public Integer getPageSize() {

@@ -577,8 +577,8 @@ public class FreightController extends BaseController{
      * @param form 删除运费模板表单。
 	 * @return 成功返回成功响应码，失败则返回相应错误码。
 	 */
-    @RequestMapping(value=REQ_DELETE_BATCH, method=RequestMethod.POST)
-    public @ResponseBody ResponseCode deleteBatch(HttpServletRequest req, @RequestBody @Valid DeleteFreightForm form, BindingResult result) {
+    @RequestMapping(value=REQ_DELETE, method=RequestMethod.POST)
+    public @ResponseBody ResponseCode delete(HttpServletRequest req, @RequestBody @Valid DeleteFreightForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }

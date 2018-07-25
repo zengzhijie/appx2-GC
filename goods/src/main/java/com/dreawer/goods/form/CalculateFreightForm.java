@@ -6,7 +6,7 @@ import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
 
 /**
- * 设置物流参数表单
+ * 计算运费表单
  */
 public class CalculateFreightForm {
     
@@ -14,7 +14,7 @@ public class CalculateFreightForm {
 	private List<PurchaseInfo> purchaseInfos = null; // 购买信息
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String cityId = null; // 运费类型
+	private String cityId = null; // 城市ID
 
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
