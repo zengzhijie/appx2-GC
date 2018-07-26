@@ -61,6 +61,8 @@ public class Goods extends BaseDomain {
     
 	private FreightParam freightParam = null; // 运费参数
 	
+	private App app = null; // 小程序应用信息
+	
     // --------------------------------------------------------------------------------
     // 构造器
     // --------------------------------------------------------------------------------
@@ -242,6 +244,14 @@ public class Goods extends BaseDomain {
 
 	public void setFreightParam(FreightParam freightParam) {
 		this.freightParam = freightParam;
+	}
+
+	public App getApp() {
+		return app;
+	}
+
+	public void setApp(App app) {
+		this.app = app;
 	}
 	
 }

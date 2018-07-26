@@ -96,7 +96,7 @@ public final class ControllerConstants {
     public static final String REQ_SELLING_LIST = "/SellingList";
 
     /** 请求“购买信息详情” */
-    public static final String REQ_PURCHASE_DETAIL = "/purchaseDetail";
+    public static final String REQ_PURCHASE_DETAILS = "/purchaseDetails";
     
     /** 请求“扣减库存” */
     public static final String REQ_LOCK_INVENTORY = "/lockInventory";

@@ -1427,7 +1427,7 @@ public class BundleGoodsController extends BaseController{
      * @param form 购买信息列表表单。
      * @return 成功返回购买信息列表，失败返回相应错误码。
 	 */
-    @RequestMapping(value=REQ_PURCHASE_DETAIL, method=RequestMethod.POST)
+    @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode purchaseDetail(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
@@ -1443,7 +1443,7 @@ public class BundleGoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1452,7 +1452,7 @@ public class BundleGoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1512,7 +1512,7 @@ public class BundleGoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1521,7 +1521,7 @@ public class BundleGoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1581,7 +1581,7 @@ public class BundleGoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1590,7 +1590,7 @@ public class BundleGoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1650,7 +1650,7 @@ public class BundleGoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1659,7 +1659,7 @@ public class BundleGoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}

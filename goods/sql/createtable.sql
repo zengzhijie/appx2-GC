@@ -253,3 +253,16 @@ CREATE TABLE godsi_inv_op_dtl (
 	upd_tim        DATETIME DEFAULT NULL COMMENT '更新时间',
 	PRIMARY KEY (ord_id, sku_id)
 ) COMMENT='库存操作明细表' ENGINE=InnoDB;
+
+-- ==================================================
+-- 小程序应用信息表
+-- ==================================================
+DROP TABLE IF EXISTS godsi_app;
+CREATE TABLE godsi_app (
+	gods_id        CHAR(32) NOT NULL COMMENT '商品ID',
+	tem_id         CHAR(32) NOT NULL COMMENT '小程序模板ID',
+	app_code       VARCHAR(255) NOT NULL COMMENT '小程序码',
+	image          VARCHAR(255) NOT NULL COMMENT '首页配图',
+	PRIMARY KEY (gods_id)
+) COMMENT='小程序应用信息表' ENGINE=InnoDB;
+CREATE UNIQUE INDEX uniq_idx_tem_id ON godsi_app(gods_id, tem_id);

@@ -53,6 +53,8 @@ public class ViewGoods {
 	
 	private List<ViewGoodsPropertyName> propertyNames = null; //商品属性名列表
     
+	private ViewApp viewApp = null; // 小程序应用信息视图
+	
     // --------------------------------------------------------------------------------
     // 构造器
     // --------------------------------------------------------------------------------
@@ -234,6 +236,14 @@ public class ViewGoods {
 
 	public void setPropertyNames(List<ViewGoodsPropertyName> propertyNames) {
 		this.propertyNames = propertyNames;
+	}
+
+	public ViewApp getViewApp() {
+		return viewApp;
+	}
+
+	public void setViewApp(ViewApp viewApp) {
+		this.viewApp = viewApp;
 	}
     
 }

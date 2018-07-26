@@ -1,5 +1,6 @@
 package com.dreawer.goods.controller;
 
+import com.dreawer.goods.domain.App;
 import com.dreawer.goods.domain.FreightParam;
 import com.dreawer.goods.domain.Goods;
 import com.dreawer.goods.domain.GoodsPropertyName;
@@ -7,6 +8,7 @@ import com.dreawer.goods.domain.GoodsPropertyValue;
 import com.dreawer.goods.domain.Group;
 import com.dreawer.goods.domain.Sku;
 import com.dreawer.goods.form.AddGoodsForm;
+import com.dreawer.goods.form.AppForm;
 import com.dreawer.goods.form.DeleteGoodsForm;
 import com.dreawer.goods.form.EditGoodsForm;
 import com.dreawer.goods.form.GoodsPropertyNameForm;
@@ -564,6 +566,53 @@ public class GoodsController extends BaseController{
         		}
     		}
     		
+    		//获取小程序应用信息表单
+    		AppForm appForm = form.getApp();
+    		
+    		//判断来源
+    		if(form.getSource().equals(SourceType.APPX)){
+    			
+    			//判断小程序应用信息是否为空
+    			if(appForm == null){
+    				return EntryError.EMPTY(APP);
+    			}
+    			
+    			//判断小程序模板ID是否为空
+    			String templetId = appForm.getTempletId();
+    			if(StringUtils.isEmpty(templetId)){
+    				return EntryError.EMPTY(TEMPLET_ID);
+    			}
+    			
+    			//判断小程序码是否为空并且长度是否合规
+    			String appCode = appForm.getAppCode();
+    			if(StringUtils.isEmpty(appCode)){
+    				return EntryError.EMPTY(APP_CODE);
+    			}
+    			if(appCode.length()>255){
+    				return EntryError.TOO_LONG(APP_CODE);
+    			}
+    			
+    			//判断小程序首页配图是否为空并且长度是否合规
+    			String image = appForm.getImage();
+    			if(StringUtils.isEmpty(image)){
+    				return EntryError.EMPTY(IMAGE);
+    			}
+    			if(image.length()>255){
+    				return EntryError.TOO_LONG(IMAGE);
+    			}
+    			
+    			//创建小程序应用信息实体类封装小程序应用信息
+    			App app = new App();
+    			app.setGoodsId(goodsId);
+    			app.setImage(image);
+    			app.setTempletId(templetId);
+    			app.setAppCode(appCode);
+    			
+    			//将小程序应用信息封装到商品实体类中
+    			goods.setApp(app);
+    			
+    		}
+    		
     		
     		//执行添加
     		ResponseCode responseCode = goodsService.save(goods);
@@ -1088,6 +1137,53 @@ public class GoodsController extends BaseController{
         		}
     		}
     		
+    		//获取小程序应用信息表单
+    		AppForm appForm = form.getApp();
+    		
+    		//判断来源
+    		if(form.getSource().equals(SourceType.APPX)){
+    			
+    			//判断小程序应用信息是否为空
+    			if(appForm == null){
+    				return EntryError.EMPTY(APP);
+    			}
+    			
+    			//判断小程序模板ID是否为空
+    			String templetId = appForm.getTempletId();
+    			if(StringUtils.isEmpty(templetId)){
+    				return EntryError.EMPTY(TEMPLET_ID);
+    			}
+    			
+    			//判断小程序码是否为空并且长度是否合规
+    			String appCode = appForm.getAppCode();
+    			if(StringUtils.isEmpty(appCode)){
+    				return EntryError.EMPTY(APP_CODE);
+    			}
+    			if(appCode.length()>255){
+    				return EntryError.TOO_LONG(APP_CODE);
+    			}
+    			
+    			//判断小程序首页配图是否为空并且长度是否合规
+    			String image = appForm.getImage();
+    			if(StringUtils.isEmpty(image)){
+    				return EntryError.EMPTY(IMAGE);
+    			}
+    			if(image.length()>255){
+    				return EntryError.TOO_LONG(IMAGE);
+    			}
+    			
+    			//创建小程序应用信息实体类封装小程序应用信息
+    			App app = new App();
+    			app.setGoodsId(goodsId);
+    			app.setImage(image);
+    			app.setTempletId(templetId);
+    			app.setAppCode(appCode);
+    			
+    			//将小程序应用信息封装到商品实体类中
+    			goods.setApp(app);
+    			
+    		}
+    		
     		//执行更新
     		ResponseCode responseCode = goodsService.update(goods);
         	
@@ -1427,7 +1523,7 @@ public class GoodsController extends BaseController{
      * @param form 购买信息列表表单。
      * @return 成功返回购买信息列表，失败返回相应错误码。
 	 */
-    @RequestMapping(value=REQ_PURCHASE_DETAIL, method=RequestMethod.POST)
+    @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode purchaseDetail(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
@@ -1443,7 +1539,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1452,7 +1548,7 @@ public class GoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1512,7 +1608,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1521,7 +1617,7 @@ public class GoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1581,7 +1677,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1590,7 +1686,7 @@ public class GoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}
@@ -1650,7 +1746,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//获取购买信息表单列表
-    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfoForms();
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
     		
     		//创建购买信息列表
     		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
@@ -1659,7 +1755,7 @@ public class GoodsController extends BaseController{
     		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
 				
     			//判断商品ID是否为空
-    			String goodsId = purchaseInfoForm.getGoodsId();
+    			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
     				EntryError.EMPTY(GOODS_ID);
     			}

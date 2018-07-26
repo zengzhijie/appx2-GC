@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dreawer.goods.domain.App">
+	
+	<!-- ================================================================================== -->
+	<!-- SQL新增																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 添加小程序应用信息 -->
+	<insert id="save" parameterType="App">
+		INSERT INTO godsi_app(gods_id, tem_id, app_code, image)
+        VALUES(#{goodsId}, #{templetId}, #{appCode}, #{image})
+	</insert>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL删除																				-->
+	<!-- ================================================================================== -->
+
+	<!-- 删除小程序应用信息 -->
+	<delete id="delete" parameterType="String">
+		DELETE FROM godsi_app WHERE gods_id = #{goodsId}
+	</delete>
+	
+	<!-- 批量删除小程序应用信息 -->
+	<delete id="delete" parameterType="Map">
+		DELETE FROM godsi_app WHERE gods_id = 
+		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+	</delete>
+	
+	<!-- ================================================================================== -->
+	<!-- SQL更新																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- ================================================================================== -->
+	<!-- SQL查询																				-->
+	<!-- ================================================================================== -->
+	
+	<!-- 查询小程序应用信息 -->
+	<select id="findAppByGoodsId" parameterType="String" resultMap="appResultMap">
+		SELECT <include refid="basicFields"/>
+		FROM godsi_app
+		WHERE gods_id = #{goodsId}
+	</select>
+	
+	<!-- ================================================================================== -->
+	<!-- 公用SQL定义																			-->
+	<!-- ================================================================================== -->
+	
+	<!-- 基本信息 -->
+	<sql id="basicFields">
+		gods_id, tem_id, app_code, image
+	</sql>
+	
+	<!-- ================================================================================== -->
+	<!-- 结果集映射																				-->
+	<!-- ================================================================================== -->
+	
+	<resultMap id="appResultMap" type="App">
+		<result property="goodsId" column="gods_id" />
+		<result property=templetId column="tem_id" />
+		<result property="appCode" column="app_code" />
+		<result property="image" column="image" />
+	</resultMap>
+</mapper>

@@ -127,11 +127,13 @@
 	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark
+	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image, 
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON gpv.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.sto_id = #{storeId}
 	  <if test="groupId != null">
@@ -193,11 +195,13 @@
 	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark
+	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image, 
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON gpv.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(sku.Inventory)-SUM(sku.lock_inv) FROM godsi_sku AS sku WHERE sku.gods_id = gods.id) != 0)
 	  <if test="groupId != null">
@@ -269,11 +273,13 @@
 	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark
+	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image, 
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON gpv.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.id = #{id}
 	  <if test="type != null">
@@ -316,5 +322,6 @@
 		<collection property="groups" resultMap="com.dreawer.goods.domain.Group.groupResultMap" columnPrefix="gr_" />
 		<collection property="skus" resultMap="com.dreawer.goods.domain.Sku.skuResultMap" columnPrefix="sku_" />
 		<collection property="propertyNames" resultMap="com.dreawer.goods.domain.GoodsPropertyName.goodsPropertyNameResultMap" columnPrefix="gpn_" />
+		<collection property="app" resultMap="com.dreawer.goods.domain.app.appResultMap" columnPrefix="app_" />
 	</resultMap>
 </mapper>

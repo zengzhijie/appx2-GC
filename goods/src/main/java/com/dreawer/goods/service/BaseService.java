@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.dreawer.goods.domain.App;
 import com.dreawer.goods.domain.City;
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
@@ -18,6 +20,7 @@ import com.dreawer.goods.domain.Sku;
 import com.dreawer.goods.lang.PurchaseInfo;
 import com.dreawer.goods.persistence.GoodsDao;
 import com.dreawer.goods.persistence.GroupDao;
+import com.dreawer.goods.view.ViewApp;
 import com.dreawer.goods.view.ViewCity;
 import com.dreawer.goods.view.ViewFreight;
 import com.dreawer.goods.view.ViewFreightParam;
@@ -519,6 +522,30 @@ public class BaseService {
     }
     
     /**
+     * 转换小程序应用信息视图。
+     * @param app 小程序应用信息。
+     * @return 商品视图列表。
+     */
+    protected ViewApp convertAppView(App app){
+
+    	//创建小程序视图对象
+    	ViewApp viewApp = new ViewApp();
+    	
+    	//判断小程序应用信息是否为空
+    	if(app != null){
+    		
+    		//封装小程序应用信息视图
+    		viewApp.setTempletId(app.getTempletId());
+    		viewApp.setAppCode(app.getAppCode());
+    		viewApp.setImage(app.getImage());
+    		
+    	}
+    	
+    	//返回处理结果
+    	return viewApp;
+    }
+    
+    /**
      * 转换商品视图列表。
      * @param goodses 商品列表。
      * @return 商品视图列表。
@@ -541,6 +568,9 @@ public class BaseService {
     			//获取商品属性名视图列表
     			List<ViewGoodsPropertyName> viewGoodsPropertyNames = convertGoodsPropertyNameViews(goods.getPropertyNames());
     			
+    			//获取小程序应用信息视图
+    			ViewApp viewApp = convertAppView(goods.getApp());
+    			
     			//创建商品视图对象
     			ViewGoods viewGoods = new ViewGoods();
     			
@@ -553,7 +583,6 @@ public class BaseService {
     			viewGoods.setMinOriginalPrice(goods.getMinOriginalPrice());
     			viewGoods.setInventoryType(goods.getInventoryType());
     			
-    			//计算商品总库存
     			//计算商品总库存
     			Integer totalInventory = 0;
     			Integer totalLockedInventory = 0;
@@ -576,6 +605,7 @@ public class BaseService {
     			viewGoods.setGroups(viewGroups);
     			viewGoods.setSkus(viewSkus);
     			viewGoods.setPropertyNames(viewGoodsPropertyNames);
+    			viewGoods.setViewApp(viewApp);
     			
     			//添加到视图列表
     			viewGoodses.add(viewGoods);
@@ -606,6 +636,9 @@ public class BaseService {
 			
 			//获取商品属性名视图列表
 			List<ViewGoodsPropertyName> viewGoodsPropertyNames = convertGoodsPropertyNameViews(goods.getPropertyNames());
+			
+			//获取小程序应用信息视图
+			ViewApp viewApp = convertAppView(goods.getApp());
 			
 			//封装商品视图
 			viewGoods.setId(goods.getId());
@@ -638,6 +671,7 @@ public class BaseService {
 			viewGoods.setGroups(viewGroups);
 			viewGoods.setSkus(viewSkus);
 			viewGoods.setPropertyNames(viewGoodsPropertyNames);
+			viewGoods.setViewApp(viewApp);
     	}
     	
     	//返回处理结果

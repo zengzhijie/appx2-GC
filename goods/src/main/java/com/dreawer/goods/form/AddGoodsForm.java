@@ -56,6 +56,8 @@ public class AddGoodsForm {
 
 	private SetFreightParamForm freightParam = null; // 设置运费参数表单
 	
+	private AppForm app = null; // 小程序应用信息表单
+	
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
@@ -192,4 +194,12 @@ public class AddGoodsForm {
 		this.freightParam = freightParam;
 	}
 
+	public AppForm getApp() {
+		return app;
+	}
+
+	public void setApp(AppForm app) {
+		this.app = app;
+	}
+	
 }

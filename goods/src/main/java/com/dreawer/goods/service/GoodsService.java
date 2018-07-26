@@ -21,6 +21,7 @@ import com.dreawer.goods.lang.GoodsStatus;
 import com.dreawer.goods.lang.GoodsType;
 import com.dreawer.goods.lang.PricingMethod;
 import com.dreawer.goods.lang.PurchaseInfo;
+import com.dreawer.goods.persistence.AppDao;
 import com.dreawer.goods.persistence.FreightDao;
 import com.dreawer.goods.persistence.FreightParamDao;
 import com.dreawer.goods.persistence.GoodsDao;
@@ -66,6 +67,9 @@ public class GoodsService extends BaseService{
     
     @Autowired
     private FreightParamDao freightParamDao; // 运费参数信息DAO
+    
+    @Autowired
+    private AppDao appDao; // 小程序应用信息DAO
     
     /**
      * 添加商品信息。
@@ -185,6 +189,17 @@ public class GoodsService extends BaseService{
 			freightParamDao.update(freightParam);
 		}
     	
+		
+		//判断小程序应用信息是否为空
+		if(goods.getApp() != null){
+			
+			
+			appDao.delete(goodsId);
+			
+			//执行添加
+			appDao.save(goods.getApp());
+		}
+		
     	//返回添加结果
     	return Success.SUCCESS(goods.getId());
     }
@@ -224,6 +239,9 @@ public class GoodsService extends BaseService{
     	
     	//批量删除商品
     	goodsDao.deleteBatch(ids);
+    	
+    	//删除小程序应用模板信息
+    	appDao.deleteBatch(ids);
     	
     	//返回删除结果
     	return Success.SUCCESS;
@@ -499,7 +517,17 @@ public class GoodsService extends BaseService{
 			freightParamDao.update(freightParam);
 		}
     	
-    	//返回添加结果
+		//判断小程序应用信息是否为空
+		if(goods.getApp() != null){
+			
+			
+			appDao.delete(goodsId);
+			
+			//执行添加
+			appDao.save(goods.getApp());
+		}
+		
+    	//返回更新结果
     	return Success.SUCCESS(goods.getId());
     }
     

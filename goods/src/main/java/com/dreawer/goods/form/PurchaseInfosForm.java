@@ -11,18 +11,18 @@ import java.util.List;
 public class PurchaseInfosForm {
     
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private List<PurchaseInfoForm> purchaseInfoForms = null;
+	private List<PurchaseInfoForm> purchaseInfos = null;
 
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
 	
-	public List<PurchaseInfoForm> getPurchaseInfoForms() {
-		return purchaseInfoForms;
+	public List<PurchaseInfoForm> getPurchaseInfos() {
+		return purchaseInfos;
 	}
 
-	public void setPurchaseInfoForms(List<PurchaseInfoForm> purchaseInfoForms) {
-		this.purchaseInfoForms = purchaseInfoForms;
+	public void setPurchaseInfos(List<PurchaseInfoForm> purchaseInfos) {
+		this.purchaseInfos = purchaseInfos;
 	}
 	
 }

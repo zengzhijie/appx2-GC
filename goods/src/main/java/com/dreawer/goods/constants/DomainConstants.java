@@ -53,6 +53,11 @@ public abstract class DomainConstants {
 	/** 城市信息列表 */
     public static final String CITIES = "cities";
     
+    
+    
+	/** 小程序应用信息 */
+    public static final String APP = "app";
+    
     // --------------------------------------------------------------------------------
     // 属性
     // --------------------------------------------------------------------------------
@@ -257,6 +262,19 @@ public abstract class DomainConstants {
     
 	/** 用户ID */
     public static final String USER_ID = "userId";
+    
+    
+    
+    
+    
+	/** 模板ID */
+    public static final String TEMPLET_ID = "templetId";
+    
+	/** 小程序码 */
+    public static final String APP_CODE = "appCode";
+    
+	/** 图片 */
+    public static final String IMAGE = "image";
     
     // --------------------------------------------------------------------------------
     // 分页属性

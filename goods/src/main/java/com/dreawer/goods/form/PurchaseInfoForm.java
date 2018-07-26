@@ -9,7 +9,7 @@ import static com.dreawer.goods.constants.MessageConstants.*;
 public class PurchaseInfoForm {
     
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String goodsId = null; // 商品ID
+	private String spuId = null; // 商品ID
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String skuId = null; // SKUID
@@ -21,14 +21,14 @@ public class PurchaseInfoForm {
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
 	
-	public String getGoodsId() {
-		return goodsId;
+	public String getSpuId() {
+		return spuId;
 	}
 
-	public void setGoodsId(String goodsId) {
-		this.goodsId = goodsId;
+	public void setSpuId(String spuId) {
+		this.spuId = spuId;
 	}
-
+	
 	public String getSkuId() {
 		return skuId;
 	}
