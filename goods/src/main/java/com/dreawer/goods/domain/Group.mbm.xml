@@ -58,13 +58,6 @@
 		SET is_par = #{isParent}
 		WHERE id = #{id}
 	</update>
-
-	<!-- 更新是否父分组属性 -->
-	<update id="updateIsParent" parameterType="Group">
-		UPDATE godsi_group
-		SET is_par = #{isParent}
-		WHERE id = #{id}
-	</update>
 	
 	<!-- 更新排列顺序 -->
 	<update id="updateSquence" parameterType="Group">
@@ -170,18 +163,18 @@
 	  	FROM godsi_group
 	  	WHERE par_id = #{parentId} AND sto_id = #{storeId}
 	  	<if test="status != null">
-	  		status = #{status}
+	  		AND status = #{status}
 	  	</if>
 	  	ORDER BY squence ASC		
 	</select>
     
 	<!-- 根据父ID、店铺ID、分组状态获取分组总数  -->
-	<select id="getChildGroupsCount" parameterType="Map" resultType="Integer">
+	<select id="getChildGroupCount" parameterType="Map" resultType="Integer">
 		SELECT COUNT(1)
 	  	FROM godsi_group
 		WHERE par_id = #{parentId} AND sto_id = #{storeId}
 	  	<if test="status != null">
-	  		status = #{status}
+	  		AND status = #{status}
 	  	</if>
 	</select>
 	

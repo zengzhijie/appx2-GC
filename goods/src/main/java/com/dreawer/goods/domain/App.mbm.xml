@@ -23,7 +23,7 @@
 	</delete>
 	
 	<!-- 批量删除小程序应用信息 -->
-	<delete id="delete" parameterType="Map">
+	<delete id="deleteBatch" parameterType="Map">
 		DELETE FROM godsi_app WHERE gods_id = 
 		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
             #{id}
@@ -60,7 +60,7 @@
 	
 	<resultMap id="appResultMap" type="App">
 		<result property="goodsId" column="gods_id" />
-		<result property=templetId column="tem_id" />
+		<result property="templetId" column="tem_id" />
 		<result property="appCode" column="app_code" />
 		<result property="image" column="image" />
 	</resultMap>

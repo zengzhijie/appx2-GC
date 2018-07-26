@@ -228,7 +228,7 @@
 	</select>
 	
 	<!-- 根据店铺ID、分组ID、推荐状态、类目ID、模糊查询关键字分页获取正在销售的商品总数(正在销售即商品库存、状态均为正常)  -->
-	<select id="getSellingGoodsCount" parameterType="Map" resultMap="Integer">
+	<select id="getSellingGoodsCount" parameterType="Map" resultType="Integer">
 	  SELECT COUNT(gods.id)
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id

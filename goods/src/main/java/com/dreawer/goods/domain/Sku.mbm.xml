@@ -93,18 +93,6 @@
 	  WHERE gods_id = #{goodsId} AND description LIKE CONCAT('%',#{keyword},'%')
 	</select>
 	
-	<!-- 根据SKUID列表查询SKU详情列表  -->
-	<select id="findSkuDetails" parameterType="Map" resultMap="skuResultMap">
-	  SELECT sku.id, sku.inv_typ, sku.inventory, sku.lock_inv, sku.sal_vol, sku.sal_vol, sku.ori_pr, sku.price, sku.description, sku.code, sku.barcode,
-	  		 gods.id AS gods_id, gods.name AS gods_name, gods.main_dig AS gods_main_dig
-	  FROM godsi_sku AS sku 
-	  LEFT JOIN  godsi_goods AS gods ON sku.gods_id = gods.id
-	  WHERE sku.id IN     	
-	  <foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
-      	#{id}
-      </foreach>
-	</select>
-	
 	<!-- ================================================================================== -->
 	<!-- 公用SQL定义																			-->
 	<!-- ================================================================================== -->
@@ -132,7 +120,6 @@
 		<result property="barcode" column="barcode" />
 		<result property="createrId" column="crer_id" />
 		<result property="createTime" column="cre_tim" />
-		<collection property="goods" resultMap="com.dreawer.goods.domain.Goods.goodsResultMap" columnPrefix="gods_" />
 		<result property="remark" column="remark" />
 	</resultMap>
 </mapper>

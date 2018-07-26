@@ -255,7 +255,7 @@ public class GroupDao extends MyBatisBaseDao<Group> {
 		params.put(STATUS, status);
 		
 		//返回查询结果
-        return count("getChildGroupsCount", params);
+        return count("getChildGroupCount", params);
     }
     
     /**
