@@ -68,6 +68,7 @@ public class GoodsController extends BaseController{
     @Autowired
     private SkuService skuService; //SKUservice
     
+    
 	/**
 	 * 添加商品信息。
      * @param req 用户请求。
@@ -152,7 +153,7 @@ public class GoodsController extends BaseController{
     			}
     			
     			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("^\\d{1,5}\\.(\\d\\d)$");
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
@@ -711,7 +712,7 @@ public class GoodsController extends BaseController{
     			}
     			
     			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("^\\d{1,5}\\.(\\d\\d)$");
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = skuForm.getOriginalPrice();
