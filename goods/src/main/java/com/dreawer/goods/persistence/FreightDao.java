@@ -105,6 +105,7 @@ public class FreightDao extends MyBatisBaseDao<Freight> {
 		//封装请求参数
 		Map<String, Object> params = new HashMap<>();
 		params.put(STORE_ID, storeId);
+		
 		params.put(NAME, name);
 		
 		//返回查询结果
