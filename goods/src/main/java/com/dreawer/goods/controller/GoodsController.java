@@ -256,6 +256,7 @@ public class GoodsController extends BaseController{
     		
     		//封装商品信息
     		goods.setId(goodsId);
+    		goods.setName(form.getName());
     		goods.setStoreId(form.getStoreId());
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
@@ -820,6 +821,7 @@ public class GoodsController extends BaseController{
     		
     		//封装商品信息
     		goods.setId(goodsId);
+    		goods.setName(form.getName());
     		goods.setStoreId(form.getStoreId());
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
