@@ -1,9 +1,9 @@
 package com.dreawer.goods.form;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import com.dreawer.goods.lang.GroupStatus;
 import com.dreawer.goods.lang.SourceType;
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 
 /**

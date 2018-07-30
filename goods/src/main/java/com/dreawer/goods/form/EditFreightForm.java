@@ -1,8 +1,8 @@
 package com.dreawer.goods.form;
 
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 编辑运费模板表单

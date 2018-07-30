@@ -1,9 +1,9 @@
 package com.dreawer.goods.form;
 
 import com.dreawer.goods.lang.PurchaseInfo;
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 计算运费表单

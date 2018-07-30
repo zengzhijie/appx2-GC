@@ -1,10 +1,10 @@
 package com.dreawer.goods.form;
 
 import com.dreawer.goods.lang.LogisticsMethodType;
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
 import java.util.List;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 添加物流方式表单

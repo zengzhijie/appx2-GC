@@ -1,10 +1,9 @@
 package com.dreawer.goods.form;
 
 import com.dreawer.goods.lang.FreightType;
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
-
 import java.math.BigDecimal;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 设置物流参数表单

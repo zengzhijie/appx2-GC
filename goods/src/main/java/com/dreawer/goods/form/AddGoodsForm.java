@@ -1,10 +1,11 @@
 package com.dreawer.goods.form;
 
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.dreawer.goods.lang.GoodsStatus;
 import com.dreawer.goods.lang.InventoryType;
 import com.dreawer.goods.lang.SourceType;
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
 

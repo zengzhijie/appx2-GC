@@ -1,7 +1,7 @@
 package com.dreawer.goods.form;
 
-import javax.validation.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 更新分组、商品信息表单

@@ -1,7 +1,7 @@
 package com.dreawer.goods.form;
 
-import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import com.dreawer.goods.lang.PropertyNameType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;

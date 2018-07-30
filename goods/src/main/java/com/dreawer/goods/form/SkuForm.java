@@ -1,7 +1,7 @@
 package com.dreawer.goods.form;
 
-import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
 

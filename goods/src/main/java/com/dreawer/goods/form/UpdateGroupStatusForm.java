@@ -1,12 +1,9 @@
 package com.dreawer.goods.form;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.dreawer.goods.lang.GroupStatus;
-
 import static com.dreawer.goods.constants.MessageConstants.*;
-
 import java.util.List;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  * 更新分组状态表单
