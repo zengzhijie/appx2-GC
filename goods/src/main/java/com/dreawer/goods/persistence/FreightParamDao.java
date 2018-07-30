@@ -24,6 +24,15 @@ public class FreightParamDao extends MyBatisBaseDao<FreightParam> {
 	}
 	
 	/**
+	 * 删除运费参数信息。
+	 * @param goodsId 商品ID。
+	 * @return 删除记录数：成功返回1，失败返回0。
+	 */
+	public int delete(String goodsId){
+		return delete("delete", goodsId);
+	}
+	
+	/**
 	 * 更新运费参数信息。
 	 * @param freightParam 待更新的运费参数信息。
 	 * @return 更新记录数：成功返回1，失败返回0。

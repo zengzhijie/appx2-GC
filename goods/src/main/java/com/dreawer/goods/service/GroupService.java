@@ -94,7 +94,7 @@ public class GroupService extends BaseService{
     	for (Goods goods : goodses) {
     		
     		//判断该商品是否存在
-    		Goods findGoods = goodsDao.findGoodsById(goods.getId(), null);
+    		Goods findGoods = goodsDao.findGoodsById(goods.getId());
     		if(findGoods == null){
     			return RuleError.NON_EXISTENT(GOODS);
     		}

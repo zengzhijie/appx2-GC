@@ -64,6 +64,15 @@
 	  ORDER BY squence ASC
 	</select>
     
+    <!-- 根据商品ID、商品属性名ID、属性值ID查询商品属性值  -->
+	<select id="findGoodsPropertyValueForUpdate" parameterType="String" resultMap="goodsPropertyValueResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_gods_pro_val
+	  WHERE gods_id = #{goodsId} 
+	  AND gods_pro_nam_id = #{goodsPropertyNameId} 
+	  AND pro_val_id = #{propertyValueId} 
+	</select>
+    
 	<!-- ================================================================================== -->
 	<!-- 公用SQL定义																			-->
 	<!-- ================================================================================== -->

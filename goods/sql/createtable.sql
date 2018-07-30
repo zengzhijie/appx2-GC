@@ -107,7 +107,6 @@ CREATE TABLE godsi_sku (
 	remark 		 VARCHAR(255) COMMENT '备注',
 	PRIMARY KEY (id)
 ) COMMENT='SKU信息表' ENGINE=InnoDB;
-CREATE UNIQUE INDEX uniq_idx_desc ON godsi_sku(gods_id, description);
 CREATE INDEX idx_gods_id ON godsi_sku(gods_id);
 
 -- ==================================================

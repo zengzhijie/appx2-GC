@@ -100,7 +100,7 @@ public class FreightDao extends MyBatisBaseDao<Freight> {
 	 * @param storeId 店铺ID。
 	 * @return 查询结果：查询到结果返回运费模板信息，未查询到结果返回NULL。
 	 */
-	public Freight findFreightByName(String name, String storeId){
+	public Freight findFreightByNameForUpdate(String name, String storeId){
 		
 		//封装请求参数
 		Map<String, Object> params = new HashMap<>();
@@ -108,7 +108,7 @@ public class FreightDao extends MyBatisBaseDao<Freight> {
 		params.put(NAME, name);
 		
 		//返回查询结果
-		return selectOne("findFreightByName", params);
+		return selectOne("findFreightByNameForUpdate", params);
 	}
 	
 	/**

@@ -72,7 +72,7 @@ public class SkuService extends BaseService{
 			}
     		
     		//查询商品信息
-    		Goods goods = goodsDao.findGoodsById(sku.getGoodsId(), null);
+    		Goods goods = goodsDao.findGoodsByIdForUpdate(sku.getGoodsId());
     		
     		//查询是否存在该库存操作明细信息
     		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderId, sku.getId());

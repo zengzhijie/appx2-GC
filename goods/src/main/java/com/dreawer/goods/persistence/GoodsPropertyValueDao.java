@@ -79,4 +79,25 @@ public class GoodsPropertyValueDao extends MyBatisBaseDao<GoodsPropertyValue> {
     	return selectList("findGoodsPropertyValues", params);
     }
     
+    /**
+     * 根据商品ID、商品属性名ID、属性值ID查询商品属性值。
+     * @param goodsId 商品ID。
+     * @param propertyNameId 属性名ID。
+     * @param propertyNameId 属性值ID。
+     * @return 查询到结果返回商品属性值信息，未查询到结果返回NULL。
+     * @author kael
+     * @since 1.0
+     */
+    public GoodsPropertyValue findGoodsPropertyValueForUpdate(String goodsId, String propertyNameId, String propertyValueId) {
+        
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(GOODS_ID, goodsId);
+    	params.put(PROPERTY_NAME_ID, propertyNameId);
+    	params.put(PROPERTY_VALUE_ID, propertyValueId);
+    	
+    	//返回查询结果
+    	return selectOne("findGoodsPropertyValueForUpdate", params);
+    }
+    
 }

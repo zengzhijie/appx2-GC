@@ -55,7 +55,7 @@ public class FreightService extends BaseService{
 	public ResponseCode save(Freight freight){
 		
 		//查询是否存在名称相同的运费模板
-		Freight findFreight = freightDao.findFreightByName(freight.getName(), freight.getStoreId());
+		Freight findFreight = freightDao.findFreightByNameForUpdate(freight.getName(), freight.getStoreId());
 		if(findFreight != null){
 			return RuleError.EXISTED(FREIGHT); // 运费模板名称已存在
 		}
@@ -109,7 +109,7 @@ public class FreightService extends BaseService{
 		}
 		
 		//查询是否存在名称相同的运费模板
-		Freight findFreight = freightDao.findFreightByName(freight.getName(), freight.getStoreId());
+		Freight findFreight = freightDao.findFreightByNameForUpdate(freight.getName(), freight.getStoreId());
 		if(findFreight != null && !findFreight.getId().equals(freight.getId())){
 			return RuleError.EXISTED(FREIGHT); // 运费模板名称已存在
 		}

@@ -210,22 +210,29 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
     }
     
     /**
-     * 根据商品ID、商品类型查询商品信息。
+     * 根据商品ID查询商品信息。
      * @param id   商品ID。
-     * @param type 商品类型。
      * @return 查询到结果返回商品信息，未查询到结果返回NULL。
      * @author kael
      * @since 1.0
      */
-    public Goods findGoodsById(String id, GoodsType type) {
-    	
-    	//封装请求参数
-    	Map<String, Object> params = new HashMap<>();
-    	params.put(ID, id);
-    	params.put(TYPE, type);
+    public Goods findGoodsById(String id) {
     	
     	//返回查询结果
-        return selectOne("findGoodsById", params);
+        return selectOne("findGoodsById", id);
+    }
+    
+    /**
+     * 根据商品ID查询商品信息。
+     * @param id   商品ID。
+     * @return 查询到结果返回商品信息，未查询到结果返回NULL。
+     * @author kael
+     * @since 1.0
+     */
+    public Goods findGoodsByIdForUpdate(String id) {
+    	
+    	//返回查询结果
+        return selectOne("findGoodsByIdForUpdate", id);
     }
     
     /**

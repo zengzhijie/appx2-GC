@@ -101,6 +101,14 @@
 	  WHERE sto_id = #{storeId} AND name = #{name}
 	</select>
 	
+	<!-- 根据店铺ID和运费模板名称查询运费模板信息  -->
+	<select id="findFreightByNameForUpdate" parameterType="Map" resultMap="freightResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_freight
+	  WHERE sto_id = #{storeId} AND name = #{name}
+	  FOR UPDATE
+	</select>
+	
 	<!-- 根据店铺ID查询运费模板列表(按照创建时间倒叙)  -->
 	<select id="findFreights"  parameterType="String" resultMap="freightResultMap">
 	  SELECT <include refid="basicFields"/>

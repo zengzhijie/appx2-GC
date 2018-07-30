@@ -159,42 +159,37 @@ public class GoodsService extends BaseService{
     	//获取物流参数信息
     	FreightParam freightParam = goods.getFreightParam();
     	
-		//获取商品ID
-		String goodsId = freightParam.getGoodsId();
-		
-		//获取体积或重量
-		String amount = freightParam.getAmount();
-		
-		//查询运费模板信息
-		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
-		
-		if(freight == null){
-			return RuleError.NON_EXISTENT(FREIGHT);
-		}
-		
-		//判断运费模板计价方式
-		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-			return EntryError.EMPTY(AMOUNT);
-		}
-		
-		//查询该商品是否配置过运费参数
-		FreightParam oldFreightParam = freightParamDao.findFreightParam(goodsId);
-		if(oldFreightParam == null){
-			
-			//未配置运费参数则执行添加
-			freightParamDao.save(freightParam);
-		}else{
-			
-			//配置过运费参数则执行更新
-			freightParamDao.update(freightParam);
-		}
-    	
+    	if(freightParam != null){
+    		//获取商品ID
+    		String goodsId = freightParam.getGoodsId();
+    		
+    		//获取体积或重量
+    		String amount = freightParam.getAmount();
+    		
+    		//查询运费模板信息
+    		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
+    		
+    		if(freight == null){
+    			return RuleError.NON_EXISTENT(FREIGHT);
+    		}
+    		
+    		//判断运费模板计价方式
+    		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
+    			return EntryError.EMPTY(AMOUNT);
+    		}
+    		
+    		//删除运费参数信息
+    		freightParamDao.delete(goodsId);
+    		
+    		//添加运费参数信息
+    		freightParamDao.save(freightParam);
+    	}
 		
 		//判断小程序应用信息是否为空
 		if(goods.getApp() != null){
 			
-			
-			appDao.delete(goodsId);
+			//删除APP信息
+			appDao.delete(goods.getId());
 			
 			//执行添加
 			appDao.save(goods.getApp());
@@ -296,15 +291,24 @@ public class GoodsService extends BaseService{
     	for (Goods goods : goodses) {
 			
     		//查询商品信息
-    		Goods findGoods = goodsDao.findGoodsDetailById(goods.getId(), null);
+    		Goods findGoods = goodsDao.findGoodsByIdForUpdate(goods.getId());
     		
-    		//判断商品是否为状态或下架状态
-    		if(findGoods.getStatus().equals(GoodsStatus.APPLIED)){
-    			return PermissionsError.DATA_NO_ALLOW(GOODS); // 未下架的商品不允许移除
+    		//判断商品信息是否存在
+    		if(findGoods == null){
+    			return RuleError.NON_EXISTENT(GOODS);
     		}
     		
-    		//封装商品ID
-    		goodsIds.add(goods.getId());
+    		//判断商品是否为状态或下架状态
+    		if(findGoods.getStatus().equals(GoodsStatus.DEFAULT)){
+    			
+    			return PermissionsError.DATA_NO_ALLOW(GOODS); // 未下架的商品不允许移除
+    		}else if(findGoods.getStatus().equals(GoodsStatus.APPLIED)){
+    			
+    			//封装商品ID
+        		goodsIds.add(goods.getId());
+    		}
+    		
+    		
 		}
     	
     	//批量删除分组、商品关系
@@ -346,7 +350,7 @@ public class GoodsService extends BaseService{
     public ResponseCode update(Goods goods){
     	
     	//判断该商品信息是否存在
-    	Goods findGoods = goodsDao.findGoodsById(goods.getId(), null);
+    	Goods findGoods = goodsDao.findGoodsByIdForUpdate(goods.getId());
     	if(findGoods != null){
         	//更新商品信息
         	goodsDao.update(goods);
@@ -487,41 +491,37 @@ public class GoodsService extends BaseService{
     	//获取物流参数信息
     	FreightParam freightParam = goods.getFreightParam();
     	
-		//获取商品ID
-		String goodsId = freightParam.getGoodsId();
-		
-		//获取体积或重量
-		String amount = freightParam.getAmount();
-		
-		//查询运费模板信息
-		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
-		
-		if(freight == null){
-			return RuleError.NON_EXISTENT(FREIGHT);
-		}
-		
-		//判断运费模板计价方式
-		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-			return EntryError.EMPTY(AMOUNT);
-		}
-		
-		//查询该商品是否配置过运费参数
-		FreightParam oldFreightParam = freightParamDao.findFreightParam(goodsId);
-		if(oldFreightParam == null){
-			
-			//未配置运费参数则执行添加
-			freightParamDao.save(freightParam);
-		}else{
-			
-			//配置过运费参数则执行更新
-			freightParamDao.update(freightParam);
-		}
+    	if(freightParam != null){
+    		//获取商品ID
+    		String goodsId = freightParam.getGoodsId();
+    		
+    		//获取体积或重量
+    		String amount = freightParam.getAmount();
+    		
+    		//查询运费模板信息
+    		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
+    		
+    		if(freight == null){
+    			return RuleError.NON_EXISTENT(FREIGHT);
+    		}
+    		
+    		//判断运费模板计价方式
+    		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
+    			return EntryError.EMPTY(AMOUNT);
+    		}
+    		
+    		//删除运费参数信息
+    		freightParamDao.delete(goodsId);
+    		
+    		//添加运费参数信息
+    		freightParamDao.save(freightParam);
+    	}
     	
 		//判断小程序应用信息是否为空
 		if(goods.getApp() != null){
 			
 			
-			appDao.delete(goodsId);
+			appDao.delete(goods.getId());
 			
 			//执行添加
 			appDao.save(goods.getApp());
@@ -663,7 +663,7 @@ public class GoodsService extends BaseService{
 			}
     		
     		//查询商品信息
-    		Goods goods = goodsDao.findGoodsById(sku.getGoodsId(), null);
+    		Goods goods = goodsDao.findGoodsById(sku.getGoodsId());
     		
     		//判断商品是否存在
     		if(goods == null){
