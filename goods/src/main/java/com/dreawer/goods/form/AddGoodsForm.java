@@ -2,7 +2,6 @@ package com.dreawer.goods.form;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
-
 import com.dreawer.goods.lang.GoodsStatus;
 import com.dreawer.goods.lang.InventoryType;
 import com.dreawer.goods.lang.SourceType;
@@ -49,6 +48,7 @@ public class AddGoodsForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private SourceType source = null; // 来源类型
     
+	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private List<String> groupIds = null; // 分组ID列表
 	
 	private List<SkuForm> skus = null; // 添加SKU表单列表
