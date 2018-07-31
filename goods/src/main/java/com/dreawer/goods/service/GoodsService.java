@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -713,29 +715,32 @@ public class GoodsService extends BaseService{
 			StringBuffer descriptionStringBuffer = new StringBuffer();
 			
 			//获取属性名属性值键值对列表
-			String[] descriptions = description.split(";");
-			for (String string : descriptions) {
-				int index = string.indexOf(":");
-				
-				//获取属性名ID
-				String propertyNameId = string.substring(0, index);
-				
-				//获取属性值ID
-				String propertyValueId = string.substring(index+1);
-				
-				//查询属性名信息
-				List<GoodsPropertyName> goodsPropertyNames = goodsPropertyNameDao.findGoodsPropertyNames(goods.getId(), propertyNameId);
-				List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), propertyNameId, propertyValueId);
-				
-				if(goodsPropertyNames != null && goodsPropertyNames.size()>0){
-					if(goodsPropertyValues != null && goodsPropertyValues.size()>0){
-						descriptionStringBuffer = descriptionStringBuffer.append(goodsPropertyNames.get(0).getName()).append(":").append(goodsPropertyValues.get(0).getName()).append(";");
+			if(!StringUtils.isEmpty(description) && description.contains(";")){
+				String[] descriptions = description.split(";");
+				for (String string : descriptions) {
+					int index = string.indexOf(":");
+					
+					//获取属性名ID
+					String propertyNameId = string.substring(0, index);
+					
+					//获取属性值ID
+					String propertyValueId = string.substring(index+1);
+					
+					//查询属性名信息
+					List<GoodsPropertyName> goodsPropertyNames = goodsPropertyNameDao.findGoodsPropertyNames(goods.getId(), propertyNameId);
+					List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), propertyNameId, propertyValueId);
+					
+					if(goodsPropertyNames != null && goodsPropertyNames.size()>0){
+						if(goodsPropertyValues != null && goodsPropertyValues.size()>0){
+							descriptionStringBuffer = descriptionStringBuffer.append(goodsPropertyNames.get(0).getName()).append(":").append(goodsPropertyValues.get(0).getName()).append(";");
+						}
 					}
 				}
+				
+		    	//设置描述信息
+		    	purchaseDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
 			}
-			
-	    	//设置描述信息
-	    	purchaseDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+
 	    	
 	    	//添加购买详情到详情列表中
 	    	purchaseDetails.add(purchaseDetail);
