@@ -19,6 +19,7 @@ import com.dreawer.goods.domain.Group;
 import com.dreawer.goods.domain.Sku;
 import com.dreawer.goods.lang.GoodsStatus;
 import com.dreawer.goods.lang.GoodsType;
+import com.dreawer.goods.lang.InventoryType;
 import com.dreawer.goods.lang.PricingMethod;
 import com.dreawer.goods.lang.PurchaseInfo;
 import com.dreawer.goods.persistence.AppDao;
@@ -687,10 +688,12 @@ public class GoodsService extends BaseService{
 			}
     				
 			//判断sku库存是否充足
-			if((sku.getInventory() - sku.getLockedInventory()) >= purchaseInfo.getQuantity()){
-				//TODO
-				return StatusError.APPLIED(SKU); // 库存不足
-			}	
+			if(goods.getInventoryType().equals(InventoryType.LIMITED)){
+				if((sku.getInventory() - sku.getLockedInventory()) >= purchaseInfo.getQuantity()){
+					//TODO
+					return StatusError.APPLIED(SKU); // 库存不足
+				}	
+			}
 			
 			//创建购买详情视图对象，封装购买信息
 			ViewPurchaseDetail purchaseDetail = new ViewPurchaseDetail();
