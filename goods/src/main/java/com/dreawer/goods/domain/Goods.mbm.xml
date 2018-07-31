@@ -327,6 +327,6 @@
 		<collection property="groups" resultMap="com.dreawer.goods.domain.Group.groupResultMap" columnPrefix="gr_" />
 		<collection property="skus" resultMap="com.dreawer.goods.domain.Sku.skuResultMap" columnPrefix="sku_" />
 		<collection property="propertyNames" resultMap="com.dreawer.goods.domain.GoodsPropertyName.goodsPropertyNameResultMap" columnPrefix="gpn_" />
-		<collection property="app" resultMap="com.dreawer.goods.domain.app.appResultMap" columnPrefix="app_" />
+		<collection property="app" resultMap="com.dreawer.goods.domain.App.appResultMap" columnPrefix="app_" />
 	</resultMap>
 </mapper>
