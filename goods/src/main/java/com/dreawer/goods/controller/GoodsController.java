@@ -1084,14 +1084,14 @@ public class GoodsController extends BaseController{
     		//获取设置运费参数表单
     		SetFreightParamForm freightParamForm = form.getFreightParam();
     		
-    		//创建运费参数实体类
-    		FreightParam freightParam = new FreightParam();
-    		
-    		//封装运费参数信息到商品实体类中
-    		goods.setFreightParam(freightParam);
-    		
     		//判断运费参数表单是否为空
     		if(freightParamForm != null){
+    			
+        		//创建运费参数实体类
+        		FreightParam freightParam = new FreightParam();
+        		
+        		//封装运费参数信息到商品实体类中
+        		goods.setFreightParam(freightParam);
     			
     			//封装运费参数信息
         		freightParam.setGoodsId(goods.getId());

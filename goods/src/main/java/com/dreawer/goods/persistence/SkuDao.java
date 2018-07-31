@@ -26,8 +26,12 @@ public class SkuDao extends MyBatisBaseDao<Sku>{
      */
     public int saveBatch(List<Sku> skus){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(SKUS, skus);
+    	
     	//返回添加结果
-    	return insertBatch("saveBatch", skus);
+    	return insertBatch("saveBatch", params);
     }
     
     /**
@@ -52,8 +56,12 @@ public class SkuDao extends MyBatisBaseDao<Sku>{
      */
     public int updateBatchInventory(List<Sku> skus){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(SKUS, skus);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchInventory", skus);
+    	return updateBatch("updateBatchInventory", params);
     }
     
     /**
@@ -65,8 +73,12 @@ public class SkuDao extends MyBatisBaseDao<Sku>{
      */
     public int updateBatchLockedInventory(List<Sku> skus){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(SKUS, skus);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchLockedInventory", skus);
+    	return updateBatch("updateBatchLockedInventory", params);
     }
     
     /**

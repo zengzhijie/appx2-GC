@@ -57,8 +57,12 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
      */
     public int updateBatchStatus(List<Goods> goodses){
     	
+		//封装请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put(GOODSES, goodses);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchStatus", goodses);
+    	return updateBatch("updateBatchStatus", params);
     }
     
     /**
@@ -70,8 +74,12 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
      */
     public int updateBatchRecommend(List<Goods> goodses){
     	
+		//封装请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put(GOODSES, goodses);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchRecommend", goodses);
+    	return updateBatch("updateBatchRecommend", params);
     }
     
     /**

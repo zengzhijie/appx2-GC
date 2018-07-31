@@ -25,8 +25,12 @@ public class InventoryOperationDetailDao extends MyBatisBaseDao<InventoryOperati
      */
     public int saveBatch(List<InventoryOperationDetail> inventoryOperationDetails){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(INVENTORY_OPERATION_DETAILS, inventoryOperationDetails);
+    	
     	//返回添加结果
-    	return insertBatch("saveBatch", inventoryOperationDetails);
+    	return insertBatch("saveBatch", params);
     }
     
     /**
@@ -38,8 +42,12 @@ public class InventoryOperationDetailDao extends MyBatisBaseDao<InventoryOperati
      */
     public int updateBatchStatus(List<InventoryOperationDetail> inventoryOperationDetails){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(INVENTORY_OPERATION_DETAILS, inventoryOperationDetails);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchStatus", inventoryOperationDetails);
+    	return updateBatch("updateBatchStatus", params);
     }
     
     /**

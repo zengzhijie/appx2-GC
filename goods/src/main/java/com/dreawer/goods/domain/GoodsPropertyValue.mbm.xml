@@ -8,7 +8,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 新增商品属性值信息 -->
-	<insert id="saveBatch" parameterType="GoodsPropertyValue">
+	<insert id="saveBatch" parameterType="Map">
 		INSERT INTO godsi_gods_pro_val(id, gods_pro_nam_id, pro_val_id, pro_nam_id, gods_id, pro_nam_typ, squence, type, name, is_dflt_img, img_url, crer_id, cre_tim, remark)
         VALUES
         <foreach collection="goodsPropertyValues" item="gpv" index="index" separator=",">

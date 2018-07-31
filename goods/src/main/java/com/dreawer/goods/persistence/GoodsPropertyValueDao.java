@@ -28,8 +28,12 @@ public class GoodsPropertyValueDao extends MyBatisBaseDao<GoodsPropertyValue> {
      */
     public int saveBatch(List<GoodsPropertyValue> goodsPropertyValues){
     	
+		//封装请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put(GOODS_PROPERTY_VALUES, goodsPropertyValues);
+    	
     	//返回添加结果
-    	return insertBatch("saveBatch", goodsPropertyValues);
+    	return insertBatch("saveBatch", params);
     }
     
     /**

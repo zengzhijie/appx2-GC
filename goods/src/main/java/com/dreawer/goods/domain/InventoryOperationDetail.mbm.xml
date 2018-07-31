@@ -8,7 +8,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量添加锁定库存信息 -->
-	<insert id="saveBatch" parameterType="java.util.List">
+	<insert id="saveBatch" parameterType="Map">
 		INSERT INTO godsi_inv_op_dtl(ord_id, sku_id, inventory, status, crer_id, cre_tim)
         VALUES
         <foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=",">
@@ -25,7 +25,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量修改库存状态 -->
-	<update id="updateBatchStatus" parameterType="java.util.List">
+	<update id="updateBatchStatus" parameterType="Map">
 	    UPDATE godsi_inv_op_dtl
   		SET status = 
     	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">

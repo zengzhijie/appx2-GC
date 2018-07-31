@@ -38,6 +38,9 @@ public abstract class DomainConstants {
 	/** SKU */
     public static final String SKU = "sku";
     
+	/** SKU列表 */
+    public static final String SKUS = "skus";
+    
 	/** 计价方式方式 */
     public static final String PRICING_METHOD = "pricingMethod";
     
@@ -53,10 +56,21 @@ public abstract class DomainConstants {
 	/** 城市信息列表 */
     public static final String CITIES = "cities";
     
+    /** 商品属性名列表 */
+    public static final String GOODS_PROPERTY_NAMES = "goodsPropertyNames";
     
+    /** 商品属性值列表 */
+    public static final String GOODS_PROPERTY_VALUES = "goodsPropertyValues";
+    
+    /** 分组列表 */
+    public static final String GROUPS = "groups";
     
 	/** 小程序应用信息 */
     public static final String APP = "app";
+    
+    /** 库存处理明细列表 */
+    public static final String INVENTORY_OPERATION_DETAILS = "inventoryOperationDetails";
+    
     
     // --------------------------------------------------------------------------------
     // 属性

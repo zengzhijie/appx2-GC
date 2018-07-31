@@ -67,7 +67,7 @@
 	</update>
 	
 	<!-- 批量更新分组状态 -->
-	<update id="updateBatchStatus" parameterType="java.util.List">
+	<update id="updateBatchStatus" parameterType="Map">
 		UPDATE godsi_group
 		SET status = 
 		<foreach collection="groups" item="group" index="index" separator=" " open="case ID" close="end">

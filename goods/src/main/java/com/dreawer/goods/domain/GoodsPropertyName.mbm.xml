@@ -8,7 +8,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 新增商品属性名信息 -->
-	<insert id="saveBatch" parameterType="java.util.List">
+	<insert id="saveBatch" parameterType="Map">
 		INSERT INTO godsi_gods_pro_nam(id, pro_nam_id, gods_id, name, ctg_id, type, squence, is_srch, is_rad,
 		                               is_chk, is_inp, is_sel, is_ve, is_colr, is_req, is_sal, is_basc, is_key,
 		                               is_img, crer_id, cre_tim)

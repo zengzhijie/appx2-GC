@@ -1,6 +1,10 @@
 package com.dreawer.goods.persistence;
 
+import static com.dreawer.goods.constants.DomainConstants.*;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 import com.dreawer.goods.domain.LogisticsMethod;
@@ -21,8 +25,12 @@ public class LogisticsMethodDao extends MyBatisBaseDao<LogisticsMethod> {
 	 */
 	public int saveBatch(List<LogisticsMethod> logisticsMethods){
 		
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(LOGISTICS_METHODS, logisticsMethods);
+		
 		//返回添加结果
-		return insertBatch("saveBatch", logisticsMethods);
+		return insertBatch("saveBatch", params);
 	}
 	
 	/**

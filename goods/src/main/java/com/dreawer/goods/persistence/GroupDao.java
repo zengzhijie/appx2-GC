@@ -131,8 +131,12 @@ public class GroupDao extends MyBatisBaseDao<Group> {
      */
     public int updateBatchStatus(List<Group> groups){
     	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+		params.put(GROUPS, groups);
+    	
     	//返回更新结果
-    	return updateBatch("updateBatchStatus", groups);
+    	return updateBatch("updateBatchStatus", params);
     }
     
     /**

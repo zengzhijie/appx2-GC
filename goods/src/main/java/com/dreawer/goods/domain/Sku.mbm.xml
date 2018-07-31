@@ -48,7 +48,7 @@
 	</update>
 	
 	<!-- 批量更新SKU锁定库存 -->
-	<update id="updateBatchLockedInventory" parameterType="java.util.List">
+	<update id="updateBatchLockedInventory" parameterType="Map">
 		UPDATE godsi_sku
 		SET lock_inv = 
 		<foreach collection="skus" item="sku" index="index" separator=" " open="case ID" close="end">

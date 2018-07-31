@@ -8,7 +8,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量添加物流方式信息 -->
-	<insert id="saveBatch" parameterType="java.util.List">
+	<insert id="saveBatch" parameterType="Map">
 		INSERT INTO godsi_log_meth(id, frt_id, is_dflt, type, strt_qty, strt_pr, inc_qty, inc_pr, crer_id)
         VALUES
 	    <foreach collection="logisticsMethods" item="log_meth" index="index" separator=",">

@@ -1,9 +1,11 @@
 package com.dreawer.goods.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
-
+import static com.dreawer.goods.constants.DomainConstants.*;
 import com.dreawer.goods.domain.City;
 import com.dreawer.persistence.mybatis.MyBatisBaseDao;
 
@@ -23,8 +25,12 @@ public class CityDao extends MyBatisBaseDao<City> {
 	 */
 	public int saveBatch(List<City> cities){
 		
+		//封装请求参数
+		Map<String, Object> params = new HashMap<>();
+		params.put(CITIES, cities);
+		
 		//返回添加结果
-		return insertBatch("saveBatch", cities);
+		return insertBatch("saveBatch", params);
 	}
 	
 }

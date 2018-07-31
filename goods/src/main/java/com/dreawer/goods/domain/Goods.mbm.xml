@@ -38,7 +38,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量更新商品状态 -->
-	<update id="updateBatchStatus" parameterType="java.util.List">
+	<update id="updateBatchStatus" parameterType="Map">
 		UPDATE godsi_goods
 		SET status = 
 		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">
@@ -59,7 +59,7 @@
 	</update>
 	
 	<!-- 批量更新商品推荐状态 -->
-	<update id="updateBatchRecommend" parameterType="java.util.List">
+	<update id="updateBatchRecommend" parameterType="Map">
 		UPDATE godsi_goods
 		SET is_rcd = 
 		<foreach collection="goodses" item="goods" index="index" separator=" " open="case ID" close="end">

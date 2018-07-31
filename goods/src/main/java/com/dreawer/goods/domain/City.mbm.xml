@@ -8,7 +8,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量添加城市信息 -->
-	<insert id="saveBatch" parameterType="java.util.List">
+	<insert id="saveBatch" parameterType="Map">
 		INSERT INTO godsi_city(id, log_meth_id, name, par_id, cty_id, crer_id)
         VALUES
 		<foreach collection="cities" item="city" index="index" separator=",">
