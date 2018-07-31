@@ -8,8 +8,8 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量添加SKU信息 -->
-	<insert id="saveBatch" parameterType="java.util.List">
-		INSERT INTO godsi_sku(id, gods_id, inv_typ, inventory, lock_inv, sal_vol, ori_pr, price, desc, code, barcode, crer_id, cre_tim, remark)
+	<insert id="saveBatch" parameterType="Map">
+		INSERT INTO godsi_sku(id, gods_id, inv_typ, inventory, lock_inv, sal_vol, ori_pr, price, description, code, barcode, crer_id, cre_tim, remark)
         VALUES
         <foreach collection="skus" item="sku" index="index" separator=",">
             (#{sku.id}, #{sku.goodsId}, #{sku.inventoryType}, #{sku.inventory}, #{sku.lockedInventory}, #{sku.salesVolume}, #{sku.originalPrice}, #{sku.price}, #{sku.description}, #{sku.code}, #{sku.barcode}, #{sku.createrId}, #{sku.createTime}, #{sku.remark})
@@ -35,7 +35,7 @@
 	<!-- ================================================================================== -->
 	
 	<!-- 批量更新SKU库存 -->
-	<update id="updateBatchInventory" parameterType="java.util.List">
+	<update id="updateBatchInventory" parameterType="Map">
 	    UPDATE godsi_sku
   		SET inventory = 
     	<foreach collection="skus" item="sku" index="index" separator=" " open="case ID" close="end">
