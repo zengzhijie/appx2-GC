@@ -104,7 +104,7 @@
 	<!-- 通过商品ID更新分组中的商品数（商品数加一） -->
 	<update id="increaseGoodsQuantityByGoodsId" parameterType="String">
 		UPDATE godsi_group AS gr
-		LEFT JION godsi_gr_gods AS gr_gods
+		LEFT JOIN godsi_gr_gods AS gr_gods
 		SET gr.gods_qty = gr.gods_qty + 1
 		WHERE gr_gods.gods_id = #{goodsId}
 	</update>
@@ -112,7 +112,7 @@
 	<!-- 通过商品ID列表批量更新分组中的商品数（商品数减一） -->
 	<update id="reduceBatchGoodsQuantityByGoodsId" parameterType="String">
 		UPDATE godsi_group AS gr
-		LEFT JION godsi_gr_gods AS gr_gods
+		LEFT JOIN godsi_gr_gods AS gr_gods
 		SET gr.gods_qty = gr.gods_qty - 1
 		WHERE gr_gods.gods_id IN
 		<foreach collection="goodsIds" item="goodsId" open="(" close=")" index="index" separator=",">

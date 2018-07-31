@@ -6,6 +6,8 @@ import com.dreawer.goods.lang.GroupStatus;
 import com.dreawer.goods.lang.SourceType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 
+import javax.validation.constraints.Null;
+
 /**
  * 添加分组信息表单
  */
@@ -30,7 +32,7 @@ public class AddGroupForm {
 	@Length(min=1, max=200, message=ENTRY_ERROR_OVERRANGE)
 	private String intro = null; // 简介
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@Null(message=ENTRY_ERROR_EMPTY)
 	private GroupStatus status = null; // 状态
 	
 	private String url = null; // 跳转地址（APPX专用）

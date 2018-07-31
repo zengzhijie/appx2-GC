@@ -21,12 +21,12 @@
 	<delete id="deleteBatch" parameterType="Map">
 		DELETE gods, gr_gods, gods_frt, frt_par, sku, gpn, gpv
 		FROM godsi_goods AS gods
-		LEFT JION godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
-		LEFT JION godsr_gods_frt AS gods_frt ON gr_gods.gods_id = gods_frt.gods_id
-		LEFT JION godsi_frt_par AS frt_par ON gods_frt.gods_id = frt_par.gods_id
-		LEFT JION godsi_sku AS sku ON frt_par.gods_id = sku.gods_id
-		LEFT JION godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
-		LEFT JION godsi_gods_pro_val AS gpv ON gpn.gods_id = gpv.gods_id
+		LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+		LEFT JOIN godsr_gods_frt AS gods_frt ON gr_gods.gods_id = gods_frt.gods_id
+		LEFT JOIN godsi_frt_par AS frt_par ON gods_frt.gods_id = frt_par.gods_id
+		LEFT JOIN godsi_sku AS sku ON frt_par.gods_id = sku.gods_id
+		LEFT JOIN godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+		LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.gods_id = gpv.gods_id
 		WHERE gg.id IN
 		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
             #{id}
