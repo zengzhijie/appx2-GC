@@ -232,7 +232,7 @@
 		<result property="intro" column="intro" />
 		<result property="status" column="status" />
 		<result property="url" column="url" />
-		<result property="gods_qty" column="gods_qty" />
+		<result property="goodsQuantity" column="gods_qty" />
 		<result property="createrId" column="crer_id" />
 		<result property="createTime" column="cre_tim" />
 		<result property="updaterId" column="updr_id" />
