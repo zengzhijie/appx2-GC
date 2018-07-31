@@ -2,7 +2,6 @@ package com.dreawer.goods.domain;
 
 import java.util.Date;
 import java.util.List;
-
 import com.dreawer.domain.BaseDomain;
 import com.dreawer.goods.lang.Payer;
 import com.dreawer.goods.lang.PricingMethod;
