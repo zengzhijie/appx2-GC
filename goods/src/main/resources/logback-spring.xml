@@ -44,6 +44,27 @@
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
+             
+                         <providers>  
+                <timestamp>  
+                    <timeZone>UTC</timeZone>  
+                </timestamp>  
+                <pattern>  
+                    <pattern>  
+                        {  
+                        "severity": "%level",  
+                        "service": "${springAppName:-}",  
+                        "trace": "%X{X-B3-TraceId:-}",  
+                        "span": "%X{X-B3-SpanId:-}",  
+                        "exportable": "%X{X-Span-Export:-}",  
+                        "pid": "${PID:-}",  
+                        "thread": "%thread",  
+                        "class": "%logger{40}",  
+                        "rest": "%message"  
+                        }  
+                    </pattern>  
+                </pattern>  
+            </providers> 
         </encoder>
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
