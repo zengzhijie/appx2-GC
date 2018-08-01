@@ -44,7 +44,13 @@
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
-             <pattern>${log.pattern}</pattern>
+            <providers>  
+                <pattern>  
+                    <pattern>
+						${log.pattern}
+					</pattern>  
+                </pattern>  
+            </providers> 
         </encoder>
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
