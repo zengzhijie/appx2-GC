@@ -45,10 +45,7 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
              
-                         <providers>  
-                <timestamp>  
-                    <timeZone>UTC</timeZone>  
-                </timestamp>  
+              <providers>  
                 <pattern>  
                     <pattern>  
                         {  
