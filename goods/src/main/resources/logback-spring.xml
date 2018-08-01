@@ -51,8 +51,6 @@
                     </pattern>  
                 </pattern>  
             </providers> 
-             
-             <pattern></pattern>
         </encoder>
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
