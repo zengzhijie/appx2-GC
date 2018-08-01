@@ -46,10 +46,10 @@
     <appender name="logstash"  
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">  
         <destination>${LOGSTASH_PATH}</destination>
-        <customFields>{"appname":"gc"}</customFields>  
         <!-- 日志输出编码 -->  
         <encoder  
-            class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">  
+            class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <customFields>{"appname":"gc"}</customFields>   
             <providers>  
                 <timestamp>  
                     <timeZone>UTC</timeZone>  
