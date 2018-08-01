@@ -53,8 +53,8 @@
                 <timestamp>  
                     <timeZone>UTC</timeZone>  
                 </timestamp>  
-                <pattern>  
-                    <pattern>  
+                <pattern>%n[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}]-[%thread] [%logger]%n==> %msg%n</pattern>
+<!--                 <pattern>  
                         {  
                         "severity": "%level",  
                         "service": "${springAppName:-}",  
@@ -66,8 +66,7 @@
                         "class": "%logger{40}",  
                         "rest": "%message"  
                         }  
-                    </pattern>  
-                </pattern>  
+                </pattern>  --> 
             </providers>  
         </encoder>  
     </appender>
