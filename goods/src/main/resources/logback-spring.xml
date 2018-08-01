@@ -56,7 +56,7 @@
                         "pid": "${PID:-}",  
                         "thread": "%thread",  
                         "class": "%logger{40}",  
-                        "rest": "%m%n"  
+                        "rest": "%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID} --- [%15.15t] %-40.40logger{39} : %m%n"  
                         }
 					</pattern>  
                 </pattern>  
