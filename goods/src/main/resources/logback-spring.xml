@@ -43,18 +43,17 @@
 	</appender>
 
     <!-- 为logstash输出的JSON格式的Appender -->  
-    <appender name="logstash"  
+<!--     <appender name="logstash"  
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">  
         <destination>${LOGSTASH_PATH}</destination>  
-        <!-- 日志输出编码 -->  
+        日志输出编码  
         <encoder  
             class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">  
             <providers>  
                 <timestamp>  
                     <timeZone>UTC</timeZone>  
                 </timestamp>  
-                <pattern>%n[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}]-[%thread] [%logger]%n==> %msg%n</pattern>
-<!--                 <pattern>  
+                <pattern>  
                         {  
                         "severity": "%level",  
                         "service": "${springAppName:-}",  
@@ -66,9 +65,23 @@
                         "class": "%logger{40}",  
                         "rest": "%message"  
                         }  
-                </pattern>  --> 
+                </pattern>  
             </providers>  
         </encoder>  
+    </appender> -->
+
+    <appender name="LOGSTASH"
+        class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>${LOGSTASH_PATH}</destination>
+        <!-- encoder必须配置,有多种可选 -->
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
+             <customFields>{"appname":"gc"}</customFields>
+        </encoder>
+      <connectionStrategy>
+          <roundRobin>
+              <connectionTTL>5 minutes</connectionTTL>
+          </roundRobin>
+      </connectionStrategy>
     </appender>
 
 	<logger name="org.springframework" level="INFO" />
@@ -78,7 +91,7 @@
 	<root level="INFO">
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="logstash" />
+		<appender-ref ref="LOGSTASH" />
 
 		<!-- 生产环境将请stdout,testfile去掉 <appender-ref ref="STDOUT" /> -->
 	</root>
