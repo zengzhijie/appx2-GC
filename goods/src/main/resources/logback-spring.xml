@@ -36,14 +36,14 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <customFields>{"appname":"myapp"}</customFields>
+        <customFields>{"appname":"gc"}</customFields>
     </appender>
     <appender name="LOGSTASH"
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${LOGSTASH_PATH}</destination>
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-             <customFields>{"appname":"myapp"}</customFields>
+             <customFields>{"appname":"gc"}</customFields>
         </encoder>
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
