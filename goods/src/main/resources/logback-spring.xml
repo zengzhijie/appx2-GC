@@ -48,11 +48,7 @@
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
         <destination>destination3.domain.com:4560</destination> -->
-      <connectionStrategy>
-          <roundRobin>
-              <connectionTTL>5 minutes</connectionTTL>
-          </roundRobin>
-      </connectionStrategy>
+
     </appender>
 
 
