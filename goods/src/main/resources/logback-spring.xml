@@ -43,10 +43,11 @@
 	</appender>
 
     <!-- 为logstash输出的JSON格式的Appender -->  
-<!--     <appender name="logstash"  
+    <appender name="logstash"  
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">  
-        <destination>${LOGSTASH_PATH}</destination>  
-        日志输出编码  
+        <destination>${LOGSTASH_PATH}</destination>
+        <customFields>{"appname":"gc"}</customFields>  
+        <!-- 日志输出编码 -->  
         <encoder  
             class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">  
             <providers>  
@@ -54,6 +55,7 @@
                     <timeZone>UTC</timeZone>  
                 </timestamp>  
                 <pattern>  
+                    <pattern>  
                         {  
                         "severity": "%level",  
                         "service": "${springAppName:-}",  
@@ -65,44 +67,10 @@
                         "class": "%logger{40}",  
                         "rest": "%message"  
                         }  
+                    </pattern>  
                 </pattern>  
             </providers>  
         </encoder>  
-    </appender> -->
-
-    <appender name="LOGSTASH"
-        class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${LOGSTASH_PATH}</destination>
-        <!-- encoder必须配置,有多种可选 -->
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-             <customFields>{"appname":"gc"}</customFields>
-             
-              <providers>  
-                <timestamp>  
-                    <timeZone>UTC</timeZone>  
-                </timestamp>  
-                <pattern>
-                <pattern>  
-                        {  
-                        "severity": "%level",  
-                        "service": "${springAppName:-}",  
-                        "trace": "%X{X-B3-TraceId:-}",  
-                        "span": "%X{X-B3-SpanId:-}",  
-                        "exportable": "%X{X-Span-Export:-}",  
-                        "pid": "${PID:-}",  
-                        "thread": "%thread",  
-                        "class": "%logger{40}",  
-                        "rest": "%message"  
-                        }  
-                </pattern>
-               </pattern>  
-            </providers>  
-        </encoder>
-      <connectionStrategy>
-          <roundRobin>
-              <connectionTTL>5 minutes</connectionTTL>
-          </roundRobin>
-      </connectionStrategy>
     </appender>
 
 	<logger name="org.springframework" level="INFO" />
@@ -112,7 +80,7 @@
 	<root level="INFO">
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="LOGSTASH" />
+		<appender-ref ref="logstash" />
 
 		<!-- 生产环境将请stdout,testfile去掉 <appender-ref ref="STDOUT" /> -->
 	</root>
