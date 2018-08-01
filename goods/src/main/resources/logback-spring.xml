@@ -42,36 +42,6 @@
 		</filter>
 	</appender>
 
-    <!-- 为logstash输出的JSON格式的Appender -->  
-    <appender name="logstash"  
-        class="net.logstash.logback.appender.LogstashTcpSocketAppender">  
-        <destination>${LOGSTASH_PATH}</destination>
-        <!-- 日志输出编码 -->  
-        <encoder  
-            class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>  
-                <timestamp>  
-                    <timeZone>UTC</timeZone>  
-                </timestamp>  
-                <pattern>  
-                    <pattern>  
-                        {  
-                        "severity": "%level",  
-                        "service": "${springAppName:-}",  
-                        "trace": "%X{X-B3-TraceId:-}",  
-                        "span": "%X{X-B3-SpanId:-}",  
-                        "exportable": "%X{X-Span-Export:-}",  
-                        "pid": "${PID:-}",  
-                        "thread": "%thread",  
-                        "class": "%logger{40}",  
-                        "rest": "%message"  
-                        }  
-                    </pattern>  
-                </pattern>  
-            </providers>  
-        </encoder>  
-    </appender>
-
     <appender name="LOGSTASH"
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">
         <destination>${LOGSTASH_PATH}</destination>
@@ -109,7 +79,7 @@
 	<root level="INFO">
 		<appender-ref ref="FILEINFO" />
 		<appender-ref ref="STDOUT" />
-		<appender-ref ref="logstash" />
+		<appender-ref ref="LOGSTASH" />
 
 		<!-- 生产环境将请stdout,testfile去掉 <appender-ref ref="STDOUT" /> -->
 	</root>
