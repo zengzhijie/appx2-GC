@@ -38,13 +38,11 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <host>10.10.129.35</host>
-        <port>4569</port>
         <customFields>{"appname":"gc"}</customFields>
     </appender>
     <appender name="LOGSTASH"
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>IP:PORT</destination>
+        <destination>${LOGSTASH_PATH}</destination>
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
