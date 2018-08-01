@@ -4,6 +4,8 @@
     <!-- <jmxConfigurator/> -->
     <contextName>logback</contextName>
 
+    <property name="log.path" value="E:\\123456\\logback.log" />
+
     <property name="log.pattern"
         value="%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID} --- [%15.15t] %-40.40logger{39} : %m%n" />
 
@@ -36,37 +38,20 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
+        <host>10.10.129.35</host>
+        <port>4569</port>
         <customFields>{"appname":"gc"}</customFields>
     </appender>
     <appender name="LOGSTASH"
         class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${LOGSTASH_PATH}</destination>
+        <destination>IP:PORT</destination>
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
-             
-              <providers>  
-                <pattern>  
-                    <pattern>  
-                        {  
-                        "severity": "%level",  
-                        "service": "${springAppName:-}",  
-                        "trace": "%X{X-B3-TraceId:-}",  
-                        "span": "%X{X-B3-SpanId:-}",  
-                        "exportable": "%X{X-Span-Export:-}",  
-                        "pid": "${PID:-}",  
-                        "thread": "%thread",  
-                        "class": "%logger{40}",  
-                        "rest": "%message"  
-                        }  
-                    </pattern>  
-                </pattern>  
-            </providers> 
         </encoder>
     <!-- <destination>destination1.domain.com:4560</destination> 
         <destination>destination2.domain.com:4560</destination> 
         <destination>destination3.domain.com:4560</destination> -->
-
     </appender>
 
 
