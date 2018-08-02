@@ -1553,19 +1553,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				EntryError.EMPTY(SKU_ID);
+    				return EntryError.EMPTY(SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				EntryError.EMPTY(QUANTITY);
+    				return EntryError.EMPTY(QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
@@ -1622,19 +1622,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				EntryError.EMPTY(SKU_ID);
+    				return EntryError.EMPTY(SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				EntryError.EMPTY(QUANTITY);
+    				return  EntryError.EMPTY(QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
