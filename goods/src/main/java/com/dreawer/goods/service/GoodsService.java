@@ -32,6 +32,7 @@ import com.dreawer.goods.persistence.GoodsPropertyNameDao;
 import com.dreawer.goods.persistence.GoodsPropertyValueDao;
 import com.dreawer.goods.persistence.GroupDao;
 import com.dreawer.goods.persistence.SkuDao;
+import com.dreawer.goods.view.ViewCartDetail;
 import com.dreawer.goods.view.ViewGoods;
 import com.dreawer.goods.view.ViewPurchaseDetail;
 import com.dreawer.responsecode.rcdt.EntryError;
@@ -643,9 +644,9 @@ public class GoodsService extends BaseService{
     }
     
     /**
-     * 根据购买信息列表查询购买详情列表。
+     * 根据购买信息列表查询购物车详情列表。
      * @param purchaseInfos 购买信息列表。
-     * @return 成功返回购买信息列表，失败返回相应错误码。
+     * @return 成功返回购物车商品信息列表，失败返回相应错误码。
      * @author kael
      * @since 1.0
      */
@@ -748,6 +749,100 @@ public class GoodsService extends BaseService{
     	
     	//返回处理结果
     	return Success.SUCCESS(purchaseDetails);
+    }
+    
+    /**
+     * 根据购买信息列表查询购买详情列表。
+     * @param purchaseInfos 购买信息列表。
+     * @return 成功返回购买信息列表，失败返回相应错误码。
+     * @author kael
+     * @since 1.0
+     */
+    public ResponseCode getCartDetails(List<PurchaseInfo> purchaseInfos) {
+    	
+    	//创建购买详情列表
+    	List<ViewCartDetail> cartDetails = new ArrayList<>();
+    	
+    	//循环购买信息列表
+    	for (PurchaseInfo purchaseInfo : purchaseInfos) {
+			
+    		//查询SKU信息
+    		Sku sku = skuDao.findSkuById(purchaseInfo.getSkuId());
+    		
+    		//判断SKU信息是否存在
+			if(sku != null){
+	    		
+	    		//查询商品信息
+	    		Goods goods = goodsDao.findGoodsById(sku.getGoodsId());
+	    		
+	    		//判断商品是否存在
+	    		if(goods != null){
+	    			
+					//创建购买详情视图对象
+					ViewCartDetail cartDetail = new ViewCartDetail();
+	    			
+					//封装购买信息
+					cartDetail.setSpuId(goods.getId());
+					cartDetail.setSkuId(sku.getId());
+					cartDetail.setName(goods.getName());
+					cartDetail.setStatus(goods.getStatus());
+					cartDetail.setQuantity(purchaseInfo.getQuantity());
+					cartDetail.setSalesVolume(sku.getSalesVolume());
+					cartDetail.setInventoryType(sku.getInventoryType());
+					cartDetail.setInventory(sku.getInventory()-sku.getLockedInventory());
+					
+					
+					//获取商品图片
+					String[] photos = goods.getMainDiagram().split(";");
+					cartDetail.setPhoto(photos[0]);
+					cartDetail.setPrice(sku.getPrice());
+					cartDetail.setQuantity(purchaseInfo.getQuantity());
+					
+					
+					//获取描述
+					String description = sku.getDescription();
+					StringBuffer descriptionStringBuffer = new StringBuffer();
+					
+					//获取属性名属性值键值对列表
+					if(!StringUtils.isEmpty(description) && description.contains(";")){
+						String[] descriptions = description.split(";");
+						for (String string : descriptions) {
+							int index = string.indexOf(":");
+							
+							//获取属性名ID
+							String propertyNameId = string.substring(0, index);
+							
+							//获取属性值ID
+							String propertyValueId = string.substring(index+1);
+							
+							//查询属性名信息
+							List<GoodsPropertyName> goodsPropertyNames = goodsPropertyNameDao.findGoodsPropertyNames(goods.getId(), propertyNameId);
+							List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), propertyNameId, propertyValueId);
+							
+							if(goodsPropertyNames != null && goodsPropertyNames.size()>0){
+								if(goodsPropertyValues != null && goodsPropertyValues.size()>0){
+									descriptionStringBuffer = descriptionStringBuffer.append(goodsPropertyNames.get(0).getName()).append(":").append(goodsPropertyValues.get(0).getName()).append(";");
+								}
+							}
+						}
+						
+				    	//设置描述信息
+						cartDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+					}
+
+			    	
+			    	//添加购买详情到详情列表中
+					cartDetails.add(cartDetail);
+	    		}
+	    				
+
+				
+			}
+
+    	}	
+    	
+    	//返回处理结果
+    	return Success.SUCCESS(cartDetails);
     }
     
 }

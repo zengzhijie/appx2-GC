@@ -1527,7 +1527,7 @@ public class GoodsController extends BaseController{
      * @return 成功返回购买信息列表，失败返回相应错误码。
 	 */
     @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
-    public @ResponseBody ResponseCode purchaseDetail(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
+    public @ResponseBody ResponseCode purchaseDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }
@@ -1580,6 +1580,75 @@ public class GoodsController extends BaseController{
     		
     		//执行查询
     		ResponseCode responseCode = goodsService.getPurchaseDetails(purchaseInfos);
+        	
+            //返回查询结果
+            return responseCode;
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+            return APPSERVER;
+        }
+    }
+    
+	/**
+     * 根据购买信息列表查询购买详情列表。
+     * @param form 购买信息列表表单。
+     * @return 成功返回购买信息列表，失败返回相应错误码。
+	 */
+    @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
+    public @ResponseBody ResponseCode cartDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+        }
+    	try {
+    		
+    		//获取用户ID
+    		String userId = req.getHeader(USER_ID);
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(userId)){
+    			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取购买信息表单列表
+    		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
+    		
+    		//创建购买信息列表
+    		List<PurchaseInfo> purchaseInfos = new ArrayList<>();
+    		
+    		//循环购买信息表单列表
+    		for (PurchaseInfoForm purchaseInfoForm : purchaseInfoForms) {
+				
+    			//判断商品ID是否为空
+    			String goodsId = purchaseInfoForm.getSpuId();
+    			if(StringUtils.isEmpty(goodsId)){
+    				EntryError.EMPTY(GOODS_ID);
+    			}
+    			
+    			//判断SKUID是否为空
+    			String skuId = purchaseInfoForm.getSkuId();
+    			if(StringUtils.isEmpty(skuId)){
+    				EntryError.EMPTY(SKU_ID);
+    			}
+    			
+    			//判断购买数量是否为空
+    			Integer quantity = purchaseInfoForm.getQuantity();
+    			if(quantity == null){
+    				EntryError.EMPTY(QUANTITY);
+    			}
+    			
+    			//创建购买信息实体类封装购买信息
+    			PurchaseInfo purchaseInfo = new PurchaseInfo();
+    			purchaseInfo.setGoodsId(goodsId);
+    			purchaseInfo.setSkuId(skuId);
+    			purchaseInfo.setQuantity(quantity);
+    			
+    			//将购买信息添加到List集合中
+    			purchaseInfos.add(purchaseInfo);
+			}
+    		
+    		//执行查询
+    		ResponseCode responseCode = goodsService.getCartDetails(purchaseInfos);
         	
             //返回查询结果
             return responseCode;

@@ -107,4 +107,7 @@ public final class ControllerConstants {
     /** 请求“释放库存” */
     public static final String REQ_DEDUCTION_INVENTORY = "/deductionBatchInventory";
     
+    /** 请求“购物车商品详情” */
+    public static final String REQ_CART_DETAILS = "/cartDetails";
+    
 }

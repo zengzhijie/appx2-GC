@@ -91,5 +91,5 @@ public class ViewPurchaseDetail {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
+
 }
