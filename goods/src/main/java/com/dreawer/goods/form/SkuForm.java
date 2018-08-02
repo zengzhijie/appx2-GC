@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * SKU信息表单
  */
@@ -12,10 +14,10 @@ public class SkuForm {
     
 	private String id = null; // SKUID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer inventory = null; // 库存
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer salesVolume = null; //起售量
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)

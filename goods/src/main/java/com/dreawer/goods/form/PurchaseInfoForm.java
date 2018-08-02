@@ -1,6 +1,9 @@
 package com.dreawer.goods.form;
 
 import static com.dreawer.goods.constants.MessageConstants.*;
+
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -14,7 +17,7 @@ public class PurchaseInfoForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String skuId = null; // SKUID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer quantity = null; // 购买数量 
 
     // --------------------------------------------------------------------------------

@@ -1,6 +1,9 @@
 package com.dreawer.goods.form;
 
 import static com.dreawer.goods.constants.MessageConstants.*;
+
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -11,7 +14,7 @@ public class UpdateGroupSquenceForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String id = null; // 分组ID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer squence = null; // 排列序号
 	
     // --------------------------------------------------------------------------------

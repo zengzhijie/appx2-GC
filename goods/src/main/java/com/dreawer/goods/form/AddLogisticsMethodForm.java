@@ -4,6 +4,9 @@ import com.dreawer.goods.lang.LogisticsMethodType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -11,10 +14,9 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class AddLogisticsMethodForm {
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private Boolean isDefault = null; // 是否默认
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private LogisticsMethodType type = null; // 类型
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)

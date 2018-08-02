@@ -3,6 +3,9 @@ package com.dreawer.goods.form;
 import com.dreawer.goods.lang.GroupStatus;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
+
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -13,7 +16,7 @@ public class UpdateGroupStatusForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private List<String> ids = null; // 分组ID列表
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private GroupStatus status = null; // 分组状态
 	
     // --------------------------------------------------------------------------------

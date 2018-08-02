@@ -7,6 +7,8 @@ import com.dreawer.goods.lang.PricingMethod;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 添加运费模板表单
  */
@@ -25,10 +27,10 @@ public class AddFreightForm {
     @Length(min=1, max=10, message=ENTRY_ERROR_OVERRANGE)
 	private String deliveryTime = null; // 发货时间
 	
-    @NotEmpty(message=ENTRY_ERROR_EMPTY)
+    @NotNull(message=ENTRY_ERROR_EMPTY)
 	private Payer payer = null; // 支付方
 	
-    @NotEmpty(message=ENTRY_ERROR_EMPTY)
+    @NotNull(message=ENTRY_ERROR_EMPTY)
 	private PricingMethod pricingMethod = null; // 计价方式
 	
 	private List<AddLogisticsMethodForm> addLogisticsMethods = null; // 物流方式信息列表

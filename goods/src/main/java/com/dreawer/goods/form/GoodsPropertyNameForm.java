@@ -6,6 +6,8 @@ import com.dreawer.goods.lang.PropertyNameType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 添加商品属性名信息表单
  */
@@ -20,7 +22,7 @@ public class GoodsPropertyNameForm {
     @Length(min=1, max=40, message=ENTRY_ERROR_OVERRANGE)
 	private String name = null; // 名称
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private PropertyNameType type = null; // 属性名类型（SYSTEM-系统、CUSTOMER-客户）
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)

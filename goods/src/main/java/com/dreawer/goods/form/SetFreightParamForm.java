@@ -3,6 +3,9 @@ package com.dreawer.goods.form;
 import com.dreawer.goods.lang.FreightType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
+
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -13,7 +16,7 @@ public class SetFreightParamForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String goodsId = null; // 商品ID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private FreightType type = null; // 运费类型
 	
 	private BigDecimal price = null; // 价格

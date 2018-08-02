@@ -5,8 +5,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.dreawer.goods.lang.GroupStatus;
 import com.dreawer.goods.lang.SourceType;
 import static com.dreawer.goods.constants.MessageConstants.*;
-
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotNull;
 
 /**
  * 添加分组信息表单
@@ -23,7 +22,7 @@ public class AddGroupForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String parentId = null; // 父分组ID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer squence = null; // 排列序号
 	
 	@Length(min=1, max=255, message=ENTRY_ERROR_OVERRANGE)
@@ -32,7 +31,7 @@ public class AddGroupForm {
 	@Length(min=1, max=200, message=ENTRY_ERROR_OVERRANGE)
 	private String intro = null; // 简介
 	
-	@Null(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private GroupStatus status = null; // 状态
 	
 	private String url = null; // 跳转地址（APPX专用）
@@ -40,7 +39,7 @@ public class AddGroupForm {
 	@Length(min=1, max=200, message=ENTRY_ERROR_OVERRANGE)
     private String remark = null; // 备注
 
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private SourceType source = null; // 来源类型
 
     // --------------------------------------------------------------------------------

@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import com.dreawer.goods.lang.PropertyValueType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * 添加商品属性值信息表单
  */
@@ -19,10 +21,10 @@ public class GoodsPropertyValueForm {
     @Length(min=1, max=40, message=ENTRY_ERROR_OVERRANGE)
 	private String name = null; // 名称
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private PropertyValueType type = null; // 属性值类型（SYSTEM-系统、CUSTOMER-客户）
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
     private Integer squence = null; // 排列序号
 
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
