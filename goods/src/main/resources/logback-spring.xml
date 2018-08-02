@@ -31,12 +31,12 @@
 	</appender>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<!--encoder 默认配置为PatternLayoutEncoder -->
+		<!-- encoder 默认配置为PatternLayoutEncoder -->
 		<encoder>
 			<pattern>%n[%level] [%d{yyyy-MM-dd HH:mm:ss.SSS}]-[%thread] [%logger]%n==> %msg%n</pattern>
 			<charset>utf-8</charset>
 		</encoder>
-		<!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息 -->
+		<!-- 此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息 -->
 		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
 			<level>debug</level>
 		</filter>
@@ -81,6 +81,6 @@
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="LOGSTASH" />
 
-		<!-- 生产环境将请stdout,testfile去掉 <appender-ref ref="STDOUT" /> -->
+		<!-- 生产环境将请stdout,testfile去掉  --><appender-ref ref="STDOUT" />
 	</root>
 </configuration>

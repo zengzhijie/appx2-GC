@@ -1595,7 +1595,7 @@ public class GoodsController extends BaseController{
      * @param form 购买信息列表表单。
      * @return 成功返回购买信息列表，失败返回相应错误码。
 	 */
-    @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
+    @RequestMapping(value=REQ_CART_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode cartDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
