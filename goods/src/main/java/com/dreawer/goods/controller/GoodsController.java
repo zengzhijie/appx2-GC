@@ -144,6 +144,7 @@ public class GoodsController extends BaseController{
         			if(form.getInventoryType().equals(InventoryType.LIMITED)){
         				return EntryError.EMPTY(INVENTORY);
         			}
+        			inventory = 0;
     			}else{
     				
     				//判断SKU库存取值范围
@@ -227,6 +228,7 @@ public class GoodsController extends BaseController{
     			sku.setId(generateUUID());
     			sku.setGoodsId(goodsId);
     			sku.setInventoryType(form.getInventoryType());
+    			sku.setInventory(inventory);
     			sku.setLockedInventory(0); // 设置锁定库存为零
     			sku.setSalesVolume(salesVolume);
     			sku.setOriginalPrice(originalPrice);
@@ -703,6 +705,7 @@ public class GoodsController extends BaseController{
         			if(form.getInventoryType().equals(InventoryType.LIMITED)){
         				return EntryError.EMPTY(INVENTORY);
         			}
+        			inventory = 0;
     			}else{
     				
     				//判断SKU库存取值范围
@@ -792,6 +795,7 @@ public class GoodsController extends BaseController{
     			
     			sku.setGoodsId(goodsId);
     			sku.setInventoryType(form.getInventoryType());
+    			sku.setInventory(inventory);
     			sku.setLockedInventory(0); // 设置锁定库存为零
     			sku.setSalesVolume(salesVolume);
     			sku.setOriginalPrice(originalPrice);

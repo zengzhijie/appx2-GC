@@ -17,12 +17,13 @@ import com.dreawer.goods.domain.InventoryOperationDetail;
 import com.dreawer.goods.domain.Sku;
 import com.dreawer.goods.lang.GoodsStatus;
 import com.dreawer.goods.lang.InventoryStatus;
+import com.dreawer.goods.lang.InventoryType;
 import com.dreawer.goods.lang.PurchaseInfo;
 import com.dreawer.goods.persistence.GoodsDao;
 import com.dreawer.goods.persistence.InventoryOperationDetailDao;
 
 /**
- * <CODE>MerchandiseSkuService</CODE> 商品SKUService。
+ * <CODE>SkuService</CODE> SKUService。
  * @author kael
  * @since Dreawer 2.0
  * @version 1.0
@@ -91,7 +92,7 @@ public class SkuService extends BaseService{
     					}
     					
     					//判断sku库存是否充足
-    					if((sku.getInventory() - sku.getLockedInventory())  >= purchaseInfo.getQuantity()){
+    					if(sku.getInventoryType().equals(InventoryType.LIMITED) && (sku.getInventory() - sku.getLockedInventory())  >= purchaseInfo.getQuantity()){
     						
     						//将待锁定的库存信息添加到List集合中
     						inventoryOperationDetail = new InventoryOperationDetail();
