@@ -431,7 +431,7 @@ public class GroupController extends BaseController{
      * @return 查询到结果返回分组列表，未查询到结果返回空，失败返回相应错误码。
 	 */
     @RequestMapping(value=REQ_LIST, method=RequestMethod.GET)
-    public @ResponseBody ResponseCode list(HttpServletRequest req, @RequestParam(name=PARENT_ID ,defaultValue="0")String parentId, @RequestParam(STORE_ID)String storeId, @RequestParam(name=STATUS, required=false, defaultValue= "DEFAULT")String status) {
+    public @ResponseBody ResponseCode list(HttpServletRequest req, @RequestParam(name=PARENT_ID ,defaultValue="0")String parentId, @RequestParam(STORE_ID)String storeId, @RequestParam(name=STATUS, required=false)String status) {
     	try {
     		
     		//获取分组状态
