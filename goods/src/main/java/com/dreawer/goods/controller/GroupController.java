@@ -83,7 +83,7 @@ public class GroupController extends BaseController{
     		if(form.getSource().equals(SourceType.APPX)){
     			
     			//判断跳转地址是否为空
-    			if(StringUtils.isEmpty(form.getUrl())){
+    			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
     		}
@@ -401,7 +401,7 @@ public class GroupController extends BaseController{
     		if(form.getSource().equals(SourceType.APPX)){
     			
     			//判断跳转地址是否为空
-    			if(StringUtils.isEmpty(form.getUrl())){
+    			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
     		}
