@@ -33,7 +33,7 @@
 		WHERE gr.id = #{id}
 	</delete>
 	
-	<!-- 根据商品ID列表批量删除店铺分类、商品关系 -->
+	<!-- 根据商品ID列表批量删除分组、商品关系 -->
 	<delete id="deleteBatchGroupGoods" parameterType="Map">
 		DELETE FROM godsi_gr_gods
 		WHERE gods_id IN 
@@ -42,7 +42,7 @@
 		</foreach>
 	</delete>
 	
-	<!-- 根据商品ID批量删除店铺分类、商品关系 -->
+	<!-- 根据商品ID批量删除分组、商品关系 -->
 	<delete id="deleteGroupGoodsByGoodsIdAndGroupId" parameterType="Map">
 		DELETE FROM godsi_gr_gods
 		WHERE gods_id = #{goodsId} AND gr_id = #{groupId}
