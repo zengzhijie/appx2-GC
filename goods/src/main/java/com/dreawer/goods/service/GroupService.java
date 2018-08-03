@@ -62,6 +62,17 @@ public class GroupService extends BaseService{
 			}
 		}
     	
+		List<Group> groups = groupDao.findChildGroups(group.getParentId(), group.getStoreId(), null);
+		
+        //添加排列序号
+        if(group.getSquence() == null){
+        	if(groups != null && groups.size()>0){
+        		group.setSquence(groups.get(groups.size()-1).getSquence()+1);
+        	}else{
+        		group.setSquence(1);
+        	}
+        }
+		
     	//添加分组
     	groupDao.save(group);
     	

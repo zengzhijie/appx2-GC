@@ -22,7 +22,6 @@ public class AddGroupForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String parentId = null; // 父分组ID
 	
-	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Integer squence = null; // 排列序号
 	
 	@Length(min=1, max=255, message=ENTRY_ERROR_OVERRANGE)
