@@ -440,9 +440,9 @@ public class GroupController extends BaseController{
     		GroupStatus groupStatus = GroupStatus.get(status);
     		
     		//判断分组状态是否为空
-    		if(groupStatus == null){
-    			return EntryError.EMPTY(STATUS);
-    		}
+//    		if(groupStatus == null){
+//    			return EntryError.EMPTY(STATUS);
+//    		}
     		
     		//执行查询
     		ResponseCode responseCode = groupService.findGroups(parentId, storeId, groupStatus);
@@ -472,9 +472,9 @@ public class GroupController extends BaseController{
     		GroupStatus groupStatus = GroupStatus.get(status);
     		
     		//判断分组状态是否为空
-    		if(groupStatus == null){
-    			return EntryError.EMPTY(STATUS);
-    		}
+//    		if(groupStatus == null){
+//    			return EntryError.EMPTY(STATUS);
+//    		}
     		
     		//执行查询
     		ResponseCode responseCode = groupService.getGroupsCount(parentId, storeId, groupStatus);
