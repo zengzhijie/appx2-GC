@@ -49,7 +49,7 @@
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
              <customFields>{"appname":"gc"}</customFields>
              
-                        <providers>  
+               <providers>  
                 <timestamp>  
                     <timeZone>UTC</timeZone>  
                 </timestamp>  
@@ -64,7 +64,7 @@
                         "pid": "${PID:-}",  
                         "thread": "%thread",  
                         "class": "%logger{40}",  
-                        "rest": "%message"  
+                        "rest": "%msg"  
                         }  
                     </pattern>  
                 </pattern>  
