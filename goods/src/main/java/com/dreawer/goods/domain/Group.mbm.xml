@@ -148,7 +148,7 @@
 			<if test="goodsQuantity != null">
 				gods_qty = #{goodsQuantity},
 			</if>
-			updr_id = #{updater.id}, upd_tim = #{updateTime}
+			updr_id = #{updaterId}, upd_tim = #{updateTime}
 		</set>
 		WHERE id = #{id}
 	</update>
