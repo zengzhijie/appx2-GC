@@ -86,6 +86,7 @@ public class GroupController extends BaseController{
     			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
+    			group.setUrl(form.getUrl());
     		}
     		group.setGoodsQuantity(0);
     		group.setCreaterId(userId);
@@ -404,6 +405,7 @@ public class GroupController extends BaseController{
     			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
+    			group.setUrl(form.getUrl());
     		}
     		group.setGoodsQuantity(0);
     		group.setUpdaterId(userId);
