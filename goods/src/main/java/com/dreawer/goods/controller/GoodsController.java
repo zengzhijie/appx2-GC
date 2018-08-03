@@ -1463,10 +1463,19 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//计算分页起始
-    		int start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    		Integer start = null;
+    		Integer pageSize = form.getPageSize();
+    		if(form.getPageNo() != null && form.getPageSize() != null){
+    			start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    		}else{
+    			start = 0;
+    			if(pageSize == null){
+    				pageSize = 5;
+    			}
+    		}
     		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, form.getPageSize());
+    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, pageSize);
         	
             //返回查询结果
             return responseCode;
@@ -1490,10 +1499,18 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//计算分页起始
-    		int start = (form.getPageNo()-1)*(form.getPageSize()+1);
-    		
+    		Integer start = null;
+    		Integer pageSize = form.getPageSize();
+    		if(form.getPageNo() != null && form.getPageSize() != null){
+    			start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    		}else{
+    			start = 0;
+    			if(pageSize == null){
+    				pageSize = 5;
+    			}
+    		}
     		//执行查询
-    		ResponseCode responseCode = goodsService.findSellingGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, form.getPageSize());
+    		ResponseCode responseCode = goodsService.findSellingGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, pageSize);
         	
             //返回查询结果
             return responseCode;
