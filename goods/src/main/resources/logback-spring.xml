@@ -47,7 +47,7 @@
         <destination>${LOGSTASH_PATH}</destination>
         <!-- encoder必须配置,有多种可选 -->
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-             <customFields>{"appname":${APP_NAME}}</customFields>
+             <customFields>{"appname":"gc"}</customFields>
              
                         <providers>  
                 <timestamp>  
