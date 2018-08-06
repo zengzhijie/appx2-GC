@@ -17,6 +17,8 @@ import com.dreawer.responsecode.rcdt.EntryError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.ResponseCodeRepository;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -41,6 +43,8 @@ import java.util.Map;
 @RequestMapping(value = REQ_GROUP)
 public class GroupController extends BaseController{
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private GroupService groupService; //分组信息service
 
@@ -101,6 +105,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -159,6 +164,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -192,6 +198,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -266,6 +273,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -306,6 +314,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -359,6 +368,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -420,6 +430,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -452,6 +463,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -484,6 +496,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -506,6 +519,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -528,6 +542,7 @@ public class GroupController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }

@@ -36,6 +36,8 @@ import com.dreawer.responsecode.rcdt.EntryError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.ResponseCodeRepository;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -62,6 +64,8 @@ import java.util.regex.Pattern;
 @RequestMapping(value = REQ_GOODS)
 public class GoodsController extends BaseController{
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private GoodsService goodsService; //商品service
 
@@ -626,6 +630,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1199,6 +1204,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1232,6 +1238,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1285,6 +1292,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1338,6 +1346,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1391,6 +1400,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1444,11 +1454,10 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
-    
-    //TODO
     
 	/**
      * 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询商品列表(根据创建时间倒叙)
@@ -1482,6 +1491,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1509,6 +1519,7 @@ public class GoodsController extends BaseController{
     				pageSize = 5;
     			}
     		}
+    		
     		//执行查询
     		ResponseCode responseCode = goodsService.findSellingGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, pageSize);
         	
@@ -1517,6 +1528,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1538,6 +1550,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1607,6 +1620,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1676,6 +1690,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1745,6 +1760,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1814,6 +1830,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -1883,6 +1900,7 @@ public class GoodsController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }

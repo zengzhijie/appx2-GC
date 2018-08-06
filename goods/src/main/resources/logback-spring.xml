@@ -81,6 +81,5 @@
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="LOGSTASH" />
 
-		<!-- 生产环境将请stdout,testfile去掉  --><appender-ref ref="STDOUT" />
 	</root>
 </configuration>

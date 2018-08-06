@@ -319,4 +319,7 @@ public abstract class DomainConstants {
     /** 关键字 */
     public static final String KEYWORD = "keyword";
 
+    /** 错误 */
+    public static final String ERROR = "error";
+    
 }

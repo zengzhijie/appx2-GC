@@ -20,12 +20,15 @@ import com.dreawer.responsecode.rcdt.EntryError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.ResponseCodeRepository;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import static com.dreawer.goods.constants.ControllerConstants.*;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import static com.dreawer.responsecode.rcdt.Error.APPSERVER;
@@ -46,6 +49,8 @@ import java.util.regex.Pattern;
 @RequestMapping(value = REQ_FREIGHT)
 public class FreightController extends BaseController{
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private FreightService freightService; //运费模板service
 
@@ -298,6 +303,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -567,6 +573,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -600,6 +607,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -628,6 +636,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -650,6 +659,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -672,6 +682,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -766,6 +777,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
@@ -816,6 +828,7 @@ public class FreightController extends BaseController{
 
         } catch ( Exception e) {
             e.printStackTrace();
+            logger.error(ERROR, e);
             return APPSERVER;
         }
     }
