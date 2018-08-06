@@ -135,7 +135,7 @@ public class GoodsController extends BaseController{
     			
     			//判断SKU描述长度是否合规
     			String description = addSkuForm.getDescription();
-    			if(description.length() > 270){
+    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
     				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
     			}
     			
@@ -697,7 +697,7 @@ public class GoodsController extends BaseController{
     			
     			//判断SKU描述长度是否合规
     			String description = skuForm.getDescription();
-    			if(description.length() > 270){
+    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
     				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
     			}
     			

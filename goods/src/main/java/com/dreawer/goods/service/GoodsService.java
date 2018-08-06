@@ -171,15 +171,17 @@ public class GoodsService extends BaseService{
     		String amount = freightParam.getAmount();
     		
     		//查询运费模板信息
-    		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
-    		
-    		if(freight == null){
-    			return RuleError.NON_EXISTENT(FREIGHT);
-    		}
-    		
-    		//判断运费模板计价方式
-    		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-    			return EntryError.EMPTY(AMOUNT);
+    		if(StringUtils.isNotEmpty(freightParam.getFreightId())){
+    			Freight freight = freightDao.findFreightById(freightParam.getFreightId());
+        		
+        		if(freight == null){
+        			return RuleError.NON_EXISTENT(FREIGHT);
+        		}
+        		
+        		//判断运费模板计价方式
+        		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
+        			return EntryError.EMPTY(AMOUNT);
+        		}
     		}
     		
     		//删除运费参数信息
@@ -503,15 +505,17 @@ public class GoodsService extends BaseService{
     		String amount = freightParam.getAmount();
     		
     		//查询运费模板信息
-    		Freight freight = freightDao.findFreightById(freightParam.getFreightId());
-    		
-    		if(freight == null){
-    			return RuleError.NON_EXISTENT(FREIGHT);
-    		}
-    		
-    		//判断运费模板计价方式
-    		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-    			return EntryError.EMPTY(AMOUNT);
+    		if(StringUtils.isNotEmpty(freightParam.getFreightId())){
+    			Freight freight = freightDao.findFreightById(freightParam.getFreightId());
+        		
+        		if(freight == null){
+        			return RuleError.NON_EXISTENT(FREIGHT);
+        		}
+        		
+        		//判断运费模板计价方式
+        		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
+        			return EntryError.EMPTY(AMOUNT);
+        		}
     		}
     		
     		//删除运费参数信息
