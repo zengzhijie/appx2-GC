@@ -7,8 +7,7 @@ import com.dreawer.goods.lang.InventoryType;
 import com.dreawer.goods.lang.SourceType;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.util.List;
-
-import javax.validation.constraints.Null;
+import javax.validation.constraints.NotNull;
 
 /**
  * 添加商品信息表单
@@ -25,9 +24,9 @@ public class AddGoodsForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String categoryId = null; // 类目ID（子类目）
 	
-	@Null(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private InventoryType inventoryType = null; // 库存类型
-	
+	                      
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	@Length(min=1, max=1020, message=ENTRY_ERROR_OVERRANGE)
 	private String mainDiagram = null; // 主图
@@ -38,16 +37,16 @@ public class AddGoodsForm {
 	@Length(min=1, max=20000, message=ENTRY_ERROR_OVERRANGE)
 	private String service = null; // 售后服务
 	
-	@Null(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private GoodsStatus status = null; // 状态
 	
-	@Null(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Boolean isRecommend = null; //是否推荐
 	
 	@Length(min=1, max=200, message=ENTRY_ERROR_OVERRANGE)
     private String remark = null; // 备注
 
-	@Null(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private SourceType source = null; // 来源类型
     
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
