@@ -93,7 +93,7 @@ public final class ControllerConstants {
     public static final String REQ_UPDATE_RECOMMEND = "/updateRecommend";
     
     /** 请求“正销售商品列表” */
-    public static final String REQ_SELLING_LIST = "/SellingList";
+    public static final String REQ_SELLING_LIST = "/sellingList";
 
     /** 请求“购买信息详情” */
     public static final String REQ_PURCHASE_DETAILS = "/purchaseDetails";
