@@ -69,7 +69,7 @@ public class SkuService extends BaseService{
     		
     		//判断SKU信息是否存在
 			if(sku == null){
-				return StatusError.DELETED(SKU); // SKU已删除
+				return StatusError.DELETED(SKU_ID+":"+purchaseInfo.getSkuId()); // SKU已删除
 			}
     		
     		//查询商品信息
@@ -88,7 +88,7 @@ public class SkuService extends BaseService{
     					//判断是否达到起售量
     					if(purchaseInfo.getQuantity() < sku.getSalesVolume()){
     						//TODO
-    						StatusError.APPLIED(SKU); // 未达到起售量
+    						StatusError.APPLIED(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
     					}
     					
     					//判断sku库存是否充足
@@ -110,15 +110,15 @@ public class SkuService extends BaseService{
     						
     					}else{
     						//TODO
-    						StatusError.APPLIED(SKU); // 库存不足
+    						StatusError.APPLIED(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
     					}	
             		}else if(goods.getStatus().equals(GoodsStatus.APPLIED)){
-            			return StatusError.APPLIED(GOODS); // 商品已下架
+            			return StatusError.APPLIED(GOODS_ID+":"+sku.getGoodsId()); // 商品已下架
             		}else{
-            			return StatusError.DELETED(GOODS); // 商品已移除
+            			return StatusError.DELETED(GOODS_ID+":"+sku.getGoodsId()); // 商品已移除
             		}
     			}else{
-    				return RuleError.NON_EXISTENT(GOODS); // 商品不存在或已删除
+    				return RuleError.NON_EXISTENT(GOODS_ID+":"+sku.getGoodsId()); // 商品不存在或已删除
     			}
     		}
     	}	
@@ -136,9 +136,6 @@ public class SkuService extends BaseService{
     		inventoryOperationDetailDao.saveBatch(inventoryOperationDetails);
     	}
     	
-    	
-
-    		
     	//返回处理结果
     	return Success.SUCCESS(orderId);
     }
@@ -192,8 +189,6 @@ public class SkuService extends BaseService{
     		//执行释放库存
     		skuDao.updateBatchLockedInventory(updateSkus);
     	}
-    	
-    	
     	
     	if(inventoryOperationDetails.size() > 0){
     		
@@ -250,7 +245,7 @@ public class SkuService extends BaseService{
 					sku.setInventory(sku.getInventory() - inventoryOperationDetail.getInventory());
 					updateSkus.add(sku);
 				}else{
-					return RuleError.NON_EXISTENT(SKU); // SKU不存在
+					return RuleError.NON_EXISTENT(SKU_ID+":"+purchaseInfo.getSkuId()); // SKU不存在
 				}
     		}
     	}	

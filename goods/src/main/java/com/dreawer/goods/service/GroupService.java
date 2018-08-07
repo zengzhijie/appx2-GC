@@ -46,7 +46,7 @@ public class GroupService extends BaseService{
     	//查询是否存在名称相同的分组信息
     	Group findGroup = groupDao.findGroup(group.getParentId(), group.getStoreId(), group.getName());
     	if(findGroup != null){
-    		return RuleError.EXISTED(GROUP); // 分组名称已存在
+    		return RuleError.EXISTED(GROUP_NAME+":"+group.getName()); // 分组名称已存在
     	}
     	
     	//父分组ID不为0，即不是顶级分组
@@ -92,7 +92,7 @@ public class GroupService extends BaseService{
     	//判断该分组是否存在
     	Group groupInfo = groupDao.findGroup(group.getId());
     	if(groupInfo == null){
-    		return RuleError.NON_EXISTENT(GROUP); // 分组不存在
+    		return RuleError.NON_EXISTENT(GROUP_ID+":"+group.getId()); // 分组不存在
     	}
     	
     	//创建集合封装分组、商品信息列表
@@ -107,7 +107,7 @@ public class GroupService extends BaseService{
     		//判断该商品是否存在
     		Goods findGoods = goodsDao.findGoodsById(goods.getId());
     		if(findGoods == null){
-    			return RuleError.NON_EXISTENT(GOODS);
+    			return RuleError.NON_EXISTENT(GOODS_ID+":"+goods.getId());
     		}
     		
     		//判断分组中是否存在该商品，存在则不添加
@@ -190,7 +190,7 @@ public class GroupService extends BaseService{
         	Group group = null;
         	group = groupDao.findGroup(currentGroupId);
         	if(group == null){
-        		return RuleError.NON_EXISTENT(GROUP); // 当前分组不存在
+        		return RuleError.NON_EXISTENT(GROUP_ID+":"+currentGroupId); // 当前分组不存在
         	}
         	
         	//若当前分组中已存在该商品则不执行添加
@@ -253,9 +253,8 @@ public class GroupService extends BaseService{
     	//查询分组名称是否已存在
     	Group findGroup = groupDao.findGroup(group.getParentId(), group.getStoreId(), group.getName());
     	if(findGroup != null && !findGroup.getId().equals(group.getId())){
-    		return RuleError.EXISTED(GROUP_NAME); // 分组名称已存在
+    		return RuleError.EXISTED(GROUP_NAME+":"+group.getName()); // 分组名称已存在
     	}
-    	
     	
     	//执行更新
     	groupDao.update(group);

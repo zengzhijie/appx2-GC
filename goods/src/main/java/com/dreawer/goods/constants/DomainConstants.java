@@ -277,10 +277,6 @@ public abstract class DomainConstants {
 	/** 用户ID */
     public static final String USER_ID = "userId";
     
-    
-    
-    
-    
 	/** 模板ID */
     public static final String TEMPLET_ID = "templetId";
     
@@ -289,6 +285,9 @@ public abstract class DomainConstants {
     
 	/** 图片 */
     public static final String IMAGE = "image";
+    
+	/** 运费模板名称 */
+    public static final String FREIGHT_NAME = "freightName";
     
     // --------------------------------------------------------------------------------
     // 分页属性
