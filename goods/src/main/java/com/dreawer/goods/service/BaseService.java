@@ -628,6 +628,7 @@ public class BaseService {
     	
     	//判断商品信息是否为空
     	if(goods != null){
+    		
 			//获取分组视图列表
 			List<ViewGroup> viewGroups = convertGroupViews(goods.getGroups());
 			
