@@ -150,19 +150,6 @@ CREATE INDEX idx_gr_id ON godsi_gr_gods(gr_id);
 CREATE INDEX idx_gods_id ON godsi_gr_gods(gods_id);
 
 -- ==================================================
--- 商品、运费关系表
--- ==================================================
-DROP TABLE IF EXISTS godsr_gods_frt;
-CREATE TABLE godsr_gods_frt (
-	gods_id	  CHAR(32) NOT NULL COMMENT 'ID序列号',
-	frt_id    CHAR(32) NOT NULL COMMENT '运费模板ID',
-	crer_id   CHAR(32) NOT NULL COMMENT '创建者用户ID号',
-	cre_tim   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-	PRIMARY KEY (gods_id)
-) COMMENT='商品、运费关系表' ENGINE=InnoDB;
-CREATE INDEX idx_frt_id ON godsr_gods_frt(frt_id);
-
--- ==================================================
 -- 运费模板信息表
 -- ==================================================
 DROP TABLE IF EXISTS godsi_freight;

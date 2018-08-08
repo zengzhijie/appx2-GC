@@ -22,10 +22,9 @@
 		DELETE gods, gr_gods, gods_frt, frt_par, sku, gpn, gpv
 		FROM godsi_goods AS gods
 		LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
-		LEFT JOIN godsr_gods_frt AS gods_frt ON gr_gods.gods_id = gods_frt.gods_id
-		LEFT JOIN godsi_frt_par AS frt_par ON gods_frt.gods_id = frt_par.gods_id
-		LEFT JOIN godsi_sku AS sku ON frt_par.gods_id = sku.gods_id
-		LEFT JOIN godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+		LEFT JOIN godsi_frt_par AS frt_par ON gods.id = frt_par.gods_id
+		LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
+		LEFT JOIN godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 		LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.gods_id = gpv.gods_id
 		WHERE gg.id IN
 		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
@@ -130,10 +129,10 @@
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
-	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.sto_id = #{storeId}
 	  <if test="groupId != null">
@@ -198,10 +197,10 @@
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
-	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(sku.Inventory)-SUM(sku.lock_inv) FROM godsi_sku AS sku WHERE sku.gods_id = gods.id) != 0)
 	  <if test="groupId != null">
@@ -281,10 +280,10 @@
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
 	  FROM godsi_goods AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
-	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON sku.gods_id = gpn.gods_id
+	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
-	  LEFT JOIN godsi_app AS app ON app.gods_id = gpv.gods_id
-	  LEFT JOIN godsi_gr_gods AS gr_gods ON app.gods_id = gr_gods.gods_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
 	  WHERE gods.id = #{id}
 	  <if test="type != null">
