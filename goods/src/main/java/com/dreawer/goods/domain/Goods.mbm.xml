@@ -207,7 +207,7 @@
 	  			<if test="keyword != null">
 	  				AND goods.name LIKE CONCAT('%',#{keyword},'%')
 	  			</if>
-	 				 ORDER BY gods.cre_tim DESC
+	 				 ORDER BY goods.cre_tim DESC
 	  			<if test="start != null">
 	  				<if test="pageSize != null">
 	  					LIMIT #{start}, #{pageSize}
