@@ -186,7 +186,7 @@ public class GoodsController extends BaseController{
     			String remark = addSkuForm.getRemark();
     			if(!StringUtils.isEmpty(remark)){
     				if(remark.length()>255){
-    					EntryError.TOO_LONG(REMARK);
+    					return EntryError.TOO_LONG(REMARK);
     				}
     			}
     			
@@ -489,7 +489,7 @@ public class GoodsController extends BaseController{
         				String remark = goodsPropertyValueForm.getRemark();
             			if(!StringUtils.isEmpty(remark)){
             				if(remark.length()>255){
-            					EntryError.TOO_LONG(PROPERTY_VALUE_REMARK);
+            					return EntryError.TOO_LONG(PROPERTY_VALUE_REMARK);
             				}
             			}
             			
@@ -748,7 +748,7 @@ public class GoodsController extends BaseController{
     			String remark = skuForm.getRemark();
     			if(!StringUtils.isEmpty(remark)){
     				if(remark.length()>255){
-    					EntryError.TOO_LONG(REMARK);
+    					return EntryError.TOO_LONG(REMARK);
     				}
     			}
     			

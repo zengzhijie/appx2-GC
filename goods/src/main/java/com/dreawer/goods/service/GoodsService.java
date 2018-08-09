@@ -743,7 +743,10 @@ public class GoodsService extends BaseService{
 				}
 				
 		    	//设置描述信息
-		    	purchaseDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+				if(descriptionStringBuffer.length() >0 && descriptionStringBuffer.toString().contains(";")){
+					purchaseDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+				}
+			
 			}
 
 	    	
@@ -831,7 +834,10 @@ public class GoodsService extends BaseService{
 						}
 						
 				    	//设置描述信息
-						cartDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+						if(descriptionStringBuffer.length() >0 && descriptionStringBuffer.toString().contains(";")){
+							cartDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
+						}
+						
 					}
 
 			    	//添加购买详情到详情列表中

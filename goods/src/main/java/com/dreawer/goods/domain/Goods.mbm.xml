@@ -127,37 +127,36 @@
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
-	  FROM godsi_goods AS gods
+	  FROM (SELECT goods.* FROM godsi_goods AS goods WHERE goods.sto_id = #{storeId})
+	        		 <if test="type != null">
+	  					AND goods.type = #{type}
+	  				 </if>	
+	 				 <if test="status != null">
+	  					AND goods.status = #{status}
+	  				</if>	
+	  				<if test="isRecommend != null">
+	  					AND goods.is_rcd = #{isRecommend}
+	  				</if>
+	  				<if test="categoryId != null">
+	  					AND goods.ctg_id = #{categoryId}
+	  				</if>		
+	  				<if test="keyword != null">
+	  					AND goods.name LIKE CONCAT('%',#{keyword},'%')
+	  				</if>
+	  					ORDER BY goods.cre_tim DESC
+	  				<if test="start != null">
+	  					<if test="pageSize != null">
+	  						LIMIT #{start}, #{pageSize}
+	  					</if>
+	  				</if>) AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
 	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
-	  WHERE gods.sto_id = #{storeId}
 	  <if test="groupId != null">
-	  	AND gr_gods.gr_id = #{groupId}
-	  </if>
-	  <if test="type != null">
-	  	AND gods.type = #{type}
-	  </if>	
-	  <if test="status != null">
-	  	AND gods.status = #{status}
-	  </if>	
-	  <if test="isRecommend != null">
-	  	AND gods.is_rcd = #{isRecommend}
-	  </if>
-	  <if test="categoryId != null">
-	  	AND gods.ctg_id = #{categoryId}
-	  </if>		
-	  <if test="keyword != null">
-	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
-	  </if>
-	  ORDER BY gods.cre_tim DESC
-	  <if test="start != null">
-	  	<if test="pageSize != null">
-	  		LIMIT #{start}, #{pageSize}
-	  	</if>
+	  	WHERE gr_gods.gr_id = #{groupId}
 	  </if>
 	</select>
 	
@@ -195,34 +194,33 @@
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
-	  FROM godsi_goods AS gods
+	  FROM (SELECT goods.* FROM godsi_goods AS goods WHERE goods.sto_id = #{storeId}  AND goods.status = 'DEFAULT'AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
+	        	<if test="type != null">
+	  				AND goods.type = #{type}
+	 			</if>	
+	  			<if test="isRecommend != null">
+	  				AND goods.is_rcd = #{isRecommend}
+	  			</if>
+	  			<if test="categoryId != null">
+	  				AND goods.ctg_id = #{categoryId}
+	  			</if>	
+	  			<if test="keyword != null">
+	  				AND goods.name LIKE CONCAT('%',#{keyword},'%')
+	  			</if>
+	 				 ORDER BY gods.cre_tim DESC
+	  			<if test="start != null">
+	  				<if test="pageSize != null">
+	  					LIMIT #{start}, #{pageSize}
+	  				</if>
+	  			</if>) AS gods
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
 	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
-	  WHERE gods.sto_id = #{storeId} AND gods.status = 'DEFAULT' AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(sku.Inventory)-SUM(sku.lock_inv) FROM godsi_sku AS sku WHERE sku.gods_id = gods.id) != 0)
 	  <if test="groupId != null">
-	  	AND gr_gods.gr_id = #{groupId}
-	  </if>
-	  <if test="type != null">
-	  	AND gods.type = #{type}
-	  </if>	
-	  <if test="isRecommend != null">
-	  	AND gods.is_rcd = #{isRecommend}
-	  </if>
-	  <if test="categoryId != null">
-	  	AND gods.ctg_id = #{categoryId}
-	  </if>	
-	  <if test="keyword != null">
-	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
-	  </if>
-	  ORDER BY gods.cre_tim DESC
-	  <if test="start != null">
-	  	<if test="pageSize != null">
-	  		LIMIT #{start}, #{pageSize}
-	  	</if>
+	  	WHERE gr_gods.gr_id = #{groupId}
 	  </if>
 	</select>
 	
@@ -248,11 +246,6 @@
 	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
 	  </if>
 	  ORDER BY gods.cre_tim DESC
-	  <if test="start != null">
-	  	<if test="pageSize != null">
-	  		LIMIT #{start}, #{pageSize}
-	  	</if>
-	  </if>	
 	</select>
 	
 	<!-- 根据商品ID查询商品信息  -->
