@@ -435,7 +435,7 @@ public class GoodsController extends BaseController{
         			goodsPropertyName.setCreaterId(userId);
         			goodsPropertyName.setCreateTime(getNow());
         			goodsPropertyName.setPropertyValues(goodsPropertyValues);
-        			
+        			goodsPropertyNames.add(goodsPropertyName);
         			//获取商品属性值表单列表
         			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValues();
     			
@@ -1007,6 +1007,7 @@ public class GoodsController extends BaseController{
         			goodsPropertyName.setCreaterId(userId);
         			goodsPropertyName.setCreateTime(getNow());
         			goodsPropertyName.setPropertyValues(goodsPropertyValues);
+        			goodsPropertyNames.add(goodsPropertyName);
         			
         			//获取商品属性值表单列表
         			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValues();
