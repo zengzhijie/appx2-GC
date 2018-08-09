@@ -415,6 +415,7 @@ public class GoodsController extends BaseController{
         			//封装属性名信息
         			GoodsPropertyName goodsPropertyName = new GoodsPropertyName();
         			goodsPropertyName.setId(goodsPropertyNameId);
+        			goodsPropertyName.setGoodsId(goodsId);
         			goodsPropertyName.setPropertyNameId(propertyNameId);
         			goodsPropertyName.setName(name);
         			goodsPropertyName.setCategoryId(form.getCategoryId());
@@ -988,6 +989,7 @@ public class GoodsController extends BaseController{
         			GoodsPropertyName goodsPropertyName = new GoodsPropertyName();
         			goodsPropertyName.setId(goodsPropertyNameId);
         			goodsPropertyName.setPropertyNameId(propertyNameId);
+        			goodsPropertyName.setGoodsId(goodsId);
         			goodsPropertyName.setName(name);
         			goodsPropertyName.setCategoryId(form.getCategoryId());
         			goodsPropertyName.setType(type);
