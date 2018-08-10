@@ -315,6 +315,9 @@ public abstract class DomainConstants {
     // 其他
     // --------------------------------------------------------------------------------
 
+    /** 是否售罄 */
+    public static final String IS_SOLD_OUT = "isSoldOut";
+    
     /** 关键字 */
     public static final String KEYWORD = "keyword";
 

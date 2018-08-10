@@ -499,7 +499,7 @@ public class GoodsController extends BaseController{
             			goodsPropertyValue.setId(generateUUID());
             			goodsPropertyValue.setGoodsPropertyNameId(goodsPropertyNameId);
             			goodsPropertyValue.setPropertyValueId(propertyValueId);
-            			goodsPropertyValue.setPropertyNameId(goodsPropertyNameId);
+            			goodsPropertyValue.setPropertyNameId(propertyNameId);
             			goodsPropertyValue.setGoodsId(goodsId);
             			goodsPropertyValue.setPropertyNameType(type);
             			goodsPropertyValue.setType(propertyValueType);
@@ -1076,7 +1076,7 @@ public class GoodsController extends BaseController{
             			}
             			goodsPropertyValue.setGoodsPropertyNameId(goodsPropertyNameId);
             			goodsPropertyValue.setPropertyValueId(propertyValueId);
-            			goodsPropertyValue.setPropertyNameId(goodsPropertyNameId);
+            			goodsPropertyValue.setPropertyNameId(propertyNameId);
             			goodsPropertyValue.setGoodsId(goodsId);
             			goodsPropertyValue.setPropertyNameType(type);
             			goodsPropertyValue.setType(propertyValueType);
@@ -1487,7 +1487,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, pageSize);
+    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.DEFAULT, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), form.getIsSoldOut(), start, pageSize);
         	
             //返回查询结果
             return responseCode;

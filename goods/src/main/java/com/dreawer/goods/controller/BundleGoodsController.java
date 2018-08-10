@@ -1363,7 +1363,7 @@ public class BundleGoodsController extends BaseController{
     		int start = (form.getPageNo()-1)*(form.getPageSize()+1);
     		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.BUNDLED, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), start, form.getPageSize());
+    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), form.getGroupId(), GoodsType.BUNDLED, form.getStatus(), form.getIsRecommend(), form.getCategoryId(), form.getKeyword(), form.getIsSoldOut(), start, form.getPageSize());
         	
             //返回查询结果
             return responseCode;

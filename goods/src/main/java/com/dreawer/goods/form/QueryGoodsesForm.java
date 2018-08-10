@@ -9,6 +9,8 @@ public class QueryGoodsesForm extends QuerySellingGoodsesForm{
     
 	private GoodsStatus status = null; // 商品状态
 	
+	private Boolean isSoldOut = null; // 是否售罄
+	
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
@@ -19,6 +21,14 @@ public class QueryGoodsesForm extends QuerySellingGoodsesForm{
 
 	public void setStatus(String status) {
 		this.status = GoodsStatus.get(status);
+	}
+
+	public Boolean getIsSoldOut() {
+		return isSoldOut;
+	}
+
+	public void setIsSoldOut(Boolean isSoldOut) {
+		this.isSoldOut = isSoldOut;
 	}
 
 }

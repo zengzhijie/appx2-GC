@@ -67,7 +67,7 @@ public class BaseService {
 	protected void recursiveDeleteGroup(String id, String storeId) throws Exception{
 		
     	//判断分组中是否存在商品
-    	List<Goods> goodses = goodsDao.findGoodses(storeId, id, null, null, null, null, null, null, null);
+    	List<Goods> goodses = goodsDao.findGoodses(storeId, id, null, null, null, null, null, null, null, null);
     	if(goodses != null && goodses.size()>0){
     		throw new Exception(PERMISSIONS_ERROR_DATA_NOT_ALLOW); // 分组中存在商品不允许删除
     	}

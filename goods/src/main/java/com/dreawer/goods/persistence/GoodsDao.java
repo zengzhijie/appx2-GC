@@ -102,6 +102,7 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
      * @param isRecommend 推荐状态。
      * @param categoryId  类目ID。 
      * @param keyword     模糊查询关键字。
+     * @param isSoldOut   是否售罄。
      * @param start		      分页起始（0为第一条记录）。
      * @param pageSize    每页显示记录数。
      * @return 查询到结果返回商品列表，未查询到结果则返回NULL。
@@ -110,7 +111,7 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
      */
     public List<Goods> findGoodses(String storeId, String groupId, GoodsType type, GoodsStatus status,
     							   Boolean isRecommend, String categoryId, String keyword,
-    							   Integer start, Integer pageSize) {
+    							   Boolean isSoldOut, Integer start, Integer pageSize) {
     	
     	//封装请求参数
     	Map<String, Object> params = new HashMap<>();
@@ -121,6 +122,7 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
     	params.put(IS_RECOMMEND, isRecommend);
     	params.put(CATEGORY_ID, categoryId);
     	params.put(KEYWORD, keyword);
+    	params.put(IS_SOLD_OUT, isSoldOut);
     	params.put(START, start);
     	params.put(PAGE_SIZE, pageSize);
     	
@@ -137,12 +139,13 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
      * @param isRecommend 推荐状态。
      * @param categoryId  类目ID。 
      * @param keyword     模糊查询关键字。
+     * @param isSoldOut   是否售罄。
      * @return 查询到结果返回商品总数，未查询到结果返回0。
      * @author kael
      * @since 1.0
      */
     public int getGoodsCount(String storeId, String groupId, GoodsType type, GoodsStatus status,
-			                 Boolean isRecommend, String categoryId, String keyword) {
+    						 Boolean isRecommend, String categoryId, String keyword, Boolean isSoldOut) {
     	
     	//封装请求参数
     	Map<String, Object> params = new HashMap<>();
@@ -153,6 +156,7 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
     	params.put(IS_RECOMMEND, isRecommend);
     	params.put(CATEGORY_ID, categoryId);
     	params.put(KEYWORD, keyword);
+    	params.put(IS_SOLD_OUT, isSoldOut);
     	
     	//返回查询结果
     	return count("getGoodsCount", params);

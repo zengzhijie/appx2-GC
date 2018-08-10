@@ -1,14 +1,14 @@
 package com.dreawer.goods.form;
 
 import static com.dreawer.goods.constants.MessageConstants.ENTRY_ERROR_EMPTY;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  * 更新商品推荐状态表单
  */
 public class UpdateGoodsRecommendForm extends UpdateGoodsStatusForm{
     
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
+	@NotNull(message=ENTRY_ERROR_EMPTY)
 	private Boolean isRecommend = null; // 是否推荐
 
     // --------------------------------------------------------------------------------
