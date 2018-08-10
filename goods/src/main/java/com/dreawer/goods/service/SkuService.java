@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dreawer.goods.persistence.SkuDao;
 import com.dreawer.goods.view.ViewSku;
 import com.dreawer.responsecode.rcdt.ResponseCode;
@@ -50,6 +52,7 @@ public class SkuService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode lockBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
     	
     	//对购买信息排序
@@ -150,6 +153,7 @@ public class SkuService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode releaseBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
     	
     	//对购买信息排序
@@ -211,6 +215,7 @@ public class SkuService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode deductionBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
     	
     	//对购买信息排序

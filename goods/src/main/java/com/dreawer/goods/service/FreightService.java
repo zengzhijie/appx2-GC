@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dreawer.goods.domain.City;
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
@@ -52,6 +54,7 @@ public class FreightService extends BaseService{
 	 * @param freight 待添加的运费模板信息。
 	 * @return 成功返回运费模板ID，失败则返回相应错误码。
 	 */
+    @Transactional
 	public ResponseCode save(Freight freight){
 		
 		//查询是否存在名称相同的运费模板
@@ -100,6 +103,7 @@ public class FreightService extends BaseService{
 	 * @param freight 待更新的运费模板信息。
 	 * @return 成功返回运费模板ID，失败则返回相应错误码
 	 */
+    @Transactional
 	public ResponseCode update(Freight freight){
 		
 		//判断运费模板信息是否存在
@@ -157,6 +161,7 @@ public class FreightService extends BaseService{
 	 * @param ids 运费信息ID列表。
 	 * @return 成功返回成功响应码，失败则返回相应错误码
 	 */
+    @Transactional
 	public ResponseCode deleteBatch(List<String> ids){
 		
 		//执行删除

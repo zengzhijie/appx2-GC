@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.dreawer.goods.domain.Goods;
 import com.dreawer.goods.domain.Group;
 import com.dreawer.goods.lang.GroupStatus;
@@ -41,6 +43,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode save(Group group){
     	
     	//查询是否存在名称相同的分组信息
@@ -87,6 +90,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode saveBatchGroupGoods(Group group){
     	
     	//判断该分组是否存在
@@ -144,6 +148,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode delete(String id, String storeId){
     	try {
     		
@@ -169,6 +174,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode updateBatchGroupGoodses(List<Map<String, Object>> groupGoodses, String updaterId, Timestamp updateTime){
     	
     	//循环集合
@@ -215,6 +221,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode updateSquence(Group group){
     	
     	//执行更新
@@ -232,6 +239,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode updateBatchStatus(List<Group> groups){
     	
     	//执行更新
@@ -248,6 +256,7 @@ public class GroupService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode update(Group group){
     	
     	//查询分组名称是否已存在

@@ -11,6 +11,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
@@ -82,6 +83,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode save(Goods goods){
     	
     	//添加商品信息
@@ -212,6 +214,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode deleteBatch(List<String> ids){
 
     	//循环ID列表
@@ -256,6 +259,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode shelveGoodses(List<Goods> goodses){
     	
     	//执行更新
@@ -272,6 +276,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode applyGoodses(List<Goods> goodses){
     	
     	//执行更新
@@ -288,6 +293,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode removeGoodses(List<Goods> goodses){
     	
     	//创建List集合封装商品ID
@@ -337,6 +343,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode updateBatchRecommend(List<Goods> goodses){
     	
     	//执行更新
@@ -353,6 +360,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
+    @Transactional
     public ResponseCode update(Goods goods){
     	
     	//判断该商品信息是否存在
