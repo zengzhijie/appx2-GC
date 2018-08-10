@@ -333,6 +333,7 @@
 		<result property="createTime" column="cre_tim" />
 		<result property="updaterId" column="updr_id" />
 		<result property="updateTime" column="upd_tim" />
+		<result property="remark" column="remark" />
 		<collection property="groups" resultMap="com.dreawer.goods.domain.Group.groupResultMap" columnPrefix="gr_" />
 		<collection property="skus" resultMap="com.dreawer.goods.domain.Sku.skuResultMap" columnPrefix="sku_" />
 		<collection property="propertyNames" resultMap="com.dreawer.goods.domain.GoodsPropertyName.goodsPropertyNameResultMap" columnPrefix="gpn_" />
