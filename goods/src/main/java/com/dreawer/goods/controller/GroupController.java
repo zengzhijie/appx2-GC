@@ -62,11 +62,19 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建分组实体类
@@ -74,7 +82,7 @@ public class GroupController extends BaseController{
     		
     		//封装分组信息数据
     		group.setId(generateUUID());
-    		group.setStoreId(form.getStoreId());
+    		group.setStoreId(storeId);
     		group.setName(form.getName());
     		group.setParentId(form.getParentId());
     		group.setIsParent(false);
@@ -183,15 +191,23 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
     		}
     		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
+    		}
+    		
     		//执行删除
-    		ResponseCode responseCode = groupService.delete(form.getId(), form.getStoreId());
+    		ResponseCode responseCode = groupService.delete(form.getId(), storeId);
         	
             //返回删除结果
             return responseCode;
@@ -219,7 +235,7 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -292,7 +308,7 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -333,7 +349,7 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -387,11 +403,19 @@ public class GroupController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建分组实体类
@@ -399,7 +423,7 @@ public class GroupController extends BaseController{
     		
     		//封装分组信息数据
     		group.setId(form.getId());
-    		group.setStoreId(form.getStoreId());
+    		group.setStoreId(storeId);
     		group.setName(form.getName());
     		group.setParentId(form.getParentId());
     		group.setIsParent(false);

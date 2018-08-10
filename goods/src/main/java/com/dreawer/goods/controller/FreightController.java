@@ -28,7 +28,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import static com.dreawer.goods.constants.ControllerConstants.*;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import static com.dreawer.responsecode.rcdt.Error.APPSERVER;
@@ -68,11 +67,19 @@ public class FreightController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//校验并封装请求参数
@@ -83,7 +90,7 @@ public class FreightController extends BaseController{
     		
     		//封装运费模板数据
     		freight.setId(generateUUID());
-    		freight.setStoreId(form.getStoreId());
+    		freight.setStoreId(storeId);
     		freight.setName(form.getName());
     		freight.setDeliveryAddress(form.getDeliveryAddress());
     		freight.setDeliveryTime(form.getDeliveryTime());
@@ -322,11 +329,19 @@ public class FreightController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//校验并封装请求参数
@@ -337,7 +352,7 @@ public class FreightController extends BaseController{
     		
     		//封装运费模板数据
     		freight.setId(generateUUID());
-    		freight.setStoreId(form.getStoreId());
+    		freight.setStoreId(storeId);
     		freight.setName(form.getName());
     		freight.setDeliveryAddress(form.getDeliveryAddress());
     		freight.setDeliveryTime(form.getDeliveryTime());
@@ -592,7 +607,7 @@ public class FreightController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -626,7 +641,7 @@ public class FreightController extends BaseController{
     	try {
     		
     		//计算分页起始
-    		int start = (pageNo-1)*(pageSize+1);
+    		int start = (pageNo-1)*pageSize;
     		
     		//执行查询
     		ResponseCode responseCode = freightService.findFreightDetails(storeId, start, pageSize);
@@ -794,14 +809,6 @@ public class FreightController extends BaseController{
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }
     	try {
-    		
-    		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
-    		
-    		//判断用户ID是否为空
-    		if(StringUtils.isEmpty(userId)){
-    			return EntryError.EMPTY(USER_ID);
-    		}
     		
     		//获取购买信息列表
     		List<PurchaseInfo> purchaseInfos = form.getPurchaseInfos();

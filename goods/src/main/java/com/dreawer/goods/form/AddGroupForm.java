@@ -13,9 +13,6 @@ import javax.validation.constraints.NotNull;
 public class AddGroupForm {
     
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String storeId = null; // 店铺ID
-	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	@Length(min=1, max=40, message=ENTRY_ERROR_OVERRANGE)
 	private String name = null; // 名称
 	
@@ -45,14 +42,6 @@ public class AddGroupForm {
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
 	
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-
 	public String getName() {
 		return name;
 	}

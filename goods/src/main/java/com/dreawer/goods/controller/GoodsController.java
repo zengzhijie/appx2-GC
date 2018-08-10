@@ -87,11 +87,19 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建商品实体类
@@ -264,7 +272,7 @@ public class GoodsController extends BaseController{
     		//封装商品信息
     		goods.setId(goodsId);
     		goods.setName(form.getName());
-    		goods.setStoreId(form.getStoreId());
+    		goods.setStoreId(storeId);
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
     		goods.setMinOriginalPrice(minOriginalPrice);
@@ -650,11 +658,19 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建商品实体类
@@ -833,7 +849,7 @@ public class GoodsController extends BaseController{
     		//封装商品信息
     		goods.setId(goodsId);
     		goods.setName(form.getName());
-    		goods.setStoreId(form.getStoreId());
+    		goods.setStoreId(storeId);
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
     		goods.setMinOriginalPrice(minOriginalPrice);
@@ -1226,7 +1242,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1260,7 +1276,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1314,7 +1330,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1368,7 +1384,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1422,7 +1438,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1478,7 +1494,7 @@ public class GoodsController extends BaseController{
     		Integer start = null;
     		Integer pageSize = form.getPageSize();
     		if(form.getPageNo() != null && form.getPageSize() != null){
-    			start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    			start = (form.getPageNo()-1)*form.getPageSize();
     		}else{
     			start = 0;
     			if(pageSize == null){
@@ -1515,7 +1531,7 @@ public class GoodsController extends BaseController{
     		Integer start = null;
     		Integer pageSize = form.getPageSize();
     		if(form.getPageNo() != null && form.getPageSize() != null){
-    			start = (form.getPageNo()-1)*(form.getPageSize()+1);
+    			start = (form.getPageNo()-1)*form.getPageSize();
     		}else{
     			start = 0;
     			if(pageSize == null){
@@ -1569,14 +1585,6 @@ public class GoodsController extends BaseController{
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }
     	try {
-    		
-    		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
-    		
-    		//判断用户ID是否为空
-    		if(StringUtils.isEmpty(userId)){
-    			return EntryError.EMPTY(USER_ID);
-    		}
     		
     		//获取购买信息表单列表
     		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
@@ -1639,14 +1647,6 @@ public class GoodsController extends BaseController{
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }
     	try {
-    		
-    		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
-    		
-    		//判断用户ID是否为空
-    		if(StringUtils.isEmpty(userId)){
-    			return EntryError.EMPTY(USER_ID);
-    		}
     		
     		//获取购买信息表单列表
     		List<PurchaseInfoForm> purchaseInfoForms = form.getPurchaseInfos();
@@ -1711,7 +1711,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1781,7 +1781,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
@@ -1851,7 +1851,7 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){

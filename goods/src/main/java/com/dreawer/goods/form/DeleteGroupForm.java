@@ -11,9 +11,6 @@ public class DeleteGroupForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private String id = null; // 分组ID
 	
-	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String storeId = null; // 店铺ID
-
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
@@ -26,12 +23,4 @@ public class DeleteGroupForm {
 		this.id = id;
 	}
 
-	public String getStoreId() {
-		return storeId;
-	}
-
-	public void setStoreId(String storeId) {
-		this.storeId = storeId;
-	}
-	
 }

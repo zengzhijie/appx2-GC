@@ -80,11 +80,19 @@ public class BundleGoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建商品实体类
@@ -254,7 +262,7 @@ public class BundleGoodsController extends BaseController{
     		
     		//封装商品信息
     		goods.setId(goodsId);
-    		goods.setStoreId(form.getStoreId());
+    		goods.setStoreId(storeId);
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
     		goods.setMinOriginalPrice(minOriginalPrice);
@@ -591,11 +599,19 @@ public class BundleGoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		String userId = req.getHeader(USER_ID);
+    		String userId = req.getHeader("userid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
+    		}
+    		
+    		//获取用户ID
+    		String storeId = req.getHeader("appid");
+    		
+    		//判断用户ID是否为空
+    		if(StringUtils.isEmpty(storeId)){
+    			return EntryError.EMPTY(STORE_ID);
     		}
     		
     		//创建商品实体类
@@ -771,7 +787,7 @@ public class BundleGoodsController extends BaseController{
     		
     		//封装商品信息
     		goods.setId(goodsId);
-    		goods.setStoreId(form.getStoreId());
+    		goods.setStoreId(storeId);
     		goods.setCategoryId(form.getCategoryId());
     		goods.setMinPrice(minPrice);
     		goods.setMinOriginalPrice(minOriginalPrice);
