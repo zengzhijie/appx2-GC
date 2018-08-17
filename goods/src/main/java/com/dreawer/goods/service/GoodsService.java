@@ -337,6 +337,41 @@ public class GoodsService extends BaseService{
     }
     
     /**
+     * 批量恢复商品。
+     * @param goodses 待更新的商品列表（商品ID、商品下架状态-APPLIED、更新者ID、更新时间）。
+     * @return 成功返回成功码，失败返回相应错误码。
+     * @author kael
+     * @since 1.0
+     */
+    @Transactional
+    public ResponseCode recoverGoodses(List<Goods> goodses, String groupId){
+    	
+    	//判断分组是否存在
+    	Group group = groupDao.findGroup(groupId);
+    	if(group == null){
+    		return RuleError.NON_EXISTENT(GROUP);
+    	}
+    	
+    	//封装请求参数
+    	List<Map<String, Object>> groupGoodses = new ArrayList<>();
+    	for (Goods goods : goodses) {
+			Map<String, Object> groupGoods = new HashMap<>();
+			groupGoods.put(GROUP_ID, groupId);
+			groupGoods.put(GOODS_ID, goods.getId());
+			groupGoods.put(CREATER_ID, goods.getUpdaterId());
+			groupGoods.put(CREATE_TIME, goods.getUpdateTime());
+			groupGoodses.add(groupGoods);
+		}
+    	
+    	//执行更新
+    	goodsDao.updateBatchStatus(goodses);
+    	groupDao.saveBatchGroupGoods(groupGoodses);
+    	
+    	//返回更新结果
+    	return Success.SUCCESS;
+    }
+    
+    /**
      * 批量更新商品推荐状态。
      * @param goodses 待更新的商品列表（商品ID、商品推荐状态、更新者ID、更新时间）。
      * @return 成功返回成功码，失败返回相应错误码。

@@ -35,6 +35,9 @@ public final class ControllerConstants {
     /** 请求“列表” */
     public static final String REQ_LIST = "/list";
     
+    /** 请求“已删除列表” */
+    public static final String REQ_REMOVED_LIST = "/removedList";
+    
     /** 请求“详情列表” */
     public static final String REQ_DETAILS = "/details";
     
@@ -89,6 +92,9 @@ public final class ControllerConstants {
     /** 请求“移除” */
     public static final String REQ_REMOVE = "/remove";
 
+    /** 请求“恢复” */
+    public static final String REQ_RECOVER = "/recover";
+    
     /** 请求“更新推荐状态” */
     public static final String REQ_UPDATE_RECOMMEND = "/updateRecommend";
     

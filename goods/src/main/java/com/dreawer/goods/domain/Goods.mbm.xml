@@ -152,6 +152,12 @@
 	  				<if test="keyword != null">
 	  					AND goods.name LIKE CONCAT('%',#{keyword},'%')
 	  				</if>
+	  			    <if test="goodsIds != null">
+	  					AND goods.id IN
+						<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+            				#{id}
+        				</foreach>
+	  				</if>
 	  					ORDER BY goods.cre_tim DESC
 	  				<if test="start != null">
 	  					<if test="pageSize != null">
@@ -200,6 +206,12 @@
 	  </if>	  	
 	  <if test="keyword != null">
 	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	  <if test="goodsIds != null">
+	  	AND goods.id IN
+		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+        	#{id}
+        </foreach>
 	  </if>
 	</select>
 	

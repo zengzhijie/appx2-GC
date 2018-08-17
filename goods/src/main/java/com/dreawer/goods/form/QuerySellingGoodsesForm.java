@@ -1,6 +1,9 @@
 package com.dreawer.goods.form;
 
 import static com.dreawer.goods.constants.MessageConstants.*;
+
+import java.util.List;
+
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
@@ -23,6 +26,8 @@ public class QuerySellingGoodsesForm {
 	
 	private Integer pageSize = null; // 每页显示记录数
 
+	private List<String> goodsIds = null; // 商品ID列表
+	
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
@@ -65,6 +70,14 @@ public class QuerySellingGoodsesForm {
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public List<String> getGoodsIds() {
+		return goodsIds;
+	}
+
+	public void setGoodsIds(List<String> goodsIds) {
+		this.goodsIds = goodsIds;
 	}
 
 	public Integer getPageNo() {
