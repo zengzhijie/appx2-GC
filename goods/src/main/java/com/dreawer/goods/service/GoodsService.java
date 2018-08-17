@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,6 +55,8 @@ import com.dreawer.responsecode.rcdt.Success;
 @Service
 public class GoodsService extends BaseService{
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
     @Autowired
     private GoodsDao goodsDao; // 商品信息DAO
     
@@ -851,6 +855,8 @@ public class GoodsService extends BaseService{
 					
 					//获取描述
 					String description = sku.getDescription();
+					logger.error(description);
+					
 					StringBuffer descriptionStringBuffer = new StringBuffer();
 					
 					//获取属性名属性值键值对列表
@@ -882,7 +888,8 @@ public class GoodsService extends BaseService{
 						}
 						
 					}
-
+					logger.error(cartDetail.getDescription());
+					
 			    	//添加购买详情到详情列表中
 					cartDetails.add(cartDetail);
 	    		}
