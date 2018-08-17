@@ -115,6 +115,9 @@ public abstract class DomainConstants {
     /** 推荐状态 */
     public static final String IS_RECOMMEND = "isRecommend";
     
+    /** 商品属性名ID */
+    public static final String GOODS_PROPERTY_NAME_ID = "goodsPropertyNameId";
+    
     /** 属性名ID */
     public static final String PROPERTY_NAME_ID = "propertyNameId";
 

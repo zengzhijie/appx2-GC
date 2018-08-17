@@ -7,14 +7,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
 import com.dreawer.goods.domain.Goods;
@@ -55,8 +51,6 @@ import com.dreawer.responsecode.rcdt.Success;
 @Service
 public class GoodsService extends BaseService{
 
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
     @Autowired
     private GoodsDao goodsDao; // 商品信息DAO
     
@@ -780,7 +774,7 @@ public class GoodsService extends BaseService{
 					
 					//查询属性名信息
 					List<GoodsPropertyName> goodsPropertyNames = goodsPropertyNameDao.findGoodsPropertyNames(goods.getId(), propertyNameId);
-					List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), propertyNameId, propertyValueId);
+					List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), goodsPropertyNames.get(0).getId(), propertyValueId);
 					
 					if(goodsPropertyNames != null && goodsPropertyNames.size()>0){
 						if(goodsPropertyValues != null && goodsPropertyValues.size()>0){
@@ -855,7 +849,6 @@ public class GoodsService extends BaseService{
 					
 					//获取描述
 					String description = sku.getDescription();
-					logger.error(description);
 					
 					StringBuffer descriptionStringBuffer = new StringBuffer();
 					
@@ -873,7 +866,7 @@ public class GoodsService extends BaseService{
 							
 							//查询属性名信息
 							List<GoodsPropertyName> goodsPropertyNames = goodsPropertyNameDao.findGoodsPropertyNames(goods.getId(), propertyNameId);
-							List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), propertyNameId, propertyValueId);
+							List<GoodsPropertyValue> goodsPropertyValues = goodsPropertyValueDao.findGoodsPropertyValues(goods.getId(), goodsPropertyNames.get(0).getId(), propertyValueId);
 							
 							if(goodsPropertyNames != null && goodsPropertyNames.size()>0){
 								if(goodsPropertyValues != null && goodsPropertyValues.size()>0){
@@ -888,7 +881,6 @@ public class GoodsService extends BaseService{
 						}
 						
 					}
-					logger.error(cartDetail.getDescription());
 					
 			    	//添加购买详情到详情列表中
 					cartDetails.add(cartDetail);

@@ -69,7 +69,7 @@
 	  SELECT <include refid="basicFields"/>
 	  FROM godsi_gods_pro_val
 	  WHERE gods_id = #{goodsId} 
-	  AND gods_pro_nam_id = #{goodsPropertyNameId} 
+	  AND pro_nam_id = #{propertyNameId} 
 	  AND pro_val_id = #{propertyValueId} 
 	</select>
     

@@ -76,7 +76,7 @@ public class GoodsPropertyValueDao extends MyBatisBaseDao<GoodsPropertyValue> {
     	//封装请求参数
     	Map<String, Object> params = new HashMap<>();
     	params.put(GOODS_ID, goodsId);
-    	params.put(PROPERTY_NAME_ID, propertyNameId);
+    	params.put(GOODS_PROPERTY_NAME_ID, propertyNameId);
     	params.put(PROPERTY_VALUE_ID, propertyValueId);
     	
     	//返回查询结果
@@ -97,7 +97,7 @@ public class GoodsPropertyValueDao extends MyBatisBaseDao<GoodsPropertyValue> {
     	//封装请求参数
     	Map<String, Object> params = new HashMap<>();
     	params.put(GOODS_ID, goodsId);
-    	params.put(PROPERTY_NAME_ID, propertyNameId);
+    	params.put(GOODS_PROPERTY_NAME_ID, propertyNameId);
     	params.put(PROPERTY_VALUE_ID, propertyValueId);
     	
     	//返回查询结果

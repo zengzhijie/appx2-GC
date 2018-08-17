@@ -1780,8 +1780,6 @@ public class GoodsController extends BaseController{
     		//执行查询
     		ResponseCode responseCode = goodsService.getCartDetails(purchaseInfos);
         	
-    		logger.error(responseCode.toString());
-    		
             //返回查询结果
             return responseCode;
 
