@@ -37,6 +37,7 @@ import com.dreawer.goods.view.ViewCartDetail;
 import com.dreawer.goods.view.ViewGoods;
 import com.dreawer.goods.view.ViewPurchaseDetail;
 import com.dreawer.responsecode.rcdt.EntryError;
+import com.dreawer.responsecode.rcdt.GCRuleError;
 import com.dreawer.responsecode.rcdt.PermissionsError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.RuleError;
@@ -236,7 +237,7 @@ public class GoodsService extends BaseService{
     			
     			//判断sku库存状态
     			if(sku.getLockedInventory() != 0){
-    				return PermissionsError.DATA_NO_ALLOW(GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
+    				return GCRuleError.NOTALLOW_DELETE_NON_RECOVERY(GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
     			}
 			}
 		}
@@ -313,7 +314,7 @@ public class GoodsService extends BaseService{
     		//判断商品是否为状态或下架状态
     		if(findGoods.getStatus().equals(GoodsStatus.DEFAULT)){
     			
-    			return PermissionsError.DATA_NO_ALLOW(GOODS_ID+":"+goods.getId()); // 未下架的商品不允许移除
+    			return GCRuleError.NOTALLOW_RECOVERY_NON_DOWN(GOODS_ID+":"+goods.getId()); // 未下架的商品不允许移除
     		}else if(findGoods.getStatus().equals(GoodsStatus.APPLIED)){
     			
     			//封装商品ID
@@ -475,8 +476,7 @@ public class GoodsService extends BaseService{
         					//比对两集合中SKU的库存(当前SKU库存小于原SKU库存，并且小于锁定库存数)
         					if(sku.getInventory() < orginalSku.getLockedInventory()){
         						
-        						//TODO
-        						return PermissionsError.DATA_NO_ALLOW(SKU_ID+":"+sku.getId()); // 修改后的库存小于锁定库存数，不允许修改
+        						return GCRuleError.LOWER_LOCKING_NUMBER(SKU_ID+":"+sku.getId()); // 修改后的库存小于锁定库存数，不允许修改
         					}
         					
         					CommonSku.add(sku);
@@ -495,8 +495,7 @@ public class GoodsService extends BaseService{
         			//判断被删除的SKU是否还有锁定库存
         			if(orginalSku.getLockedInventory() != 0){
         				
-        				//TODO
-						return PermissionsError.DATA_NO_ALLOW(SKU_ID+":"+orginalSku.getId()); // 有锁定库存，不允许删除
+						return GCRuleError.NOTALLOW_DELETE_LOCKED(SKU_ID+":"+orginalSku.getId()); // 有锁定库存，不允许删除
         			}
 				}
         		
@@ -734,15 +733,15 @@ public class GoodsService extends BaseService{
 			
 			//判断是否达到起售量
 			if(purchaseInfo.getQuantity() < sku.getSalesVolume()){
-				//TODO
-				return StatusError.APPLIED(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
+				
+				return GCRuleError.BELOW_MOQ(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
 			}
     				
 			//判断sku库存是否充足
 			if(goods.getInventoryType().equals(InventoryType.LIMITED)){
 				if((sku.getInventory() - sku.getLockedInventory()) >= purchaseInfo.getQuantity()){
-					//TODO
-					return StatusError.APPLIED(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+					
+					return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
 				}	
 			}
 			
