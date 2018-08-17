@@ -18,7 +18,7 @@ import com.dreawer.goods.form.PurchaseInfoForm;
 import com.dreawer.goods.form.PurchaseInfosForm;
 import com.dreawer.goods.form.QueryGoodsesForm;
 import com.dreawer.goods.form.QuerySellingGoodsesForm;
-import com.dreawer.goods.form.GoodsRecoverForm;
+import com.dreawer.goods.form.RecoverGoodsForm;
 import com.dreawer.goods.form.SetFreightParamForm;
 import com.dreawer.goods.form.SkuForm;
 import com.dreawer.goods.form.UpdateGoodsRecommendForm;
@@ -1432,7 +1432,7 @@ public class GoodsController extends BaseController{
 	 * @return 成功返回成功响应码，失败则返回相应错误码。
 	 */
     @RequestMapping(value=REQ_RECOVER, method=RequestMethod.POST)
-    public @ResponseBody ResponseCode recover(HttpServletRequest req, @RequestBody @Valid GoodsRecoverForm form, BindingResult result) {
+    public @ResponseBody ResponseCode recover(HttpServletRequest req, @RequestBody @Valid RecoverGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
             return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
         }
