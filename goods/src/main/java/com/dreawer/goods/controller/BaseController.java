@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+
+import com.dreawer.goods.domain.GoodsPropertyName;
 import com.dreawer.goods.domain.Sku;
 
 /**
@@ -69,4 +71,33 @@ public class BaseController{
 		return skus;
 	}
     
+	/**
+	 * 对SKU描述进行排序（排列序号由低到高低到高）。
+	 * @param skuDescription 待排序的SKU描述。
+	 * @return 排序后的SKU描述。
+	 * @author Kael
+	 * @since 2.0
+	 */
+	protected List<String> sortSkuDescription(List<String> skuDescription, List<GoodsPropertyName> goodsPropertyNames){
+		Collections.sort(skuDescription, new Comparator<String>(){
+			@Override
+			public int compare(String desc1, String desc2) {
+				
+				Integer desc1Squence = 0;
+				Integer desc2Squence = 0;
+				
+				for (GoodsPropertyName goodsPropertyName : goodsPropertyNames) {
+					if(desc1.contains(goodsPropertyName.getPropertyNameId())){
+						desc1Squence = goodsPropertyName.getSquence();
+					}
+					if(desc2.contains(goodsPropertyName.getPropertyNameId())){
+						desc2Squence = goodsPropertyName.getSquence();
+					}
+				}
+				
+				return desc1Squence.compareTo(desc2Squence);
+			}
+		});
+		return skuDescription;
+	}
 }

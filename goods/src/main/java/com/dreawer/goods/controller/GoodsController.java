@@ -128,183 +128,6 @@ public class GoodsController extends BaseController{
 				groups.add(group);
 			}
     		
-    		//获取SKU表单列表
-    		List<SkuForm> skuForms = form.getSkus();
-    		
-    		//判断SKU表单列表是否为空
-    		if(skuForms == null || skuForms.size()<=0){
-    			return EntryError.EMPTY(SKU);
-    		}
-    		
-    		//创建Set集合接收SKU描述
-    		Set<String> descSet = new HashSet<>();
-    		
-    		//循环SKU表单列表
-    		for (SkuForm addSkuForm : skuForms) {
-    			
-    			//判断SKU描述长度是否合规
-    			String description = addSkuForm.getDescription();
-    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
-    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
-    			}
-    			
-    			//将SKU描述保存到Set集合中
-    			descSet.add(description);
-    			
-    			//判断SKU库存是否为空
-    			Integer inventory = addSkuForm.getInventory();
-    			if(inventory == null){
-        			if(form.getInventoryType().equals(InventoryType.LIMITED)){
-        				return EntryError.EMPTY(INVENTORY);
-        			}
-        			inventory = 0;
-    			}else{
-    				
-    				//判断SKU库存取值范围
-    				if(inventory > 9999 || inventory<0){
-    					return EntryError.OVERRANGE(INVENTORY);
-    				}
-    			}
-    			
-    			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
-    			
-    			//判断SKU原价是否为空
-    			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
-    			if(originalPrice == null){
-    				return EntryError.EMPTY(ORIGINAL_PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
-    			}
-    			
-    			//判断SKU售价是否为空
-    			BigDecimal price = addSkuForm.getPrice();
-    			if(price == null){
-    				return EntryError.EMPTY(PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
-    			}
-    			
-    			//判断备注长度是否合规
-    			String remark = addSkuForm.getRemark();
-    			if(!StringUtils.isEmpty(remark)){
-    				if(remark.length()>255){
-    					return EntryError.TOO_LONG(REMARK);
-    				}
-    			}
-    			
-    			//创建编码正则表达式
-    			Pattern codePattern = Pattern.compile("^[0-9a-zA-Z]+$");
-    			
-    			//判断条码格式、长度是否合规
-    			String barcode = addSkuForm.getBarcode();
-    			if(!StringUtils.isEmpty(barcode)){
-        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
-        			}
-        			
-        			if(barcode.length() > 255){
-        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
-        			}
-    			}
-
-    			//判断编码格式、长度是否合规
-    			String code = addSkuForm.getCode();
-    			if(!StringUtils.isEmpty(code)){
-        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
-        			}
-        			
-        			if(code.length() > 255){
-        				return EntryError.TOO_LONG(CODE); // 商品条码过长
-        			}
-    			}
-    			
-    			//判断起售量长度是否合规
-    			Integer salesVolume = addSkuForm.getSalesVolume();
-    			if(salesVolume != null){
-    				if(salesVolume > 9999 || salesVolume <=0){
-    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
-    				}
-    			}else{
-    				salesVolume = 1; // 默认起售量为1
-    			}
-    			
-    			//创建SKU实体类封装SKU信息
-    			Sku sku = new Sku();
-    			sku.setId(generateUUID());
-    			sku.setGoodsId(goodsId);
-    			sku.setInventoryType(form.getInventoryType());
-    			sku.setInventory(inventory);
-    			sku.setLockedInventory(0); // 设置锁定库存为零
-    			sku.setSalesVolume(salesVolume);
-    			sku.setOriginalPrice(originalPrice);
-    			sku.setPrice(price);
-    			sku.setDescription(description);
-    			sku.setCode(code);
-    			sku.setBarcode(barcode);
-    			sku.setCreaterId(userId);
-    			sku.setCreateTime(getNow());
-    			sku.setRemark(remark);
-    			
-    			//添加SKU实体类到集合中
-    			skus.add(sku);
-			}
-    		
-    		//判断有无重复的SKU描述
-    		if(descSet.size() != skus.size()){
-    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
-    		}
-    		
-    		//对sku排序（按照原价正序），获取最低原价
-    		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
-    		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
-    		
-    		//对sku排序（按照售价正序），获取最低售价
-    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
-    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
-    		
-    		//封装商品信息
-    		goods.setId(goodsId);
-    		goods.setName(form.getName());
-    		goods.setStoreId(storeId);
-    		goods.setCategoryId(form.getCategoryId());
-    		goods.setMinPrice(minPrice);
-    		goods.setMinOriginalPrice(minOriginalPrice);
-    		goods.setInventoryType(form.getInventoryType());
-    		goods.setMainDiagram(form.getMainDiagram());
-    		
-    		//判断来源
-    		if(!form.getSource().equals(SourceType.APPX)){
-    			
-    			//判断商品详情是否为空
-    			if(StringUtils.isEmpty(form.getDetail())){
-    				return EntryError.EMPTY(DETAIL);
-    			}
-    			
-    			//判断商品售后服务是否为空
-    			if(StringUtils.isEmpty(form.getService())){
-    				return EntryError.EMPTY(SERVICE);
-    			}
-    		}
-    		goods.setDetail(form.getDetail());
-    		goods.setService(form.getService());
-    		goods.setType(GoodsType.DEFAULT);
-    		goods.setStatus(form.getStatus());
-    		goods.setIsRecommend(form.getIsRecommend());
-    		goods.setCreaterId(userId);
-    		goods.setCreateTime(getNow());
-    		goods.setRemark(form.getRemark());
-    		goods.setGroups(groups);
-    		goods.setSkus(sortPriceSkus);
-    		goods.setPropertyNames(goodsPropertyNames);
-    		
     		//获取属性名表单列表
     		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNames();
     		
@@ -524,6 +347,200 @@ public class GoodsController extends BaseController{
         			}
         		}
     		}
+    		
+    		//获取SKU表单列表
+    		List<SkuForm> skuForms = form.getSkus();
+    		
+    		//判断SKU表单列表是否为空
+    		if(skuForms == null || skuForms.size()<=0){
+    			return EntryError.EMPTY(SKU);
+    		}
+    		
+    		//创建Set集合接收SKU描述
+    		Set<String> descSet = new HashSet<>();
+    		
+    		//循环SKU表单列表
+    		for (SkuForm addSkuForm : skuForms) {
+    			
+    			//判断SKU描述长度是否合规
+    			String description = addSkuForm.getDescription();
+    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
+    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
+    			}
+    			
+    			//将SKU描述保存到Set集合中
+    			descSet.add(description);
+    			
+    			//判断SKU库存是否为空
+    			Integer inventory = addSkuForm.getInventory();
+    			if(inventory == null){
+        			if(form.getInventoryType().equals(InventoryType.LIMITED)){
+        				return EntryError.EMPTY(INVENTORY);
+        			}
+        			inventory = 0;
+    			}else{
+    				
+    				//判断SKU库存取值范围
+    				if(inventory > 9999 || inventory<0){
+    					return EntryError.OVERRANGE(INVENTORY);
+    				}
+    			}
+    			
+    			//创建价格正则表达式
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
+    			
+    			//判断SKU原价是否为空
+    			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
+    			if(originalPrice == null){
+    				return EntryError.EMPTY(ORIGINAL_PRICE);
+    			}
+    			
+    			//判断SKU原价格式是否正确
+    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
+    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
+    			}
+    			
+    			//判断SKU售价是否为空
+    			BigDecimal price = addSkuForm.getPrice();
+    			if(price == null){
+    				return EntryError.EMPTY(PRICE);
+    			}
+    			
+    			//判断SKU原价格式是否正确
+    			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
+    			}
+    			
+    			//判断备注长度是否合规
+    			String remark = addSkuForm.getRemark();
+    			if(!StringUtils.isEmpty(remark)){
+    				if(remark.length()>255){
+    					return EntryError.TOO_LONG(REMARK);
+    				}
+    			}
+    			
+    			//创建编码正则表达式
+    			Pattern codePattern = Pattern.compile("^[0-9a-zA-Z]+$");
+    			
+    			//判断条码格式、长度是否合规
+    			String barcode = addSkuForm.getBarcode();
+    			if(!StringUtils.isEmpty(barcode)){
+        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
+        			}
+        			
+        			if(barcode.length() > 255){
+        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
+        			}
+    			}
+
+    			//判断编码格式、长度是否合规
+    			String code = addSkuForm.getCode();
+    			if(!StringUtils.isEmpty(code)){
+        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
+        			}
+        			
+        			if(code.length() > 255){
+        				return EntryError.TOO_LONG(CODE); // 商品条码过长
+        			}
+    			}
+    			
+    			//判断起售量长度是否合规
+    			Integer salesVolume = addSkuForm.getSalesVolume();
+    			if(salesVolume != null){
+    				if(salesVolume > 9999 || salesVolume <=0){
+    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
+    				}
+    			}else{
+    				salesVolume = 1; // 默认起售量为1
+    			}
+    			
+    			//创建SKU实体类封装SKU信息
+    			Sku sku = new Sku();
+    			sku.setId(generateUUID());
+    			sku.setGoodsId(goodsId);
+    			sku.setInventoryType(form.getInventoryType());
+    			sku.setInventory(inventory);
+    			sku.setLockedInventory(0); // 设置锁定库存为零
+    			sku.setSalesVolume(salesVolume);
+    			sku.setOriginalPrice(originalPrice);
+    			sku.setPrice(price);
+    			
+    			//对SKU描述进行排序
+    			if(StringUtils.isNotEmpty(description) && description.contains(";")){
+    				String[] split = description.split(";");
+    				List<String> descList = new ArrayList<>();
+    				for (String string : split) {
+    					descList.add(string);
+					}
+    				List<String> skuDescription = sortSkuDescription(descList, goodsPropertyNames);
+    				
+    				StringBuffer skuDescriptionStringBuffer = new StringBuffer();
+    				for (String string : skuDescription) {
+    					skuDescriptionStringBuffer = skuDescriptionStringBuffer.append(string).append(";");
+					}
+    				description = skuDescriptionStringBuffer.toString();
+    			}
+    			
+    			sku.setDescription(description);
+    			sku.setCode(code);
+    			sku.setBarcode(barcode);
+    			sku.setCreaterId(userId);
+    			sku.setCreateTime(getNow());
+    			sku.setRemark(remark);
+    			
+    			//添加SKU实体类到集合中
+    			skus.add(sku);
+			}
+    		
+    		//判断有无重复的SKU描述
+    		if(descSet.size() != skus.size()){
+    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
+    		}
+    		
+    		//对sku排序（按照原价正序），获取最低原价
+    		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
+    		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
+    		
+    		//对sku排序（按照售价正序），获取最低售价
+    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
+    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		
+    		//封装商品信息
+    		goods.setId(goodsId);
+    		goods.setName(form.getName());
+    		goods.setStoreId(storeId);
+    		goods.setCategoryId(form.getCategoryId());
+    		goods.setMinPrice(minPrice);
+    		goods.setMinOriginalPrice(minOriginalPrice);
+    		goods.setInventoryType(form.getInventoryType());
+    		goods.setMainDiagram(form.getMainDiagram());
+    		
+    		//判断来源
+    		if(!form.getSource().equals(SourceType.APPX)){
+    			
+    			//判断商品详情是否为空
+    			if(StringUtils.isEmpty(form.getDetail())){
+    				return EntryError.EMPTY(DETAIL);
+    			}
+    			
+    			//判断商品售后服务是否为空
+    			if(StringUtils.isEmpty(form.getService())){
+    				return EntryError.EMPTY(SERVICE);
+    			}
+    		}
+    		goods.setDetail(form.getDetail());
+    		goods.setService(form.getService());
+    		goods.setType(GoodsType.DEFAULT);
+    		goods.setStatus(form.getStatus());
+    		goods.setIsRecommend(form.getIsRecommend());
+    		goods.setCreaterId(userId);
+    		goods.setCreateTime(getNow());
+    		goods.setRemark(form.getRemark());
+    		goods.setGroups(groups);
+    		goods.setSkus(sortPriceSkus);
+    		goods.setPropertyNames(goodsPropertyNames);
 
     		//获取设置运费参数表单
     		SetFreightParamForm freightParamForm = form.getFreightParam();
@@ -698,189 +715,6 @@ public class GoodsController extends BaseController{
 				group.setId(groupId);
 				groups.add(group);
 			}
-    		
-    		//获取SKU表单列表
-    		List<SkuForm> skuForms = form.getSkus();
-    		
-    		//判断SKU表单列表是否为空
-    		if(skuForms == null || skuForms.size()<=0){
-    			return EntryError.EMPTY(SKU);
-    		}
-    		
-    		//创建Set集合接收SKU描述
-    		Set<String> descSet = new HashSet<>();
-    		
-    		//循环SKU表单列表
-    		for (SkuForm skuForm : skuForms) {
-    			
-    			//判断SKU描述长度是否合规
-    			String description = skuForm.getDescription();
-    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
-    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
-    			}
-    			
-    			//将SKU描述保存到Set集合中
-    			descSet.add(description);
-    			
-    			//判断SKU库存是否为空
-    			Integer inventory = skuForm.getInventory();
-    			if(inventory == null){
-        			if(form.getInventoryType().equals(InventoryType.LIMITED)){
-        				return EntryError.EMPTY(INVENTORY);
-        			}
-        			inventory = 0;
-    			}else{
-    				
-    				//判断SKU库存取值范围
-    				if(inventory > 9999 || inventory<0){
-    					return EntryError.OVERRANGE(INVENTORY);
-    				}
-    			}
-    			
-    			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
-    			
-    			//判断SKU原价是否为空
-    			BigDecimal originalPrice = skuForm.getOriginalPrice();
-    			if(originalPrice == null){
-    				return EntryError.EMPTY(ORIGINAL_PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
-    			}
-    			
-    			//判断SKU售价是否为空
-    			BigDecimal price = skuForm.getPrice();
-    			if(price == null){
-    				return EntryError.EMPTY(PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
-    			}
-    			
-    			//判断备注长度是否合规
-    			String remark = skuForm.getRemark();
-    			if(!StringUtils.isEmpty(remark)){
-    				if(remark.length()>255){
-    					return EntryError.TOO_LONG(REMARK);
-    				}
-    			}
-    			
-    			//创建编码正则表达式
-    			Pattern codePattern = Pattern.compile("^[0-9a-zA-Z]+$");
-    			
-    			//判断条码格式、长度是否合规
-    			String barcode = skuForm.getBarcode();
-    			if(!StringUtils.isEmpty(barcode)){
-        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
-        			}
-        			
-        			if(barcode.length() > 255){
-        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
-        			}
-    			}
-
-    			//判断编码格式、长度是否合规
-    			String code = skuForm.getCode();
-    			if(!StringUtils.isEmpty(code)){
-        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
-        			}
-        			
-        			if(code.length() > 255){
-        				return EntryError.TOO_LONG(CODE); // 商品条码过长
-        			}
-    			}
-    			
-    			//判断起售量长度是否合规
-    			Integer salesVolume = skuForm.getSalesVolume();
-    			if(salesVolume != null){
-    				if(salesVolume > 9999 || salesVolume <=0){
-    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
-    				}
-    			}else{
-    				salesVolume = 1; // 默认起售量为1
-    			}
-    			
-    			//创建SKU实体类封装SKU信息
-    			Sku sku = new Sku();
-    			
-    			if(StringUtils.isEmpty(skuForm.getId())){
-    				sku.setId(generateUUID());
-    			}else{
-    				sku.setId(skuForm.getId());
-    			}
-    			
-    			sku.setGoodsId(goodsId);
-    			sku.setInventoryType(form.getInventoryType());
-    			sku.setInventory(inventory);
-    			sku.setLockedInventory(0); // 设置锁定库存为零
-    			sku.setSalesVolume(salesVolume);
-    			sku.setOriginalPrice(originalPrice);
-    			sku.setPrice(price);
-    			sku.setDescription(description);
-    			sku.setCode(code);
-    			sku.setBarcode(barcode);
-    			sku.setCreaterId(userId);
-    			sku.setCreateTime(getNow());
-    			sku.setRemark(remark);
-    			
-    			//添加SKU实体类到集合中
-    			skus.add(sku);
-			}
-    		
-    		//判断有无重复的SKU描述
-    		if(descSet.size() != skus.size()){
-    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
-    		}
-    		
-    		//对sku排序（按照原价正序），获取最低原价
-    		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
-    		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
-    		
-    		//对sku排序（按照售价正序），获取最低售价
-    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
-    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
-    		
-    		//封装商品信息
-    		goods.setId(goodsId);
-    		goods.setName(form.getName());
-    		goods.setStoreId(storeId);
-    		goods.setCategoryId(form.getCategoryId());
-    		goods.setMinPrice(minPrice);
-    		goods.setMinOriginalPrice(minOriginalPrice);
-    		goods.setInventoryType(form.getInventoryType());
-    		goods.setMainDiagram(form.getMainDiagram());
-    		
-    		//判断来源
-    		if(!form.getSource().equals(SourceType.APPX)){
-    			
-    			//判断商品详情是否为空
-    			if(StringUtils.isEmpty(form.getDetail())){
-    				return EntryError.EMPTY(DETAIL);
-    			}
-    			
-    			//判断商品售后服务是否为空
-    			if(StringUtils.isEmpty(form.getService())){
-    				return EntryError.EMPTY(SERVICE);
-    			}
-    		}
-    		goods.setDetail(form.getDetail());
-    		goods.setService(form.getService());
-    		goods.setType(GoodsType.DEFAULT);
-    		goods.setStatus(form.getStatus());
-    		goods.setIsRecommend(form.getIsRecommend());
-    		goods.setUpdaterId(userId);
-    		goods.setUpdateTime(getNow());
-    		goods.setRemark(form.getRemark());
-    		goods.setGroups(groups);
-    		goods.setSkus(sortPriceSkus);
-    		goods.setPropertyNames(goodsPropertyNames);
     		
     		//获取属性名表单列表
     		List<GoodsPropertyNameForm> goodsPropertyNameForms = form.getGoodsPropertyNames();
@@ -1109,7 +943,207 @@ public class GoodsController extends BaseController{
         			}
         		}
     		}
+    		
+    		//获取SKU表单列表
+    		List<SkuForm> skuForms = form.getSkus();
+    		
+    		//判断SKU表单列表是否为空
+    		if(skuForms == null || skuForms.size()<=0){
+    			return EntryError.EMPTY(SKU);
+    		}
+    		
+    		//创建Set集合接收SKU描述
+    		Set<String> descSet = new HashSet<>();
+    		
+    		//循环SKU表单列表
+    		for (SkuForm skuForm : skuForms) {
+    			
+    			//判断SKU描述长度是否合规
+    			String description = skuForm.getDescription();
+    			if(StringUtils.isNotEmpty(description) && description.length() > 270){
+    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
+    			}
+    			
+    			//将SKU描述保存到Set集合中
+    			descSet.add(description);
+    			
+    			//判断SKU库存是否为空
+    			Integer inventory = skuForm.getInventory();
+    			if(inventory == null){
+        			if(form.getInventoryType().equals(InventoryType.LIMITED)){
+        				return EntryError.EMPTY(INVENTORY);
+        			}
+        			inventory = 0;
+    			}else{
+    				
+    				//判断SKU库存取值范围
+    				if(inventory > 9999 || inventory<0){
+    					return EntryError.OVERRANGE(INVENTORY);
+    				}
+    			}
+    			
+    			//创建价格正则表达式
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
+    			
+    			//判断SKU原价是否为空
+    			BigDecimal originalPrice = skuForm.getOriginalPrice();
+    			if(originalPrice == null){
+    				return EntryError.EMPTY(ORIGINAL_PRICE);
+    			}
+    			
+    			//判断SKU原价格式是否正确
+    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
+    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
+    			}
+    			
+    			//判断SKU售价是否为空
+    			BigDecimal price = skuForm.getPrice();
+    			if(price == null){
+    				return EntryError.EMPTY(PRICE);
+    			}
+    			
+    			//判断SKU原价格式是否正确
+    			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
+    			}
+    			
+    			//判断备注长度是否合规
+    			String remark = skuForm.getRemark();
+    			if(!StringUtils.isEmpty(remark)){
+    				if(remark.length()>255){
+    					return EntryError.TOO_LONG(REMARK);
+    				}
+    			}
+    			
+    			//创建编码正则表达式
+    			Pattern codePattern = Pattern.compile("^[0-9a-zA-Z]+$");
+    			
+    			//判断条码格式、长度是否合规
+    			String barcode = skuForm.getBarcode();
+    			if(!StringUtils.isEmpty(barcode)){
+        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
+        			}
+        			
+        			if(barcode.length() > 255){
+        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
+        			}
+    			}
 
+    			//判断编码格式、长度是否合规
+    			String code = skuForm.getCode();
+    			if(!StringUtils.isEmpty(code)){
+        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
+        			}
+        			
+        			if(code.length() > 255){
+        				return EntryError.TOO_LONG(CODE); // 商品条码过长
+        			}
+    			}
+    			
+    			//判断起售量长度是否合规
+    			Integer salesVolume = skuForm.getSalesVolume();
+    			if(salesVolume != null){
+    				if(salesVolume > 9999 || salesVolume <=0){
+    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
+    				}
+    			}else{
+    				salesVolume = 1; // 默认起售量为1
+    			}
+    			
+    			//创建SKU实体类封装SKU信息
+    			Sku sku = new Sku();
+    			
+    			if(StringUtils.isEmpty(skuForm.getId())){
+    				sku.setId(generateUUID());
+    			}else{
+    				sku.setId(skuForm.getId());
+    			}
+    			
+    			sku.setGoodsId(goodsId);
+    			sku.setInventoryType(form.getInventoryType());
+    			sku.setInventory(inventory);
+    			sku.setLockedInventory(0); // 设置锁定库存为零
+    			sku.setSalesVolume(salesVolume);
+    			sku.setOriginalPrice(originalPrice);
+    			sku.setPrice(price);
+    			
+    			//对SKU描述进行排序
+    			if(StringUtils.isNotEmpty(description) && description.contains(";")){
+    				String[] split = description.split(";");
+    				List<String> descList = new ArrayList<>();
+    				for (String string : split) {
+    					descList.add(string);
+					}
+    				List<String> skuDescription = sortSkuDescription(descList, goodsPropertyNames);
+    				
+    				StringBuffer skuDescriptionStringBuffer = new StringBuffer();
+    				for (String string : skuDescription) {
+    					skuDescriptionStringBuffer = skuDescriptionStringBuffer.append(string).append(";");
+					}
+    				description = skuDescriptionStringBuffer.toString();
+    			}
+    			
+    			sku.setDescription(description);
+    			sku.setCode(code);
+    			sku.setBarcode(barcode);
+    			sku.setCreaterId(userId);
+    			sku.setCreateTime(getNow());
+    			sku.setRemark(remark);
+    			
+    			//添加SKU实体类到集合中
+    			skus.add(sku);
+			}
+    		
+    		//判断有无重复的SKU描述
+    		if(descSet.size() != skus.size()){
+    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
+    		}
+    		
+    		//对sku排序（按照原价正序），获取最低原价
+    		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
+    		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
+    		
+    		//对sku排序（按照售价正序），获取最低售价
+    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
+    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		
+    		//封装商品信息
+    		goods.setId(goodsId);
+    		goods.setName(form.getName());
+    		goods.setStoreId(storeId);
+    		goods.setCategoryId(form.getCategoryId());
+    		goods.setMinPrice(minPrice);
+    		goods.setMinOriginalPrice(minOriginalPrice);
+    		goods.setInventoryType(form.getInventoryType());
+    		goods.setMainDiagram(form.getMainDiagram());
+    		
+    		//判断来源
+    		if(!form.getSource().equals(SourceType.APPX)){
+    			
+    			//判断商品详情是否为空
+    			if(StringUtils.isEmpty(form.getDetail())){
+    				return EntryError.EMPTY(DETAIL);
+    			}
+    			
+    			//判断商品售后服务是否为空
+    			if(StringUtils.isEmpty(form.getService())){
+    				return EntryError.EMPTY(SERVICE);
+    			}
+    		}
+    		goods.setDetail(form.getDetail());
+    		goods.setService(form.getService());
+    		goods.setType(GoodsType.DEFAULT);
+    		goods.setStatus(form.getStatus());
+    		goods.setIsRecommend(form.getIsRecommend());
+    		goods.setUpdaterId(userId);
+    		goods.setUpdateTime(getNow());
+    		goods.setRemark(form.getRemark());
+    		goods.setGroups(groups);
+    		goods.setSkus(sortPriceSkus);
+    		goods.setPropertyNames(goodsPropertyNames);
+    		
     		//获取设置运费参数表单
     		SetFreightParamForm freightParamForm = form.getFreightParam();
     		
