@@ -866,7 +866,7 @@ public class GoodsController extends BaseController{
         			List<GoodsPropertyValueForm> goodsPropertyValueForms = goodsPropertyNameForm.getGoodsPropertyValues();
     			
         			//判断属性值表单列表是否为空
-        			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <=0){
+        			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <= 0){
         				return EntryError.EMPTY(PROPERTY_VALUE);
         			}
         			
@@ -1501,7 +1501,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//执行更新
-    		ResponseCode responseCode = goodsService.applyGoodses(goodses);
+    		ResponseCode responseCode = goodsService.recoverGoodses(goodses, form.getGroupId());
         	
             //返回更新结果
             return responseCode;
