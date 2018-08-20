@@ -849,7 +849,7 @@ public class GoodsService extends BaseService{
 					
 					//获取描述
 					String description = sku.getDescription();
-					
+
 					StringBuffer descriptionStringBuffer = new StringBuffer();
 					
 					//获取属性名属性值键值对列表
@@ -879,6 +879,7 @@ public class GoodsService extends BaseService{
 						if(descriptionStringBuffer.length() >0 && descriptionStringBuffer.toString().contains(";")){
 							cartDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
 						}
+						
 						
 					}
 					

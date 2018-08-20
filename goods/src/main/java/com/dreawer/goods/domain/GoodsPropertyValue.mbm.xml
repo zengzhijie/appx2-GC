@@ -55,10 +55,10 @@
 	  <if test="goodsId != null">
 	  	AND gods_id = #{goodsId} 
 	  </if>
-	  <if test="propertyNameId != null">
+	  <if test="goodsPropertyNameId != null">
 	  	AND gods_pro_nam_id = #{goodsPropertyNameId} 
 	  </if>
-	  <if test="propertyNameId != null">
+	  <if test="propertyValueId != null">
 	  	AND pro_val_id = #{propertyValueId} 
 	  </if>	  
 	  ORDER BY squence ASC
