@@ -295,12 +295,14 @@
 	<!-- 根据商品ID查询商品详细信息（根据属性名排列序号正序、属性值排列序号正序）  -->
 	<select id="findGoodsDetailById" parameterType="Map" resultMap="goodsResultMap">
 	  SELECT gods.id, gods.sto_id, gods.name, gods.ctg_id, gods.min_pr, gods.min_orig_pr, gods.inv_typ, gods.main_dig, gods.detail, gods.service, gods.status, gods.is_rcd, gods.crer_id, gods.cre_tim, gods.remark,
+	  		 frt_par.gods_id AS frt_par_gods_id,frt_par.type AS frt_par_type, frt_par.price AS frt_par_price, frt_par.frt_id AS frt_par_frt_id, frt_par.amount AS frt_par_amount,
 	  		 sku.id AS sku_id, sku.inv_typ AS sku_inv_typ, sku.inventory AS sku_inventory, sku.lock_inv AS sku_lock_inv, sku.sal_vol AS sku_sal_vol, sku.ori_pr AS sku_ori_pr, sku.price AS sku_price, sku.description AS sku_description, sku.code AS sku_code, sku.barcode AS sku_barcode, sku.remark AS sku_remark,
 	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
 	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_frt_par AS frt_par ON gods.id = frt_par.gods_id
 	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
@@ -346,6 +348,7 @@
 		<result property="updaterId" column="updr_id" />
 		<result property="updateTime" column="upd_tim" />
 		<result property="remark" column="remark" />
+		<collection property="freightParam" resultMap="com.dreawer.goods.domain.FreightParam.freightParamResultMap" columnPrefix="frt_par_" />
 		<collection property="groups" resultMap="com.dreawer.goods.domain.Group.groupResultMap" columnPrefix="gr_" />
 		<collection property="skus" resultMap="com.dreawer.goods.domain.Sku.skuResultMap" columnPrefix="sku_" />
 		<collection property="propertyNames" resultMap="com.dreawer.goods.domain.GoodsPropertyName.goodsPropertyNameResultMap" columnPrefix="gpn_" />

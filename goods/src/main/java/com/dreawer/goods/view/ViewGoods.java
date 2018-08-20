@@ -47,6 +47,8 @@ public class ViewGoods {
     
 	private String remark = null; // 备注
 	
+	private ViewFreightParam freightParam = null; // 运费参数
+	
 	private List<ViewGroup> groups = null; // 分组列表
 	
 	private List<ViewSku> skus = null; // SKU列表
@@ -214,6 +216,14 @@ public class ViewGoods {
 		this.remark = remark;
 	}
 	
+	public ViewFreightParam getFreightParam() {
+		return freightParam;
+	}
+
+	public void setFreightParam(ViewFreightParam freightParam) {
+		this.freightParam = freightParam;
+	}
+
 	public List<ViewGroup> getGroups() {
 		return groups;
 	}

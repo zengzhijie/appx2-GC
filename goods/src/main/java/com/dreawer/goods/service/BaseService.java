@@ -559,6 +559,9 @@ public class BaseService {
     	if(goodses != null && goodses.size()>0){
     		for (Goods goods : goodses) {
     			
+    			//获取运费参数视图
+    			ViewFreightParam viewFreightParam = convertFreightParamView(goods.getFreightParam());
+    			
     			//获取分组视图列表
     			List<ViewGroup> viewGroups = convertGroupViews(goods.getGroups());
     			
@@ -602,6 +605,7 @@ public class BaseService {
     			viewGoods.setCreaterId(goods.getCreaterId());
     			viewGoods.setCreateTime(goods.getCreateTime());
     			viewGoods.setRemark(goods.getRemark());
+    			viewGoods.setFreightParam(viewFreightParam);
     			viewGoods.setGroups(viewGroups);
     			viewGoods.setSkus(viewSkus);
     			viewGoods.setPropertyNames(viewGoodsPropertyNames);
@@ -628,6 +632,9 @@ public class BaseService {
     	
     	//判断商品信息是否为空
     	if(goods != null){
+    		
+			//获取运费参数视图
+			ViewFreightParam viewFreightParam = convertFreightParamView(goods.getFreightParam());
     		
 			//获取分组视图列表
 			List<ViewGroup> viewGroups = convertGroupViews(goods.getGroups());
@@ -669,6 +676,7 @@ public class BaseService {
 			viewGoods.setCreaterId(goods.getCreaterId());
 			viewGoods.setCreateTime(goods.getCreateTime());
 			viewGoods.setRemark(goods.getRemark());
+			viewGoods.setFreightParam(viewFreightParam);
 			viewGoods.setGroups(viewGroups);
 			viewGoods.setSkus(viewSkus);
 			viewGoods.setPropertyNames(viewGoodsPropertyNames);
