@@ -284,103 +284,105 @@ public class FreightService extends BaseService{
 			//查询商品运费参数信息
 			FreightParam freightParam = freightParamDao.findFreightParam(goodsId);
 			
-			//获取运费类型
-			FreightType freightType = freightParam.getType();
-			
-			//固定运费
-			if(freightType.equals(FreightType.FIXED)){
+			if(freightParam != null){
+				//获取运费类型
+				FreightType freightType = freightParam.getType();
 				
-				//获取运费价格
-				BigDecimal price = freightParam.getPrice();
-				
-				//将该商品运费添加到总运费中
-				count.add(price);
-			}else{
-				//不固定运费，需查询运费模板
-				
-				//获取运费模板ID
-				String freightId = freightParam.getFreightId();
-				
-				//查询运费模板详情
-				Freight freight = freightDao.findFreightById(freightId);
-				
-				//判断运费模板信息是否存在
-				if(freight == null){
-					return RuleError.NON_EXISTENT(FREIGHT);
-				}
-				
-				//获取运费支付方
-				Payer payer = freight.getPayer();
-				
-				//买家支付运费
-				if(payer.equals(Payer.BUYER)){
+				//固定运费
+				if(freightType.equals(FreightType.FIXED)){
 					
-					//获取计价方式
-					PricingMethod pricingMethod = freight.getPricingMethod();
+					//获取运费价格
+					BigDecimal price = freightParam.getPrice();
 					
-					//按件数计费
-					if (pricingMethod.equals(PricingMethod.NUMBER)) {
-						
-						//从Map集合中获取该运费模板相关的运费参数
-						BigDecimal param = freightParamMap.get(freight);
-						
-						//判断运费参数是否存在
-						if(param == null){
-							//不存在该运费参数，则将运费参数添加到集合中
-							freightParamMap.put(freight, new BigDecimal(quantity.toString()));
-						}else{
-							
-							//存在该运费参数，则将两运费参数相加，保存到Map集合中
-							param = param.add(new BigDecimal(quantity.toString()));
-							
-							//保存到Map集合
-							freightParamMap.put(freight, param);
-						}
-						
+					//将该商品运费添加到总运费中
+					count.add(price);
+				}else{
+					//不固定运费，需查询运费模板
+					
+					//获取运费模板ID
+					String freightId = freightParam.getFreightId();
+					
+					//查询运费模板详情
+					Freight freight = freightDao.findFreightById(freightId);
+					
+					//判断运费模板信息是否存在
+					if(freight == null){
+						return RuleError.NON_EXISTENT(FREIGHT);
 					}
 					
-					//按件数计费
-					if(pricingMethod.equals(PricingMethod.WEIGHT)){
+					//获取运费支付方
+					Payer payer = freight.getPayer();
+					
+					//买家支付运费
+					if(payer.equals(Payer.BUYER)){
 						
-						//从Map集合中获取该运费模板相关的运费参数
-						BigDecimal param = freightParamMap.get(freight);
+						//获取计价方式
+						PricingMethod pricingMethod = freight.getPricingMethod();
 						
-						//判断运费参数是否存在
-						if(param == null){
+						//按件数计费
+						if (pricingMethod.equals(PricingMethod.NUMBER)) {
 							
-							//不存在该运费参数，则将运费参数添加到集合中(重量和购买数量相乘)
-							param = new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount()));
-							freightParamMap.put(freight, param);
-						}else{
+							//从Map集合中获取该运费模板相关的运费参数
+							BigDecimal param = freightParamMap.get(freight);
 							
-							//存在该运费参数，则将两运费参数相加，保存到Map集合中(重量和购买数量相乘)
-							param = param.add(new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount())));
+							//判断运费参数是否存在
+							if(param == null){
+								//不存在该运费参数，则将运费参数添加到集合中
+								freightParamMap.put(freight, new BigDecimal(quantity.toString()));
+							}else{
+								
+								//存在该运费参数，则将两运费参数相加，保存到Map集合中
+								param = param.add(new BigDecimal(quantity.toString()));
+								
+								//保存到Map集合
+								freightParamMap.put(freight, param);
+							}
 							
-							//保存到Map集合
-							freightParamMap.put(freight, param);
 						}
 						
-					}
-					
-					//按体积计费
-					if(pricingMethod.equals(PricingMethod.VOLUME)){
+						//按件数计费
+						if(pricingMethod.equals(PricingMethod.WEIGHT)){
+							
+							//从Map集合中获取该运费模板相关的运费参数
+							BigDecimal param = freightParamMap.get(freight);
+							
+							//判断运费参数是否存在
+							if(param == null){
+								
+								//不存在该运费参数，则将运费参数添加到集合中(重量和购买数量相乘)
+								param = new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount()));
+								freightParamMap.put(freight, param);
+							}else{
+								
+								//存在该运费参数，则将两运费参数相加，保存到Map集合中(重量和购买数量相乘)
+								param = param.add(new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount())));
+								
+								//保存到Map集合
+								freightParamMap.put(freight, param);
+							}
+							
+						}
 						
-						//从Map集合中获取该运费模板相关的运费参数
-						BigDecimal param = freightParamMap.get(freight);
-						
-						//判断运费参数是否存在
-						if(param == null){
+						//按体积计费
+						if(pricingMethod.equals(PricingMethod.VOLUME)){
 							
-							//不存在该运费参数，则将运费参数添加到集合中(重量和购买数量相乘)
-							param = new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount()));
-							freightParamMap.put(freight, param);
-						}else{
+							//从Map集合中获取该运费模板相关的运费参数
+							BigDecimal param = freightParamMap.get(freight);
 							
-							//存在该运费参数，则将两运费参数相加，保存到Map集合中(重量和购买数量相乘)
-							param = param.add(new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount())));
-							
-							//保存到Map集合
-							freightParamMap.put(freight, param);
+							//判断运费参数是否存在
+							if(param == null){
+								
+								//不存在该运费参数，则将运费参数添加到集合中(重量和购买数量相乘)
+								param = new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount()));
+								freightParamMap.put(freight, param);
+							}else{
+								
+								//存在该运费参数，则将两运费参数相加，保存到Map集合中(重量和购买数量相乘)
+								param = param.add(new BigDecimal(quantity.toString()).multiply(new BigDecimal(freightParam.getAmount())));
+								
+								//保存到Map集合
+								freightParamMap.put(freight, param);
+							}
 						}
 					}
 				}

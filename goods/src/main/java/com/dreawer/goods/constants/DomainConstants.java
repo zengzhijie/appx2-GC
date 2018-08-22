@@ -327,4 +327,13 @@ public abstract class DomainConstants {
     /** 错误 */
     public static final String ERROR = "error";
     
+    /** 锁定库存 */
+    public static final String LOCK_INVENTORY = "lockInventory";
+    
+    /** 锁定库存 */
+    public static final String RELEASE_INVENTORY = "releaseInventory";
+    
+    /** 锁定库存 */
+    public static final String DEDUCTION_INVENTORY = "deductionInventory";
+    
 }

@@ -19,7 +19,7 @@
 	
 	<!-- 批量删除商品 -->
 	<delete id="deleteBatch" parameterType="Map">
-		DELETE gods, gr_gods, gods_frt, frt_par, sku, gpn, gpv
+		DELETE gods, gr_gods, frt_par, sku, gpn, gpv
 		FROM godsi_goods AS gods
 		LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 		LEFT JOIN godsi_frt_par AS frt_par ON gods.id = frt_par.gods_id
