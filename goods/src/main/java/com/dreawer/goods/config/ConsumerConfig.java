@@ -1,20 +1,19 @@
 package com.dreawer.goods.config;
 
-import java.util.Properties;
-
+/*import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.ONSFactory;
-import com.aliyun.openservices.ons.api.PropertyKeyConst;
+import com.aliyun.openservices.ons.api.PropertyKeyConst;*/
+import org.springframework.context.annotation.Configuration;
+
 
 @Configuration
 public class ConsumerConfig {
 
-	@Value("${ons.consumerId}")
+/*	@Value("${ons.consumerId}")
 	private String consumerId;
 
 	@Value("${ons.accessKey}")
@@ -35,12 +34,12 @@ public class ConsumerConfig {
 	@Autowired
 	private DefaultMessageListener defaultMessageListener;
 
-	/**
+	*//**
 	 * 创建阿里云消息消费者
 	 * @return
-	 */
+	 *//*
 	@Bean(initMethod = "start", destroyMethod = "shutdown")
-	public Consumer lockInventory() {
+	public Consumer consumer() {
 		Properties properties = new Properties();
 		// 您在 MQ 控制台创建的 Consumer ID
 		properties.put(PropertyKeyConst.ConsumerId, consumerId);
@@ -56,6 +55,6 @@ public class ConsumerConfig {
 		Consumer consumer = ONSFactory.createConsumer(properties);
 		consumer.subscribe(TOPIC_DEFAULT, "lockInventory || releaseInventory || deductionInventory", defaultMessageListener);
 		return consumer;
-	}
+	}*/
 	
 }

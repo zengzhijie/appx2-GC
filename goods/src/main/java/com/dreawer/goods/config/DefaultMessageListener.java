@@ -1,35 +1,35 @@
 package com.dreawer.goods.config;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+/*import org.apache.commons.lang.StringUtils;
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.MessageListener;
 import com.dreawer.goods.lang.PurchaseInfo;
-import com.dreawer.goods.service.SkuService;
 import com.dreawer.goods.utils.GoodsPacket;
 import com.dreawer.goods.utils.OrderPacket;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.google.gson.Gson;
 import static com.dreawer.goods.constants.DomainConstants.*;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.List;*/
+import com.dreawer.goods.service.SkuService;
+
 
 @Component
-public class DefaultMessageListener implements MessageListener {
+public class DefaultMessageListener /*implements MessageListener*/ {
 	
 	private Logger logger = LoggerFactory.getLogger(DefaultMessageListener.class);
 
     @Autowired
     private SkuService skuService; //SKUservice
 	
-	@Override
+/*	@Override
 	public Action consume(Message message, ConsumeContext context) {
 		logger.info("收到MQ消息：" + message.getMsgID());
 		System.out.println(message.getBody());
@@ -128,6 +128,6 @@ public class DefaultMessageListener implements MessageListener {
             //消费失败
             return Action.ReconsumeLater;
         }
-	}
+	}*/
 
 }
