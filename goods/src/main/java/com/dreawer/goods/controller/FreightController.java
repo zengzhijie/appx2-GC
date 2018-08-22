@@ -273,6 +273,7 @@ public class FreightController extends BaseController{
         					//保存城市ID到Map集合中
         					StringBuffer cityIds = cityMap.get(logisticsMethod.getType());
         					if(cityIds == null || cityIds.length()<=0){
+        						cityIds = new StringBuffer();
         						cityIds.append(cityId);
         					}else{
         						

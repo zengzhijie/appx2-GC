@@ -1827,7 +1827,7 @@ public class GoodsController extends BaseController{
 	/**
      * 锁定SKU库存。
      * @param form 库存管理表单。
-     * @return  成功返回订单ID，失败返回相应的错误码
+     * @return  成功返回订单ID，失败返回相应的错误码。
 	 */
     @RequestMapping(value=REQ_LOCK_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode lockInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
