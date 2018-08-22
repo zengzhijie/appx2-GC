@@ -67,16 +67,15 @@ public class FreightController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		//String userId = req.getHeader("userid");
-    		String userId = "1322";
-    		String storeId = "storeid1322";
+    		String userId = req.getHeader("userid");
+    		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
     		}
     		
     		//获取用户ID
-    		//String storeId = req.getHeader("appid");
+    		String storeId = req.getHeader("appid");
     		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(storeId)){
