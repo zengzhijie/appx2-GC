@@ -26,7 +26,7 @@
 		LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
 		LEFT JOIN godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
 		LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.gods_id = gpv.gods_id
-		WHERE gg.id IN
+		WHERE gods.id IN
 		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
             #{id}
         </foreach>
