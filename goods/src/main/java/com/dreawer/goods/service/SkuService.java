@@ -91,8 +91,8 @@ public class SkuService extends BaseService{
     					
     					//判断是否达到起售量
     					if(purchaseInfo.getQuantity() < sku.getSalesVolume()){
-    						//TODO
-    						GCRuleError.BELOW_MOQ(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
+    						
+    						return GCRuleError.BELOW_MOQ(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
     					}
     					
     					//判断sku库存是否充足
@@ -113,7 +113,7 @@ public class SkuService extends BaseService{
     						updateSkus.add(sku);
     						
     					}else{
-    						GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+    						return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
     					}	
             		}else if(goods.getStatus().equals(GoodsStatus.APPLIED)){
             			return StatusError.APPLIED(GOODS_ID+":"+sku.getGoodsId()); // 商品已下架

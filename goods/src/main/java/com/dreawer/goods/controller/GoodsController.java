@@ -1837,8 +1837,8 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		//String userId = req.getHeader("userid");
-    		String userId = "testUserId123";
+    		String userId = req.getHeader("userid");
+    		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
@@ -1907,8 +1907,8 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		//String userId = req.getHeader("userid");
-    		String userId = "testUserId123";
+    		String userId = req.getHeader("userid");
+    		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
@@ -1977,8 +1977,8 @@ public class GoodsController extends BaseController{
     	try {
     		
     		//获取用户ID
-    		//String userId = req.getHeader("userid");
-    		String userId = "testUserId123";
+    		String userId = req.getHeader("userid");
+    		
     		//判断用户ID是否为空
     		if(StringUtils.isEmpty(userId)){
     			return EntryError.EMPTY(USER_ID);
