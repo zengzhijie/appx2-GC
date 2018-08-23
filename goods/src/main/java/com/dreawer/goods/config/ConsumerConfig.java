@@ -31,6 +31,10 @@ public class ConsumerConfig {
 	@Value("${ons.topic.delay}")
 	private String TOPIC_DELAY;
 
+	@Value("${ons.consume.threadNums}")
+	private String CONSUME_THREAD_NUMS;
+
+
 	@Autowired
 	private DefaultMessageListener defaultMessageListener;
 
@@ -49,11 +53,11 @@ public class ConsumerConfig {
 		properties.put(PropertyKeyConst.SecretKey, secretKey);
 		// 设置 TCP 接入域名（此处以公共云公网环境接入为例）
 		properties.put(PropertyKeyConst.ONSAddr, ONSAddr);
-		properties.put(PropertyKeyConst.ConsumeThreadNums, 5);
+		properties.put(PropertyKeyConst.ConsumeThreadNums, CONSUME_THREAD_NUMS);
 		// properties.put(PropertyKeyConst.ConsumeTimeout, "");
 		// properties.put(PropertyKeyConst.OnsChannel, "");
 		Consumer consumer = ONSFactory.createConsumer(properties);
-		consumer.subscribe(TOPIC_DEFAULT, "lockInventory || releaseInventory || deductionInventory", defaultMessageListener);
+		consumer.subscribe(TOPIC_DEFAULT, "lockInventory||releaseInventory||deductionInventory", defaultMessageListener);
 		return consumer;
 	}
 	

@@ -12,7 +12,7 @@
 		INSERT INTO godsi_inv_op_dtl(ord_id, sku_id, inventory, status, crer_id, cre_tim)
         VALUES
         <foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=",">
-            (#{inv_op_dtl.ord_id}, #{inv_op_dtl.sku_id}, #{inv_op_dtl.inventory}, #{inv_op_dtl.status}, #{inv_op_dtl.crer_id}, #{inv_op_dtl.cre_tim})
+            (#{inv_op_dtl.orderId}, #{inv_op_dtl.skuId}, #{inv_op_dtl.inventory}, #{inv_op_dtl.status}, #{inv_op_dtl.createrId}, #{inv_op_dtl.createTime})
         </foreach>
 	</insert>
 	
@@ -27,24 +27,24 @@
 	<!-- 批量修改库存状态 -->
 	<update id="updateBatchStatus" parameterType="Map">
 	    UPDATE godsi_inv_op_dtl
-  		SET status = 
-    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
-        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.status}
+  		SET status=
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
+        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.status}
     	</foreach>
-    		,updr_id = 
-    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
-        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.updaterId}
+    		,updr_id=
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
+        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updaterId}
     	</foreach>
-    		,upd_tim = 
-    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case ID" close="end">
-        	when #{inv_op_dtl.orderId}  AND #{inv_op_dtl.skuId} then #{inv_op_dtl.updateTime}
+    		,upd_tim= 
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
+        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updateTime}
     	</foreach>
     	WHERE sku_id IN
-    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=" ">
+    	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=")">
         	#{inv_op_dtl.skuId}
    	 	</foreach>
    	 	AND ord_id IN
-   	 	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=" ">
+   	 	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=")">
         	#{inv_op_dtl.orderId}
    	 	</foreach>
 	</update>

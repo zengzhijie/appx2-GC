@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.dreawer.goods.service.SkuService;
 
 
@@ -109,10 +110,8 @@ public class DefaultMessageListener implements MessageListener {
 									logger.error("responseCode", responseCode);
 /*									if(responseCode.getCode().equals("000000")){
 										//释放库存成功
-										logger.error("responseCode", responseCode);
 									}else{
 										//释放库存失败
-										logger.error("responseCode", responseCode);
 									}*/
 									
 									

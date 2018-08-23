@@ -38,7 +38,7 @@
 	<update id="updateBatchInventory" parameterType="Map">
 	    UPDATE godsi_sku
   		SET inventory = 
-    	<foreach collection="skus" item="sku" index="index" separator=" " open="case ID" close="end">
+    	<foreach collection="skus" item="sku" index="index" separator=" " open="case id" close="end">
         	when #{sku.id} then #{sku.inventory}
     	</foreach>
     	WHERE id IN
@@ -51,7 +51,7 @@
 	<update id="updateBatchLockedInventory" parameterType="Map">
 		UPDATE godsi_sku
 		SET lock_inv = 
-		<foreach collection="skus" item="sku" index="index" separator=" " open="case ID" close="end">
+		<foreach collection="skus" item="sku" index="index" separator=" " open="case id" close="end">
         	when #{sku.id} then #{sku.lockedInventory}
     	</foreach>
 		WHERE id IN

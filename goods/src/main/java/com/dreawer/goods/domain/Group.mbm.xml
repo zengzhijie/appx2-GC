@@ -70,15 +70,15 @@
 	<update id="updateBatchStatus" parameterType="Map">
 		UPDATE godsi_group
 		SET status = 
-		<foreach collection="groups" item="group" index="index" separator=" " open="case ID" close="end">
+		<foreach collection="groups" item="group" index="index" separator=" " open="case id" close="end">
         	when #{group.id} then #{group.status}
     	</foreach>,
     		updr_id = 
-		<foreach collection="groups" item="group" index="index" separator=" " open="case ID" close="end">
+		<foreach collection="groups" item="group" index="index" separator=" " open="case id" close="end">
         	when #{group.id} then #{group.updaterId}
     	</foreach>,
     		upd_tim = 
-		<foreach collection="groups" item="group" index="index" separator=" " open="case ID" close="end">
+		<foreach collection="groups" item="group" index="index" separator=" " open="case id" close="end">
         	when #{group.id} then #{group.updateTime}
     	</foreach>
 		WHERE id IN
