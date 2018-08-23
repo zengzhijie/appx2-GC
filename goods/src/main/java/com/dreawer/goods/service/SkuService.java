@@ -156,9 +156,6 @@ public class SkuService extends BaseService{
     @Transactional
     public ResponseCode releaseBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
     	
-    	//对购买信息排序
-    	purchaseInfos = sortPurchaseInfoBySkuId(purchaseInfos);
-    	
     	//创建List集合接收库存操作明细列表
     	List<InventoryOperationDetail> inventoryOperationDetails = new ArrayList<>();
     	

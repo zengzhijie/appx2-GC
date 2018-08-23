@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-/*import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import com.aliyun.openservices.ons.api.Action;
 import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
@@ -17,19 +17,24 @@ import com.google.gson.Gson;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;*/
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.dreawer.goods.service.SkuService;
 
 
 @Component
-public class DefaultMessageListener /*implements MessageListener*/ {
+public class DefaultMessageListener implements MessageListener {
 	
 	private Logger logger = LoggerFactory.getLogger(DefaultMessageListener.class);
 
+	@Autowired
+	private ProduceFactory produceFactory;
+	
     @Autowired
     private SkuService skuService; //SKUservice
-	
-/*	@Override
+    
+	@Override
 	public Action consume(Message message, ConsumeContext context) {
 		logger.info("收到MQ消息：" + message.getMsgID());
 		System.out.println(message.getBody());
@@ -80,40 +85,49 @@ public class DefaultMessageListener /*implements MessageListener*/ {
 									//执行锁定库存
 									ResponseCode responseCode = skuService.lockBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
 									
+									//封装请求参数
+									Map<String, Object> param = new HashMap<>();
+									param.put(ORDER_ID, orderId);
+									String json = new Gson().toJson(param);
+									
 									if(responseCode.getCode().equals("000000")){
+
 										//锁定库存成功
+										produceFactory.sendMessage(json, "HANDLE_SUCCESS");
 										
 									}else{
 										//锁定库存失败
+										produceFactory.sendMessage(json, "HANDLE_FAILURE");
 										
+										logger.error("responseCode", responseCode);
 									}
 									
 								}else if(tag.equals(RELEASE_INVENTORY)){
 									
 									//执行释放库存
 									ResponseCode responseCode = skuService.releaseBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
-									
-									if(responseCode.getCode().equals("000000")){
+									logger.error("responseCode", responseCode);
+/*									if(responseCode.getCode().equals("000000")){
 										//释放库存成功
-										
+										logger.error("responseCode", responseCode);
 									}else{
 										//释放库存失败
-										
-									}
+										logger.error("responseCode", responseCode);
+									}*/
 									
 									
 								}else if(tag.equals(DEDUCTION_INVENTORY)){
 									
 									//执行扣减库存
 									ResponseCode responseCode = skuService.deductionBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
-									
-									if(responseCode.getCode().equals("000000")){
+									logger.error("responseCode", responseCode);
+/*									if(responseCode.getCode().equals("000000")){
 										//扣减库存成功
 										
 									}else{
 										//扣减库存失败
 										
-									}
+									}*/
 									
 								}
 							}
@@ -124,10 +138,10 @@ public class DefaultMessageListener /*implements MessageListener*/ {
 			
             return Action.CommitMessage;
         }catch (Exception e) {
-        	
+        	logger.error(ERROR, e);
             //消费失败
             return Action.ReconsumeLater;
         }
-	}*/
+	}
 
 }
