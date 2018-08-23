@@ -295,7 +295,7 @@ public class FreightService extends BaseService{
 					BigDecimal price = freightParam.getPrice();
 					
 					//将该商品运费添加到总运费中
-					count.add(price);
+					count = count.add(price);
 				}else{
 					//不固定运费，需查询运费模板
 					
