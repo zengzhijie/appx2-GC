@@ -352,7 +352,7 @@ public class FreightController extends BaseController{
     		List<LogisticsMethod> logisticsMethods = new ArrayList<>();
     		
     		//封装运费模板数据
-    		freight.setId(generateUUID());
+    		freight.setId(form.getId());
     		freight.setStoreId(storeId);
     		freight.setName(form.getName());
     		freight.setDeliveryAddress(form.getDeliveryAddress());
@@ -473,7 +473,7 @@ public class FreightController extends BaseController{
     				if(StringUtils.isEmpty(logisticsMethodForm.getId())){
     					logisticsMethod.setId(generateUUID());
     				}else{
-    					logisticsMethod.setId(form.getId());
+    					logisticsMethod.setId(logisticsMethodForm.getId());
     				}
     				
     				logisticsMethod.setFreightId(freight.getId());
@@ -544,7 +544,8 @@ public class FreightController extends BaseController{
         					//保存城市ID到Map集合中
         					StringBuffer cityIds = cityMap.get(logisticsMethod.getType());
         					if(cityIds == null || cityIds.length()<=0){
-        						cityIds.append(cityId);
+        						cityIds = new StringBuffer();
+        						cityIds = cityIds.append(cityId);
         					}else{
         						
         						//判断城市ID是否存在
@@ -553,7 +554,7 @@ public class FreightController extends BaseController{
         						}
         						
         						//添加城市ID到Map集合中
-        						cityIds.append(";").append(cityId);
+        						cityIds = cityIds.append(";").append(cityId);
         					}
         					
         					//创建城市信息实体类封装城市信息
