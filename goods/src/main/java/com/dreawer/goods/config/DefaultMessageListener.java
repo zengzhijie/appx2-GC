@@ -99,7 +99,7 @@ public class DefaultMessageListener implements MessageListener {
 										//锁定库存失败
 										produceFactory.sendMessage(json, "HANDLE_FAILURE");
 										
-										logger.error("responseCode", responseCode);
+										logger.error("responseCode", responseCode.getCheckPoint());
 									}
 									
 								}else if(tag.equals(RELEASE_INVENTORY)){
