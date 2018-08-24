@@ -96,24 +96,24 @@ public class SkuService extends BaseService{
     					}
     					
     					//判断sku库存是否充足
-    					if(sku.getInventoryType().equals(InventoryType.LIMITED) && (sku.getInventory() - sku.getLockedInventory())  >= purchaseInfo.getQuantity()){
-    						
-    						//将待锁定的库存信息添加到List集合中
-    						inventoryOperationDetail = new InventoryOperationDetail();
-    						inventoryOperationDetail.setOrderId(orderId);
-    						inventoryOperationDetail.setSkuId(purchaseInfo.getSkuId());
-    						inventoryOperationDetail.setInventory(purchaseInfo.getQuantity());
-    						inventoryOperationDetail.setStatus(InventoryStatus.LOCKED);
-    						inventoryOperationDetail.setCreaterId(userId);
-    						inventoryOperationDetail.setCreateTime(time);
-    						inventoryOperationDetails.add(inventoryOperationDetail);
-    						
-    						//将待锁定库存的SKU信息添加到List集合中
-    						sku.setLockedInventory(sku.getLockedInventory()+purchaseInfo.getQuantity());
-    						updateSkus.add(sku);
-    						
-    					}else{
-    						return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+    					if(sku.getInventoryType().equals(InventoryType.LIMITED)){
+    						if((sku.getInventory() - sku.getLockedInventory())  >= purchaseInfo.getQuantity()){
+        						//将待锁定的库存信息添加到List集合中
+        						inventoryOperationDetail = new InventoryOperationDetail();
+        						inventoryOperationDetail.setOrderId(orderId);
+        						inventoryOperationDetail.setSkuId(purchaseInfo.getSkuId());
+        						inventoryOperationDetail.setInventory(purchaseInfo.getQuantity());
+        						inventoryOperationDetail.setStatus(InventoryStatus.LOCKED);
+        						inventoryOperationDetail.setCreaterId(userId);
+        						inventoryOperationDetail.setCreateTime(time);
+        						inventoryOperationDetails.add(inventoryOperationDetail);
+        						
+        						//将待锁定库存的SKU信息添加到List集合中
+        						sku.setLockedInventory(sku.getLockedInventory()+purchaseInfo.getQuantity());
+        						updateSkus.add(sku);
+    						}else{
+        						return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+        					}
     					}	
             		}else if(goods.getStatus().equals(GoodsStatus.APPLIED)){
             			return StatusError.APPLIED(GOODS_ID+":"+sku.getGoodsId()); // 商品已下架
