@@ -37,6 +37,7 @@ public class DefaultMessageListener implements MessageListener {
 	@Override
 	public Action consume(Message message, ConsumeContext context) {
 		logger.info("收到MQ消息：" + message.getMsgID());
+		logger.info("MQ消息BODY：" + message.getBody());
 		System.out.println(message.getBody());
 		try {
 			
@@ -99,7 +100,7 @@ public class DefaultMessageListener implements MessageListener {
 										//锁定库存失败
 										produceFactory.sendMessage(json, "HANDLE_FAILURE");
 										
-										logger.error("responseCode", responseCode.getCheckPoint());
+										logger.error("responseCode："+responseCode.getCheckPoint());
 									}
 									
 								}else if(tag.equals(RELEASE_INVENTORY)){
