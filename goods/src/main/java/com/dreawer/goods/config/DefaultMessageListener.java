@@ -72,6 +72,7 @@ public class DefaultMessageListener implements MessageListener {
 								if(StringUtils.isNotEmpty(spuId) && StringUtils.isNotEmpty(skuId) && quantity!=null){
 									PurchaseInfo purchaseInfo = new PurchaseInfo();
 									purchaseInfo.setGoodsId(spuId);
+									logger.error("spuId:"+spuId+";skuId:"+skuId+";quantity:"+quantity);
 									purchaseInfo.setSkuId(skuId);
 									purchaseInfo.setQuantity(quantity);
 									purchaseInfos.add(purchaseInfo);
