@@ -597,6 +597,8 @@ public class BaseService {
     			}
     			
     			viewGoods.setTotalInventory(totalInventory);
+    			viewGoods.setTotalLockedInventory(totalLockedInventory);
+    			viewGoods.setTotalPurchasableInventory(totalPurchasableInventory);
     			viewGoods.setMainDiagram(goods.getMainDiagram());
     			viewGoods.setDetail(goods.getDetail());
     			viewGoods.setService(goods.getService());
@@ -668,6 +670,8 @@ public class BaseService {
 			}
 			
 			viewGoods.setTotalInventory(totalInventory);
+			viewGoods.setTotalLockedInventory(totalLockedInventory);
+			viewGoods.setTotalPurchasableInventory(totalPurchasableInventory);
 			viewGoods.setMainDiagram(goods.getMainDiagram());
 			viewGoods.setDetail(goods.getDetail());
 			viewGoods.setService(goods.getService());
