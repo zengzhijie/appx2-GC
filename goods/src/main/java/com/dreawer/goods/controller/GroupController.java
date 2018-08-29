@@ -441,7 +441,6 @@ public class GroupController extends BaseController{
     			}
     			group.setUrl(form.getUrl());
     		}
-    		group.setGoodsQuantity(0);
     		group.setUpdaterId(userId);
     		group.setUpdateTime(getNow());
     		group.setRemark(form.getRemark());
