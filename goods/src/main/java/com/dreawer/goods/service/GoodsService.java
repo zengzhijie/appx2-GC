@@ -761,14 +761,8 @@ public class GoodsService extends BaseService{
 			StringBuffer descriptionStringBuffer = new StringBuffer();
 			
 			//获取属性名属性值键值对列表
-			if(!StringUtils.isEmpty(description)){
-				String[] descriptions = null;
-				if(description.contains(";")){
-					descriptions = description.split(";");
-				}else{
-					descriptions = new String[]{description};
-				}
-				
+			if(!StringUtils.isEmpty(description) && description.contains(";")){
+				String[] descriptions = description.split(";");
 				for (String string : descriptions) {
 					int index = string.indexOf(":");
 					
@@ -859,13 +853,8 @@ public class GoodsService extends BaseService{
 					StringBuffer descriptionStringBuffer = new StringBuffer();
 					
 					//获取属性名属性值键值对列表
-					if(!StringUtils.isEmpty(description)){
-						String[] descriptions = null;
-						if(description.contains(";")){
-							descriptions = description.split(";");
-						}else{
-							descriptions = new String[]{description};
-						}
+					if(!StringUtils.isEmpty(description) && description.contains(";")){
+						String[] descriptions = description.split(";");
 						for (String string : descriptions) {
 							int index = string.indexOf(":");
 							
