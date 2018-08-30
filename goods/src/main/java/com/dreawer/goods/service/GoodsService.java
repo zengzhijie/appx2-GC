@@ -36,7 +36,6 @@ import com.dreawer.goods.view.ViewGoods;
 import com.dreawer.goods.view.ViewPurchaseDetail;
 import com.dreawer.responsecode.rcdt.EntryError;
 import com.dreawer.responsecode.rcdt.GCRuleError;
-import com.dreawer.responsecode.rcdt.PermissionsError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.RuleError;
 import com.dreawer.responsecode.rcdt.StatusError;
@@ -224,7 +223,7 @@ public class GoodsService extends BaseService{
     		
     		//判断商品是否为REMOVED状态或下架状态
     		if(!goods.getStatus().equals(GoodsStatus.REMOVED)){
-    			return PermissionsError.DATA_NO_ALLOW(GOODS_ID+":"+id); // 未进入回收站的商品不允许删除
+    			return GCRuleError.NOTALLOW_DELETE_NON_RECOVERY(GOODS_ID+":"+id); // 未进入回收站的商品不允许删除
     		}
     		
     		//获取SKU列表
@@ -235,7 +234,7 @@ public class GoodsService extends BaseService{
     			
     			//判断sku库存状态
     			if(sku.getLockedInventory() != 0){
-    				return GCRuleError.NOTALLOW_DELETE_NON_RECOVERY(GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
+    				return GCRuleError.NOTALLOW_DELETE_LOCKED(GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
     			}
 			}
 		}

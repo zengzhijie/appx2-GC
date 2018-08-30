@@ -229,7 +229,7 @@ CREATE INDEX idx_frt_id ON godsi_frt_par(frt_id);
 -- ==================================================
 DROP TABLE IF EXISTS godsi_inv_op_dtl;
 CREATE TABLE godsi_inv_op_dtl (
-	ord_id         CHAR(32) NOT NULL COMMENT 'ID序列号',
+	ord_no         CHAR(32) NOT NULL COMMENT '订单号',
 	sku_id         CHAR(32) NOT NULL COMMENT '店铺ID',
 	inventory      INT(4) COMMENT '操作库存数',
 	status         CHAR(32) NOT NULL DEFAULT 'LOCKED' COMMENT '状态（LOCKED-已锁定、RELEASED-已释放、RETURNED-已扣减）',
@@ -237,9 +237,8 @@ CREATE TABLE godsi_inv_op_dtl (
 	cre_tim        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	updr_id        CHAR(32) COMMENT '更新者用户ID号',
 	upd_tim        DATETIME DEFAULT NULL COMMENT '更新时间',
-	PRIMARY KEY (ord_id, sku_id)
+	PRIMARY KEY (ord_no, sku_id)
 ) COMMENT='库存操作明细表' ENGINE=InnoDB;
-
 
 -- ==================================================
 -- 小程序应用信息表

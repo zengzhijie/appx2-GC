@@ -7,7 +7,7 @@ public class OrderPacket implements Serializable{
 
 	private static final long serialVersionUID = 2754566770369863383L;
 
-	private String orderId = null; // 订单id
+	private String orderNo = null; // 订单号
 
 	private String userId = null; // 用户id
 
@@ -19,12 +19,12 @@ public class OrderPacket implements Serializable{
 
 	private List<GoodsPacket> goods = null; // 商品信息
 
-	public String getOrderId() {
-		return orderId;
+	public String getOrderNo() {
+		return orderNo;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	public String getUserId() {

@@ -46,15 +46,15 @@ public class SkuService extends BaseService{
     /**
      * 批量锁定SKU库存。
      * @param purchaseInfos 购买信息列表。
-     * @param orderId 	           订单ID。
+     * @param orderNo 	           订单号。
      * @param userId 	           用户ID。
      * @param time			操作时间。
-     * @return  成功返回订单ID，失败返回相应的错误码
+     * @return  成功返回订单号，失败返回相应的错误码
      * @author kael
      * @since 1.0
      */
     @Transactional
-    public ResponseCode lockBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
+    public ResponseCode lockBatchInventory(List<PurchaseInfo> purchaseInfos, String orderNo, String userId, Timestamp time){
     	
     	//对购买信息排序
     	purchaseInfos = sortPurchaseInfoBySkuId(purchaseInfos);
@@ -80,7 +80,7 @@ public class SkuService extends BaseService{
     		Goods goods = goodsDao.findGoodsByIdForUpdate(sku.getGoodsId());
     		
     		//查询是否存在该库存操作明细信息
-    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderId, sku.getId());
+    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderNo, sku.getId());
     		if(inventoryOperationDetail == null){
     			
     			//判断商品是否存在
@@ -100,7 +100,7 @@ public class SkuService extends BaseService{
     						if((sku.getInventory() - sku.getLockedInventory())  >= purchaseInfo.getQuantity()){
         						//将待锁定的库存信息添加到List集合中
         						inventoryOperationDetail = new InventoryOperationDetail();
-        						inventoryOperationDetail.setOrderId(orderId);
+        						inventoryOperationDetail.setOrderNo(orderNo);
         						inventoryOperationDetail.setSkuId(purchaseInfo.getSkuId());
         						inventoryOperationDetail.setInventory(purchaseInfo.getQuantity());
         						inventoryOperationDetail.setStatus(InventoryStatus.LOCKED);
@@ -140,21 +140,21 @@ public class SkuService extends BaseService{
     	}
     	
     	//返回处理结果
-    	return Success.SUCCESS(orderId);
+    	return Success.SUCCESS(orderNo);
     }
     
     /**
      * 批量释放SKU库存。
      * @param purchaseInfos 购买信息列表。
-     * @param orderId 	           订单ID。
+     * @param orderNo 	           订单号。
      * @param userId 	           用户ID。
      * @param time			操作时间。
-     * @return  成功返回订单ID，失败返回相应的错误码。
+     * @return  成功返回订单号，失败返回相应的错误码。
      * @author kael
      * @since 1.0
      */
     @Transactional
-    public ResponseCode releaseBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
+    public ResponseCode releaseBatchInventory(List<PurchaseInfo> purchaseInfos, String orderNo, String userId, Timestamp time){
     	
     	//创建List集合接收库存操作明细列表
     	List<InventoryOperationDetail> inventoryOperationDetails = new ArrayList<>();
@@ -166,7 +166,7 @@ public class SkuService extends BaseService{
     	for (PurchaseInfo purchaseInfo : purchaseInfos) {
 
     		//查询是否存在该库存操作明细信息
-    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderId, purchaseInfo.getSkuId());
+    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderNo, purchaseInfo.getSkuId());
     		if(inventoryOperationDetail != null && inventoryOperationDetail.getStatus().equals(InventoryStatus.LOCKED)){
    				//将待释放的库存信息添加到List集合中
 				inventoryOperationDetail.setStatus(InventoryStatus.RELEASED);
@@ -199,21 +199,21 @@ public class SkuService extends BaseService{
     	
     		
     	//返回处理结果
-    	return Success.SUCCESS(orderId);
+    	return Success.SUCCESS(orderNo);
     }
     
     /**
      * 批量扣减SKU库存。
      * @param purchaseInfos 购买信息列表。
-     * @param orderId 	           订单ID。
+     * @param orderNo 	           订单号。
      * @param userId 	           用户ID。
      * @param time			操作时间。
-     * @return  成功返回订单ID，失败返回相应的错误码
+     * @return  成功返回订单号，失败返回相应的错误码
      * @author kael
      * @since 1.0
      */
     @Transactional
-    public ResponseCode deductionBatchInventory(List<PurchaseInfo> purchaseInfos, String orderId, String userId, Timestamp time){
+    public ResponseCode deductionBatchInventory(List<PurchaseInfo> purchaseInfos, String orderNo, String userId, Timestamp time){
     	
     	//对购买信息排序
     	purchaseInfos = sortPurchaseInfoBySkuId(purchaseInfos);
@@ -228,7 +228,7 @@ public class SkuService extends BaseService{
     	for (PurchaseInfo purchaseInfo : purchaseInfos) {
 			
     		//查询是否存在该库存操作明细信息
-    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderId, purchaseInfo.getSkuId());
+    		InventoryOperationDetail inventoryOperationDetail = inventoryOperationDetailDao.findInventoryOperationDetail(orderNo, purchaseInfo.getSkuId());
     		if(inventoryOperationDetail != null && inventoryOperationDetail.getStatus().equals(InventoryStatus.LOCKED)){
 
     			//将待扣减的库存信息添加到List集合中
@@ -265,7 +265,7 @@ public class SkuService extends BaseService{
     	}
     	
     	//返回处理结果
-    	return Success.SUCCESS(orderId);
+    	return Success.SUCCESS(orderNo);
     }
     
     /**

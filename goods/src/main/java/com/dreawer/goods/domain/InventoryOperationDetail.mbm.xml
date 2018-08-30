@@ -9,10 +9,10 @@
 	
 	<!-- 批量添加锁定库存信息 -->
 	<insert id="saveBatch" parameterType="Map">
-		INSERT INTO godsi_inv_op_dtl(ord_id, sku_id, inventory, status, crer_id, cre_tim)
+		INSERT INTO godsi_inv_op_dtl(ord_no, sku_id, inventory, status, crer_id, cre_tim)
         VALUES
         <foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=",">
-            (#{inv_op_dtl.orderId}, #{inv_op_dtl.skuId}, #{inv_op_dtl.inventory}, #{inv_op_dtl.status}, #{inv_op_dtl.createrId}, #{inv_op_dtl.createTime})
+            (#{inv_op_dtl.orderNo}, #{inv_op_dtl.skuId}, #{inv_op_dtl.inventory}, #{inv_op_dtl.status}, #{inv_op_dtl.createrId}, #{inv_op_dtl.createTime})
         </foreach>
 	</insert>
 	
@@ -29,23 +29,23 @@
 	    UPDATE godsi_inv_op_dtl
   		SET status=
     	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
-        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.status}
+        	when ord_no = #{inv_op_dtl.orderNo} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.status}
     	</foreach>
     		,updr_id=
     	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
-        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updaterId}
+        	when ord_no = #{inv_op_dtl.orderNo} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updaterId}
     	</foreach>
     		,upd_tim= 
     	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator=" " open="case" close="end">
-        	when ord_id = #{inv_op_dtl.orderId} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updateTime}
+        	when ord_no = #{inv_op_dtl.orderNo} AND sku_id = #{inv_op_dtl.skuId} then #{inv_op_dtl.updateTime}
     	</foreach>
     	WHERE sku_id IN
     	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=")">
         	#{inv_op_dtl.skuId}
    	 	</foreach>
-   	 	AND ord_id IN
+   	 	AND ord_no IN
    	 	<foreach collection="inventoryOperationDetails" item="inv_op_dtl" index="index" separator="," open="(" close=")">
-        	#{inv_op_dtl.orderId}
+        	#{inv_op_dtl.orderNo}
    	 	</foreach>
 	</update>
 	
@@ -57,7 +57,7 @@
 	<select id="findInventoryOperationDetail" parameterType="Map" resultMap="inventoryOperationDetailResult">
 	  SELECT <include refid="basicFields"/>
 	  FROM godsi_inv_op_dtl
-	  WHERE ord_id = #{orderId} AND sku_id = #{skuId}
+	  WHERE ord_no = #{orderNo} AND sku_id = #{skuId}
 	  FOR UPDATE
 	</select>
     
@@ -67,7 +67,7 @@
 	
 	<!-- 基本信息 -->
 	<sql id="basicFields">
-		ord_id, sku_id, inventory, status
+		ord_no, sku_id, inventory, status
 	</sql>
 	
 	<!-- ================================================================================== -->
@@ -75,7 +75,7 @@
 	<!-- ================================================================================== -->
 	
 	<resultMap id="inventoryOperationDetailResult" type="InventoryOperationDetail">
-		<result property="orderId" column="ord_id" />
+		<result property="orderNo" column="ord_no" />
 		<result property="skuId" column="sku_id" />
 		<result property="inventory" column="inventory" />
 		<result property="status" column="status" />

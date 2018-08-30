@@ -58,11 +58,11 @@ public class InventoryOperationDetailDao extends MyBatisBaseDao<InventoryOperati
      * @author kael
      * @since 1.0
      */
-    public InventoryOperationDetail findInventoryOperationDetail(String orderId, String skuId){
+    public InventoryOperationDetail findInventoryOperationDetail(String orderNo, String skuId){
     	
     	//封装请求参数
     	Map<String, Object> params = new HashMap<>();
-    	params.put(ORDER_ID, orderId);
+    	params.put(ORDER_NO, orderNo);
     	params.put(SKU_ID, skuId);
     	
     	//返回查询结果

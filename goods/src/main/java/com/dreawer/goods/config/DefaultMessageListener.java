@@ -55,11 +55,11 @@ public class DefaultMessageListener implements MessageListener {
 				//判断用户ID是否为空
 				if(StringUtils.isNotEmpty(userId)){
 					
-					//获取订单ID
-					String orderId = orderPacket.getOrderId();
+					//获取订单号
+					String orderNo = orderPacket.getOrderNo();
 					
 					//判断订单ID是否为空
-					if(StringUtils.isNotEmpty(orderId)){
+					if(StringUtils.isNotEmpty(orderNo)){
 						//获取商品购买信息
 						List<GoodsPacket> goodsPackets = orderPacket.getGoods();
 						
@@ -85,11 +85,11 @@ public class DefaultMessageListener implements MessageListener {
 								if(tag.equals(LOCK_INVENTORY)){
 									
 									//执行锁定库存
-									ResponseCode responseCode = skuService.lockBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
+									ResponseCode responseCode = skuService.lockBatchInventory(purchaseInfos, orderNo, userId, new Timestamp(System.currentTimeMillis()));
 									
 									//封装请求参数
 									Map<String, Object> param = new HashMap<>();
-									param.put(ORDER_ID, orderId);
+									param.put(ORDER_NO, orderNo);
 									String json = new Gson().toJson(param);
 									
 									if(responseCode.getCode().equals("000000")){
@@ -107,7 +107,7 @@ public class DefaultMessageListener implements MessageListener {
 								}else if(tag.equals(RELEASE_INVENTORY)){
 									
 									//执行释放库存
-									ResponseCode responseCode = skuService.releaseBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
+									ResponseCode responseCode = skuService.releaseBatchInventory(purchaseInfos, orderNo, userId, new Timestamp(System.currentTimeMillis()));
 									logger.error("responseCode", responseCode);
 /*									if(responseCode.getCode().equals("000000")){
 										//释放库存成功
@@ -119,7 +119,7 @@ public class DefaultMessageListener implements MessageListener {
 								}else if(tag.equals(DEDUCTION_INVENTORY)){
 									
 									//执行扣减库存
-									ResponseCode responseCode = skuService.deductionBatchInventory(purchaseInfos, orderId, userId, new Timestamp(System.currentTimeMillis()));
+									ResponseCode responseCode = skuService.deductionBatchInventory(purchaseInfos, orderNo, userId, new Timestamp(System.currentTimeMillis()));
 									logger.error("responseCode", responseCode);
 /*									if(responseCode.getCode().equals("000000")){
 										//扣减库存成功

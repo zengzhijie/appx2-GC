@@ -14,7 +14,7 @@ public class InventoryOperationDetail extends BaseDomain {
 
 	private static final long serialVersionUID = 2498633554049066213L;
 
-	private String orderId = null; // 订单ID
+	private String orderNo = null; // 订单号
 	
 	private String skuId = null; // SKUID
 	
@@ -45,12 +45,12 @@ public class InventoryOperationDetail extends BaseDomain {
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
 
-	public String getOrderId() {
-		return orderId;
+	public String getOrderNo() {
+		return orderNo;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 
 	public String getSkuId() {

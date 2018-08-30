@@ -1882,7 +1882,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//执行锁定库存
-    		ResponseCode responseCode = skuService.lockBatchInventory(purchaseInfos, form.getOrderId(), userId, getNow());
+    		ResponseCode responseCode = skuService.lockBatchInventory(purchaseInfos, form.getOrderNo(), userId, getNow());
         	
             //返回处理结果
             return responseCode;
@@ -1952,7 +1952,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//执行释放库存
-    		ResponseCode responseCode = skuService.releaseBatchInventory(purchaseInfos, form.getOrderId(), userId, getNow());
+    		ResponseCode responseCode = skuService.releaseBatchInventory(purchaseInfos, form.getOrderNo(), userId, getNow());
         	
             //返回处理结果
             return responseCode;
@@ -2022,7 +2022,7 @@ public class GoodsController extends BaseController{
 			}
     		
     		//执行扣减库存
-    		ResponseCode responseCode = skuService.deductionBatchInventory(purchaseInfos, form.getOrderId(), userId, getNow());
+    		ResponseCode responseCode = skuService.deductionBatchInventory(purchaseInfos, form.getOrderNo(), userId, getNow());
         	
             //返回处理结果
             return responseCode;

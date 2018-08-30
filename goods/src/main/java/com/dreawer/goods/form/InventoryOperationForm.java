@@ -9,18 +9,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class InventoryOperationForm extends PurchaseInfosForm{
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	private String orderId = null; // 订单ID
+	private String orderNo = null; // 订单号
 
     // --------------------------------------------------------------------------------
     // getter 和 setter 方法
     // --------------------------------------------------------------------------------
 	
-	public String getOrderId() {
-		return orderId;
+	public String getOrderNo() {
+		return orderNo;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 	
 }

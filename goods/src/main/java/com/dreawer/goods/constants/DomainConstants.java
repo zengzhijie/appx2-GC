@@ -148,8 +148,8 @@ public abstract class DomainConstants {
     /** SKUID */
     public static final String SKU_ID = "skuId";
     
-    /** 订单ID */
-    public static final String ORDER_ID = "orderId";
+    /** 订单号 */
+    public static final String ORDER_NO = "orderNo";
     
 	/** 物流方式类型 */
     public static final String LOGISTICS_METHOD_TYPE = "logisticsMethodType";
