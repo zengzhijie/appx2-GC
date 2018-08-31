@@ -194,15 +194,15 @@
 	
 	<!-- 根据商品ID查询分组列表(分组状态为正常)  -->
 	<select id="findGroupsByGoodsId" parameterType="String" resultMap="groupResultMap">
-	  SELECT <include refid="basicFields"/>
+	  SELECT gr.id, gr.sto_id, gr.name, gr.par_id, gr.is_par, gr.squence, gr.logo, gr.intro, gr.status, gr.url, gr.gods_qty, gr.crer_id, gr.cre_tim, gr.remark
 	  FROM godsi_group AS gr
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gr.id = gr_gods.gr_id
 	  WHERE gr_gods.gods_id = #{goodsId} AND gr.status = 'DEFAULT'
 	</select>
 	
 	<!-- 根据商品ID、分组ID查询分组信息  -->
-	<select id="findGroupByIdAndGoodsId" parameterType="String" resultMap="groupResultMap">
-	  SELECT <include refid="basicFields"/>
+	<select id="findGroupByIdAndGoodsId" parameterType="Map" resultMap="groupResultMap">
+	  SELECT gr.id, gr.sto_id, gr.name, gr.par_id, gr.is_par, gr.squence, gr.logo, gr.intro, gr.status, gr.url, gr.gods_qty, gr.crer_id, gr.cre_tim, gr.remark
 	  FROM godsi_group AS gr
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gr.id = gr_gods.gr_id
 	  WHERE gr_gods.gods_id = #{goodsId} AND gr_gods.id = #{id}

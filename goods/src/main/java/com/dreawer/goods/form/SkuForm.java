@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 import static com.dreawer.goods.constants.MessageConstants.*;
 import java.math.BigDecimal;
-
 import javax.validation.constraints.NotNull;
 
 /**
