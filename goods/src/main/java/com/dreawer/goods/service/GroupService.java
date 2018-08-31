@@ -205,10 +205,16 @@ public class GroupService extends BaseService{
         		return Success.SUCCESS; // 分组中已存在该商品返回成功
         	}
         	
-        	//执行添加
-        	groupDao.saveBatchGroupGoods(groupGoodses);
-    		
+        	
+        	//封装请求参数
+			groupGoods.put(GROUP_ID, currentGroupId);
+			groupGoods.put(CREATER_ID, updaterId);
+			groupGoods.put(CREATE_TIME, updateTime);
+        	
 		}
+    	
+    	//执行添加
+    	groupDao.saveBatchGroupGoods(groupGoodses);
     	
     	//返回删除结果
     	return Success.SUCCESS;
