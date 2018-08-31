@@ -205,7 +205,7 @@
 	  SELECT gr.id, gr.sto_id, gr.name, gr.par_id, gr.is_par, gr.squence, gr.logo, gr.intro, gr.status, gr.url, gr.gods_qty, gr.crer_id, gr.cre_tim, gr.remark
 	  FROM godsi_group AS gr
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gr.id = gr_gods.gr_id
-	  WHERE gr_gods.gods_id = #{goodsId} AND gr_gods.id = #{id}
+	  WHERE gr_gods.gods_id = #{goodsId} AND gr.id = #{id}
 	</select>
 	
 	<!-- ================================================================================== -->
