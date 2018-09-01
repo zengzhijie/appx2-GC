@@ -130,10 +130,10 @@
 	  FROM (SELECT goods.* FROM godsi_goods AS goods WHERE goods.sto_id = #{storeId}
 	  				 
 	  				 <if test="isSoldOut != null">
-	  				 	<if test="isSoldOut != false">
+	  				 	<if test="isSoldOut != true">
 	  						AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
 	  				 	</if>	
-	  				 	<if test="isSoldOut != true">
+	  				 	<if test="isSoldOut != false">
 	  						AND (goods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
 	  				 	</if>	
 	  				 </if>	
@@ -182,10 +182,10 @@
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  WHERE gods.sto_id = #{storeId}
 	  <if test="isSoldOut != null">
-	  	<if test="isSoldOut != false">
+	  	<if test="isSoldOut != true">
 	  		AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
 	  	</if>	
-	  	<if test="isSoldOut != true">
+	  	<if test="isSoldOut != false">
 	  		AND (goods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
 	  	</if>	
 	  </if>	
