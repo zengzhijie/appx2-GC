@@ -456,7 +456,7 @@ public class GoodsService extends BaseService{
         		List<Sku> skus = goods.getSkus();
         		
         		//创建Set集合，接收原SKU列表和当前SKU列表中相同ID的SKU信息
-        		Set<Sku> CommonSku = new HashSet<>();
+        		Set<Sku> CommonSkuSet = new HashSet<>();
         		
         		//循环原SKU列表
         		for (Sku orginalSku : orginalSkus) {
@@ -476,14 +476,20 @@ public class GoodsService extends BaseService{
         						return GCRuleError.LOWER_LOCKING_NUMBER(SKU_ID+":"+sku.getId()); // 修改后的库存小于锁定库存数，不允许修改
         					}
         					
-        					CommonSku.add(sku);
+        					CommonSkuSet.add(orginalSku);
         				}
 					}
 				}
         		
+        		
         		//比对共同SKU集合和原SKU集合的长度
-        		if(CommonSku.size() < orginalSkus.size()){
-        			orginalSkus.removeAll(CommonSku); // 获取被删除的SKU列表
+        		List<Sku> CommonSkus = new ArrayList<>();
+        		for (Sku sku : CommonSkuSet) {
+        			CommonSkus.add(sku);
+				}
+        		
+        		if(CommonSkus.size() <= orginalSkus.size()){
+        			orginalSkus.removeAll(CommonSkus); // 获取被删除的SKU列表
         		}
         		
         		//循环被删除的SKU列表
