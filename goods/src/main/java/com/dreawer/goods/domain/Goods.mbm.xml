@@ -127,8 +127,10 @@
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
-	  FROM (SELECT goods.* FROM godsi_goods AS goods WHERE goods.sto_id = #{storeId}
-	  				 
+	  FROM (SELECT goods.* FROM godsi_goods AS goods 
+	  		LEFT JOIN godsi_gr_gods AS godsi_gr_gods ON goods.id = godsi_gr_gods.gods_id
+	  		LEFT JOIN godsi_group AS godsi_group ON godsi_gr_gods.gr_id = godsi_group.id
+	  		WHERE goods.sto_id = #{storeId}
 	  				 <if test="isSoldOut != null">
 	  				 	<if test="isSoldOut != true">
 	  						AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
@@ -152,6 +154,9 @@
 	  				<if test="keyword != null">
 	  					AND goods.name LIKE CONCAT('%',#{keyword},'%')
 	  				</if>
+	  				<if test="groupId != null">
+	  					WHERE godsi_group.id = #{groupId}
+	  				</if>
 	  			    <if test="goodsIds != null">
 	  					AND goods.id IN
 						<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
@@ -170,9 +175,6 @@
 	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
-	  <if test="groupId != null">
-	  	WHERE gr_gods.gr_id = #{groupId}
-	  </if>
 	</select>
 	
 	<!-- 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页获取商品总数  -->
@@ -223,7 +225,10 @@
 	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
 	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
 	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
-	  FROM (SELECT goods.* FROM godsi_goods AS goods WHERE goods.sto_id = #{storeId}  AND goods.status = 'DEFAULT'AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
+	  FROM (SELECT goods.* FROM godsi_goods AS goods 
+	  		LEFT JOIN godsi_gr_gods AS godsi_gr_gods ON goods.id = godsi_gr_gods.gods_id
+	  		LEFT JOIN godsi_group AS godsi_group ON godsi_gr_gods.gr_id = godsi_group.id
+	  		WHERE goods.sto_id = #{storeId}  AND goods.status = 'DEFAULT'AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
 	        	<if test="type != null">
 	  				AND goods.type = #{type}
 	 			</if>	
@@ -235,6 +240,9 @@
 	  			</if>	
 	  			<if test="keyword != null">
 	  				AND goods.name LIKE CONCAT('%',#{keyword},'%')
+	  			</if>
+	  			<if test="groupId != null">
+	  				WHERE godsi_group.id = #{groupId}
 	  			</if>
 	 				 ORDER BY goods.cre_tim DESC
 	  			<if test="start != null">
@@ -248,9 +256,7 @@
 	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
 	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
 	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
-	  <if test="groupId != null">
-	  	WHERE gr_gods.gr_id = #{groupId}
-	  </if>
+
 	</select>
 	
 	<!-- 根据店铺ID、分组ID、推荐状态、类目ID、模糊查询关键字分页获取正在销售的商品总数(正在销售即商品库存、状态均为正常)  -->

@@ -196,6 +196,9 @@ public abstract class DomainConstants {
     /** 跳转地址 */
     public static final String URL = "url";
     
+    /** LOGO */
+    public static final String LOGO = "logo";
+    
     /** 当前分组ID */
     public static final String CURRENT_GROUP_ID = "currentGroupId";
     

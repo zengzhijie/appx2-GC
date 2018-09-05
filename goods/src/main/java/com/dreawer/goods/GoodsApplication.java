@@ -9,13 +9,17 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
 
+import com.dreawer.responsecode.rcdt.ResponseCode;
+
 @SpringBootApplication
 @EnableEurekaClient
 @EnableTransactionManagement
 public class GoodsApplication {
 
     public static void main(String[] args) {
+    	
         SpringApplication.run(GoodsApplication.class, args);
+        ResponseCode.initNamespace("gc");
     }
     
     @Bean // 定义REST客户端，RestTemplate实例

@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class AddGroupForm {
     
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
-	@Length(min=1, max=40, message=ENTRY_ERROR_OVERRANGE)
+	@Length(min=1, max=16, message=ENTRY_ERROR_OVERRANGE)
 	private String name = null; // 名称
 	
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)

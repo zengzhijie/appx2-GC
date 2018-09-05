@@ -643,7 +643,7 @@ public class GoodsService extends BaseService{
      * @author kael
      * @since 1.0
      */
-    public ResponseCode findSellingGoodses(String storeId, String groupId,GoodsType type, Boolean isRecommend, 
+    public ResponseCode findSellingGoodses(String storeId, String groupId, GoodsType type, Boolean isRecommend, 
     		                              String categoryId, String keyword, Integer start, Integer pageSize){
     	
     	//查询商品列表

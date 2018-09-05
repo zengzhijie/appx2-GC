@@ -99,6 +99,11 @@ public class GroupController extends BaseController{
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
+    		}else if(form.getSource().equals(SourceType.RETAIL)){
+    			//判断跳转地址是否为空
+    			if(StringUtils.isEmpty(form.getLogo())){
+    				return EntryError.EMPTY(LOGO); // 跳转地址为空
+    			}
     		}
     		group.setGoodsQuantity(0);
     		group.setCreaterId(userId);
@@ -440,6 +445,11 @@ public class GroupController extends BaseController{
     				return EntryError.EMPTY(URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
+    		}else if(form.getSource().equals(SourceType.RETAIL)){
+    			//判断跳转地址是否为空
+    			if(StringUtils.isEmpty(form.getLogo())){
+    				return EntryError.EMPTY(LOGO); // 跳转地址为空
+    			}
     		}
     		group.setUpdaterId(userId);
     		group.setUpdateTime(getNow());
