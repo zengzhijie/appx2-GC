@@ -280,7 +280,6 @@
 	  <if test="keyword != null">
 	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
 	  </if>
-	  ORDER BY gods.cre_tim DESC
 	</select>
 	
 	<!-- 根据商品ID查询商品信息  -->
