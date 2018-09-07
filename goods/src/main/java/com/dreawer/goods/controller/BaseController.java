@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
+
+import org.junit.Test;
+
 import com.dreawer.goods.domain.GoodsPropertyName;
 import com.dreawer.goods.domain.Sku;
 
@@ -280,5 +284,17 @@ public class BaseController{
 		
 		fos.close();
 	}*/
+	
+	@Test
+	public void test312321(){
+		Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+		String originalPrice = "0.11";
+		boolean matches = pricePattern.matcher(originalPrice.toString()).matches();
+		if(matches){
+			System.out.println("true");
+		}else{
+			System.out.println("false");
+		}
+	}
 	
 }

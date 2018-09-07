@@ -381,13 +381,13 @@ public class GoodsController extends BaseController{
     			}else{
     				
     				//判断SKU库存取值范围
-    				if(inventory > 9999 || inventory<0){
+    				if(inventory > 99999999 || inventory<0){
     					return EntryError.OVERRANGE(INVENTORY);
     				}
     			}
     			
     			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
@@ -977,13 +977,13 @@ public class GoodsController extends BaseController{
     			}else{
     				
     				//判断SKU库存取值范围
-    				if(inventory > 9999 || inventory<0){
+    				if(inventory > 99999999 || inventory<0){
     					return EntryError.OVERRANGE(INVENTORY);
     				}
     			}
     			
     			//创建价格正则表达式
-    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,4}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,4}\\.\\d{2}$)");
+    			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = skuForm.getOriginalPrice();
