@@ -353,6 +353,13 @@ public class GoodsService extends BaseService{
     	//封装请求参数
     	List<Map<String, Object>> groupGoodses = new ArrayList<>();
     	for (Goods goods : goodses) {
+    		
+    		//判断商品是否存在
+    		Goods findGoods = goodsDao.findGoodsById(goods.getId());
+    		if(findGoods == null){
+    			return RuleError.NON_EXISTENT(GOODS_ID+":"+goods.getId());
+    		}
+    		
 			Map<String, Object> groupGoods = new HashMap<>();
 			groupGoods.put(GROUP_ID, groupId);
 			groupGoods.put(GOODS_ID, goods.getId());
@@ -609,6 +616,7 @@ public class GoodsService extends BaseService{
     	//转换查询结果为视图列表
     	List<ViewGoods> viewGoodses = convertGoodsViews(goodses);
     	
+    	viewGoodses = sortViewGoodsByCreateTimeDesc(viewGoodses);
     	//查询商品总数
     	int totalSize = goodsDao.getGoodsCount(storeId, groupId, type, status, isRecommend, categoryId, keyword, isSoldOut);
     	
@@ -651,6 +659,8 @@ public class GoodsService extends BaseService{
     	
     	//转换查询结果为视图列表
     	List<ViewGoods> viewGoodses = convertGoodsViews(goodses);
+    	
+    	viewGoodses = sortViewGoodsByCreateTimeDesc(viewGoodses);
     	
     	//查询商品总数
     	int totalSize = goodsDao.getSellingGoodsCount(storeId, groupId, type, isRecommend, categoryId, keyword);

@@ -43,6 +43,23 @@ public class BaseService {
     private GoodsDao goodsDao; // 商品信息DAO
 	
 	/**
+	 * 商品视图列表排序（根据创建时间倒叙）
+	 * @param viewGoodses 待排序的商品视图列表。
+	 * @return viewGoodses 排序后的商品视图列表。
+	 */
+	protected List<ViewGoods> sortViewGoodsByCreateTimeDesc(List<ViewGoods> viewGoodses){
+		
+		Collections.sort(viewGoodses, new Comparator<ViewGoods>(){
+			@Override
+			public int compare(ViewGoods viewGoods1, ViewGoods viewGoods2) {
+				return viewGoods2.getCreateTime().compareTo(viewGoods1.getCreateTime());
+			}
+		});
+		
+		return viewGoodses;
+	}
+    
+	/**
 	 * 购买信息排序（根据SKUID排序）
 	 * @param purchaseInfos 待排序的购买信息列表。
 	 * @return purchaseInfos 排序后的购买信息列表。

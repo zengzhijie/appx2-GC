@@ -155,7 +155,7 @@
 	  					AND goods.name LIKE CONCAT('%',#{keyword},'%')
 	  				</if>
 	  				<if test="groupId != null">
-	  					WHERE godsi_group.id = #{groupId}
+	  					AND godsi_group.id = #{groupId}
 	  				</if>
 	  			    <if test="goodsIds != null">
 	  					AND goods.id IN
@@ -242,7 +242,7 @@
 	  				AND goods.name LIKE CONCAT('%',#{keyword},'%')
 	  			</if>
 	  			<if test="groupId != null">
-	  				WHERE godsi_group.id = #{groupId}
+	  				AND godsi_group.id = #{groupId}
 	  			</if>
 	 				 ORDER BY goods.cre_tim DESC
 	  			<if test="start != null">
