@@ -347,7 +347,7 @@ public class GoodsService extends BaseService{
     	//判断分组是否存在
     	Group group = groupDao.findGroup(groupId);
     	if(group == null){
-    		return RuleError.NON_EXISTENT(GROUP);
+    		return RuleError.NON_EXISTENT(GROUP_ID+":"+groupId);
     	}
     	
     	//封装请求参数

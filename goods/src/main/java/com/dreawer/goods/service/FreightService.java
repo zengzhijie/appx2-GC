@@ -307,7 +307,7 @@ public class FreightService extends BaseService{
 					
 					//判断运费模板信息是否存在
 					if(freight == null){
-						return RuleError.NON_EXISTENT(FREIGHT);
+						return RuleError.NON_EXISTENT(FREIGHT_ID+":"+freightId);
 					}
 					
 					//获取运费支付方
