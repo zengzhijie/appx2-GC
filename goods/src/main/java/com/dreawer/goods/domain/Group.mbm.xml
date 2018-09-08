@@ -36,7 +36,7 @@
 	<!-- 根据商品ID列表批量删除分组、商品关系 -->
 	<delete id="deleteBatchGroupGoods" parameterType="Map">
 		DELETE FROM godsi_gr_gods
-		WHERE gods_id IN 
+		WHERE gods_id IN
 		<foreach collection="goodsIds" item="goodsId" open="(" close=")" index="index" separator=",">
 			#{goodsId}
 		</foreach>

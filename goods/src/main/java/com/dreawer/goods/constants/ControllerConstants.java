@@ -38,6 +38,9 @@ public final class ControllerConstants {
     /** 请求“已删除列表” */
     public static final String REQ_REMOVED_LIST = "/removedList";
     
+    /** 请求“正常列表” */
+    public static final String REQ_NORMAL_LIST = "/normalList";
+    
     /** 请求“详情列表” */
     public static final String REQ_DETAILS = "/details";
     

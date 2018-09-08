@@ -222,6 +222,75 @@ public class GoodsDao extends MyBatisBaseDao<Goods> {
     }
     
     /**
+     * 根据店铺ID、分组ID、商品类型、商品状态、推荐状态、类目ID、模糊查询关键字分页查询正常商品列表(未移除、根据创建时间倒叙)。
+     * @param storeId     店铺ID。
+     * @param groupId	      分组ID。
+     * @param type	                 商品类型。
+     * @param status	      商品状态。
+     * @param isRecommend 推荐状态。
+     * @param categoryId  类目ID。 
+     * @param keyword     模糊查询关键字。
+     * @param isSoldOut   是否售罄。
+     * @param start		      分页起始（0为第一条记录）。
+     * @param pageSize    每页显示记录数。
+     * @return 查询到结果返回商品列表，未查询到结果则返回NULL。
+     * @author kael
+     * @since 1.0
+     */
+    public List<Goods> findNormalGoodses(String storeId, String groupId, GoodsType type, GoodsStatus status,
+    							   Boolean isRecommend, String categoryId, String keyword,
+    							   Boolean isSoldOut, Integer start, Integer pageSize) {
+    	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(STORE_ID, storeId);
+    	params.put(GROUP_ID, groupId);
+    	params.put(TYPE, type);
+    	params.put(STATUS, status);
+    	params.put(IS_RECOMMEND, isRecommend);
+    	params.put(CATEGORY_ID, categoryId);
+    	params.put(KEYWORD, keyword);
+    	params.put(IS_SOLD_OUT, isSoldOut);
+    	params.put(START, start);
+    	params.put(PAGE_SIZE, pageSize);
+    	
+    	//返回查询结果
+        return selectList("findNormalGoodses", params);
+    }
+    
+    /**
+     * 根据店铺ID、分组ID、商品类型、商品状态、推荐状态、类目ID、模糊查询关键字分页获取正常商品总数(未移除)。
+     * @param storeId     店铺ID。
+     * @param groupId	      分组ID。
+     * @param type	                 商品类型。
+     * @param status	      商品状态。
+     * @param isRecommend 推荐状态。
+     * @param categoryId  类目ID。 
+     * @param keyword     模糊查询关键字。
+     * @param isSoldOut   是否售罄。
+     * @return 查询到结果返回商品总数，未查询到结果返回0。
+     * @author kael
+     * @since 1.0
+     */
+    public int getNormalGoodsCount(String storeId, String groupId, GoodsType type, GoodsStatus status,
+    						 Boolean isRecommend, String categoryId, String keyword, Boolean isSoldOut) {
+    	
+    	//封装请求参数
+    	Map<String, Object> params = new HashMap<>();
+    	params.put(STORE_ID, storeId);
+    	params.put(GROUP_ID, groupId);
+    	params.put(TYPE, type);
+    	params.put(STATUS, status);
+    	params.put(IS_RECOMMEND, isRecommend);
+    	params.put(CATEGORY_ID, categoryId);
+    	params.put(KEYWORD, keyword);
+    	params.put(IS_SOLD_OUT, isSoldOut);
+    	
+    	//返回查询结果
+    	return count("getNormalGoodsCount", params);
+    }
+    
+    /**
      * 根据商品ID查询商品信息。
      * @param id   商品ID。
      * @return 查询到结果返回商品信息，未查询到结果返回NULL。

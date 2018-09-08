@@ -592,6 +592,53 @@ public class GoodsService extends BaseService{
     }
     
     /**
+     * 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询正常商品列表(未移除、根据创建时间倒叙)
+     * @param storeId     店铺ID。
+     * @param groupId	      分组ID。
+     * @param status	      商品状态。
+     * @param isRecommend 推荐状态。
+     * @param categoryId  类目ID。 
+     * @param keyword     模糊查询关键字。
+     * @param isSoldOut   是否售罄。
+     * @param start		      分页起始（0为第一条记录）。
+     * @param pageSize    每页显示记录数。
+     * @return 查询到结果返回商品列表，未查询到结果返回空，失败则返回相应错误码。
+     * @author kael
+     * @since 1.0
+     */
+    public ResponseCode findNormalGoodses(String storeId, String groupId, GoodsType type, GoodsStatus status,
+    							   Boolean isRecommend, String categoryId, String keyword,
+    							   Boolean isSoldOut, Integer start, Integer pageSize) {
+    	
+    	//查询商品列表
+    	List<Goods> goodses = goodsDao.findGoodses(storeId, groupId, type, status, isRecommend, categoryId, keyword, isSoldOut, start, pageSize);
+    	
+    	//转换查询结果为视图列表
+    	List<ViewGoods> viewGoodses = convertGoodsViews(goodses);
+    	
+    	viewGoodses = sortViewGoodsByCreateTimeDesc(viewGoodses);
+    	//查询商品总数
+    	int totalSize = goodsDao.getNormalGoodsCount(storeId, groupId, type, status, isRecommend, categoryId, keyword, isSoldOut);
+    	
+		//计算出总页数
+		int totalPage = totalSize%pageSize==0?totalSize/pageSize:(totalSize/pageSize + 1);
+		
+		
+		//创建Map集合封装分页参数
+		Map<String, Object> pageParam = new HashMap<>();
+		pageParam.put(TOTAL_SIZE, totalSize);
+		pageParam.put(TOTAL_PAGE, totalPage);
+		
+		//创建Map集合封装查询结果
+		Map<String, Object> result = new HashMap<>();
+		result.put(GOODSES, viewGoodses);
+		result.put(PAGE_PARAM, pageParam);
+    	
+    	//返回查询结果
+        return Success.SUCCESS(result);
+    }
+    
+    /**
      * 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询商品列表(根据创建时间倒叙)
      * @param storeId     店铺ID。
      * @param groupId	      分组ID。

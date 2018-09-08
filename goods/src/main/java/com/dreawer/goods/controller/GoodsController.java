@@ -1642,6 +1642,43 @@ public class GoodsController extends BaseController{
     }
     
 	/**
+     * 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询正常商品列表(未移除、根据创建时间倒叙)
+     * @param form  查询商品列表表单(店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字、分页起始（0为第一条记录）、每页显示记录数）。
+     * @return 查询到结果返回商品列表，未查询到结果返回空，失败则返回相应错误码。
+	 */
+    @RequestMapping(value=REQ_NORMAL_LIST, method=RequestMethod.POST)
+    public @ResponseBody ResponseCode normalList(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+        }
+    	try {
+    		
+    		//计算分页起始
+    		Integer start = null;
+    		Integer pageSize = form.getPageSize();
+    		if(form.getPageNo() != null && form.getPageSize() != null){
+    			start = (form.getPageNo()-1)*form.getPageSize();
+    		}else{
+    			start = 0;
+    			if(pageSize == null){
+    				pageSize = 5;
+    			}
+    		}
+    		
+    		//执行查询
+    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), null, GoodsType.DEFAULT, GoodsStatus.REMOVED, null, null, form.getKeyword(), null, start, pageSize);
+        	
+            //返回查询结果
+            return responseCode;
+
+        } catch ( Exception e) {
+            e.printStackTrace();
+            logger.error(ERROR, e);
+            return APPSERVER;
+        }
+    }
+    
+	/**
      * 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询商品列表(根据创建时间倒叙)
      * @param form  查询商品列表表单(店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字、分页起始（0为第一条记录）、每页显示记录数）。
      * @return 查询到结果返回商品列表，未查询到结果返回空，失败则返回相应错误码。

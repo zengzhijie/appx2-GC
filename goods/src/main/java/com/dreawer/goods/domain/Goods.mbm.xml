@@ -282,6 +282,110 @@
 	  </if>
 	</select>
 	
+		<!-- 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页查询商品列表(未移除、根据创建时间倒叙)  -->
+	<select id="findNormalGoodses" parameterType="Map" resultMap="goodsResultMap">
+	  SELECT gods.id, gods.sto_id, gods.name, gods.ctg_id, gods.min_pr, gods.min_orig_pr, gods.inv_typ, gods.main_dig, gods.detail, gods.service, gods.status, gods.is_rcd, gods.crer_id, gods.cre_tim, gods.remark,
+	  		 sku.id AS sku_id, sku.inv_typ AS sku_inv_typ, sku.inventory AS sku_inventory, sku.lock_inv AS sku_lock_inv, sku.sal_vol AS sku_sal_vol, sku.ori_pr AS sku_ori_pr, sku.price AS sku_price, sku.description AS sku_description, sku.code AS sku_code, sku.barcode AS sku_barcode, sku.remark AS sku_remark,
+	  		 gpn.id AS gpn_id, gpn.pro_nam_id AS gpn_pro_nam_id, gpn.name AS gpn_name, gpn.type AS gpn_type, gpn.squence AS gpn_squence, gpn.is_srch AS gpn_is_srch, gpn.is_rad AS gpn_is_rad, gpn.is_chk AS gpn_is_chk, gpn.is_inp AS gpn_is_inp, gpn.is_sel AS gpn_is_sel, gpn.is_ve AS gpn_is_ve, gpn.is_colr AS gpn_is_colr, gpn.is_req AS gpn_is_req, gpn.is_sal AS gpn_is_sal, gpn.is_basc AS gpn_is_basc, gpn.is_key AS gpn_is_key, gpn.is_img AS gpn_is_img,
+	  		 gpv.id AS gpn_gpv_id, gpv.pro_val_id AS gpn_gpv_pro_val_id, gpv.pro_nam_id AS gpn_gpv_pro_nam_id, gpv.type AS gpn_gpv_type, gpv.squence AS gpn_gpv_squence, gpv.name AS gpn_gpv_name, gpv.is_dflt_img AS gpn_gpv_is_dflt_img, gpv.img_url AS gpn_gpv_img_url, gpv.remark AS gpn_gpv_remark, 
+	  		 gr.id AS gr_id, gr.name AS gr_name, gr.par_id AS gr_par_id, gr.is_par AS gr_is_par, gr.squence AS gr_squence, gr.logo AS gr_logo, gr.intro AS gr_intro, gr.status AS gr_status , gr.url AS gr_url, gr.gods_qty AS gr_gods_qty,  gr.remark AS gr_remark,
+	  		 app.tem_id AS app_tem_id, app.app_code AS app_app_code, app.image AS app_image
+	  FROM (SELECT goods.* FROM godsi_goods AS goods 
+	  		LEFT JOIN godsi_gr_gods AS godsi_gr_gods ON goods.id = godsi_gr_gods.gods_id
+	  		LEFT JOIN godsi_group AS godsi_group ON godsi_gr_gods.gr_id = godsi_group.id
+	  		WHERE goods.sto_id = #{storeId}
+	  				 <if test="isSoldOut != null">
+	  				 	<if test="isSoldOut != true">
+	  						AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
+	  				 	</if>	
+	  				 	<if test="isSoldOut != false">
+	  						AND (goods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
+	  				 	</if>	
+	  				 </if>	
+	        		 <if test="type != null">
+	  					AND goods.type = #{type}
+	  				 </if>
+	  				 <if test="type == null">
+	  					AND goods.type != 'REMOVED'
+	  				 </if>	
+	 				 <if test="status != null">
+	  					AND goods.status = #{status}
+	  				</if>	
+	  				<if test="isRecommend != null">
+	  					AND goods.is_rcd = #{isRecommend}
+	  				</if>
+	  				<if test="categoryId != null">
+	  					AND goods.ctg_id = #{categoryId}
+	  				</if>		
+	  				<if test="keyword != null">
+	  					AND goods.name LIKE CONCAT('%',#{keyword},'%')
+	  				</if>
+	  				<if test="groupId != null">
+	  					AND godsi_group.id = #{groupId}
+	  				</if>
+	  			    <if test="goodsIds != null">
+	  					AND goods.id IN
+						<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+            				#{id}
+        				</foreach>
+	  				</if>
+	  					ORDER BY goods.cre_tim DESC
+	  				<if test="start != null">
+	  					<if test="pageSize != null">
+	  						LIMIT #{start}, #{pageSize}
+	  					</if>
+	  				</if>) AS gods
+	  LEFT JOIN godsi_sku AS sku ON gods.id = sku.gods_id
+	  LEFT JOIN	godsi_gods_pro_nam AS gpn ON gods.id = gpn.gods_id
+	  LEFT JOIN godsi_gods_pro_val AS gpv ON gpn.id = gpv.gods_pro_nam_id
+	  LEFT JOIN godsi_app AS app ON app.gods_id = gods.id
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  LEFT JOIN godsi_group AS gr ON gr_gods.gr_id = gr.id
+	</select>
+	
+	<!-- 根据店铺ID、分组ID、商品状态、推荐状态、类目ID、模糊查询关键字分页获取正常商品总数（未移除）  -->
+	<select id="getNormalGoodsCount" parameterType="Map" resultType="Integer">
+	  SELECT COUNT(gods.id)
+	  FROM godsi_goods AS gods
+	  LEFT JOIN godsi_gr_gods AS gr_gods ON gods.id = gr_gods.gods_id
+	  WHERE gods.sto_id = #{storeId}
+	  <if test="isSoldOut != null">
+	  	<if test="isSoldOut != true">
+	  		AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
+	  	</if>	
+	  	<if test="isSoldOut != false">
+	  		AND (goods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
+	  	</if>	
+	  </if>	
+	  <if test="groupId != null">
+	  	AND gr_gods.gr_id = #{groupId}
+	  </if>
+	  <if test="type != null">
+	  	AND gods.type = #{type}
+	  </if>	
+	  <if test="status != null">
+	  	AND gods.status = #{status}
+	  </if>	
+	  <if test="type == null">
+	  	AND goods.type != 'REMOVED'
+	  </if>	
+	  <if test="isRecommend != null">
+	  	AND gods.is_rcd = #{isRecommend}
+	  </if>
+	  <if test="categoryId != null">
+	  	AND gods.ctg_id = #{categoryId}
+	  </if>	  	
+	  <if test="keyword != null">
+	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
+	  </if>
+	  <if test="goodsIds != null">
+	  	AND goods.id IN
+		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
+        	#{id}
+        </foreach>
+	  </if>
+	</select>
+	
 	<!-- 根据商品ID查询商品信息  -->
 	<select id="findGoodsById" parameterType="String" resultMap="goodsResultMap">
 	  SELECT <include refid="basicFields"/>
