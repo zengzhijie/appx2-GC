@@ -425,7 +425,7 @@ public class GoodsController extends BaseController{
     			//判断条码格式、长度是否合规
     			String barcode = addSkuForm.getBarcode();
     			if(!StringUtils.isEmpty(barcode)){
-        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!codePattern.matcher(barcode).matches()){
         				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
         			}
         			
@@ -437,7 +437,7 @@ public class GoodsController extends BaseController{
     			//判断编码格式、长度是否合规
     			String code = addSkuForm.getCode();
     			if(!StringUtils.isEmpty(code)){
-        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!codePattern.matcher(code).matches()){
         				return EntryError.FORMAT(CODE); // 商品条码格式不正确
         			}
         			
@@ -568,9 +568,15 @@ public class GoodsController extends BaseController{
         		//判断运费类型为固定运费或不固定运费
         		if(type.equals(FreightType.FIXED)){
         			
+        			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
         				return EntryError.EMPTY(PRICE);
+        			}
+        			
+        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(PRICE);
         			}
         			
         			//设置运费价格
@@ -590,8 +596,8 @@ public class GoodsController extends BaseController{
         			if(amount != null){
         				
         				//创建匹配正则（0.01-99.99）
-        				Pattern pattern = Pattern.compile("[^0]\\d?$|[^0]\\d?.\\d{1,2}$|0.0?[^0]$"); 
-        				if(!pattern.matcher(amount.toString()).matches()){
+        				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
         					return EntryError.FORMAT(AMOUNT);
         				}
         				
@@ -1021,7 +1027,7 @@ public class GoodsController extends BaseController{
     			//判断条码格式、长度是否合规
     			String barcode = skuForm.getBarcode();
     			if(!StringUtils.isEmpty(barcode)){
-        			if(!codePattern.matcher(barcode).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!codePattern.matcher(barcode).matches()){
         				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
         			}
         			
@@ -1033,7 +1039,7 @@ public class GoodsController extends BaseController{
     			//判断编码格式、长度是否合规
     			String code = skuForm.getCode();
     			if(!StringUtils.isEmpty(code)){
-        			if(!codePattern.matcher(code).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!codePattern.matcher(code).matches()){
         				return EntryError.FORMAT(CODE); // 商品条码格式不正确
         			}
         			
@@ -1170,9 +1176,15 @@ public class GoodsController extends BaseController{
         		//判断运费类型为固定运费或不固定运费
         		if(type.equals(FreightType.FIXED)){
         			
+        			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
         				return EntryError.EMPTY(PRICE);
+        			}
+        			
+        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(PRICE);
         			}
         			
         			//设置运费价格
@@ -1192,8 +1204,8 @@ public class GoodsController extends BaseController{
         			if(amount != null){
         				
         				//创建匹配正则（0.01-99.99）
-        				Pattern pattern = Pattern.compile("[^0]\\d?$|[^0]\\d?.\\d{1,2}$|0.0?[^0]$"); 
-        				if(!pattern.matcher(amount.toString()).matches()){
+        				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
         					return EntryError.FORMAT(AMOUNT);
         				}
         				

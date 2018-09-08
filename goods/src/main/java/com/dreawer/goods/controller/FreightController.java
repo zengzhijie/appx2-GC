@@ -136,59 +136,110 @@ public class FreightController extends BaseController{
     					return EntryError.EMPTY(LOGISTICS_METHOD_TYPE);
     				}
     				
-    				//验证非0正整数，取值范围1-9999
-    				Pattern pattern = Pattern.compile("^[1-9]([0-9]{0,3})$");
-    				
     				//获取起始量
     				BigDecimal startQuantity = logisticsMethodForm.getStartQuantity();
-    				
-    				//判断起始量是否为空
-    				if(startQuantity == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
-    				}
-    				
-    				//判断起始量格式是否正确
-    				if(!pattern.matcher(startQuantity.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
-    				}
     				
     				//获取起始金额
     				BigDecimal startPrice = logisticsMethodForm.getStartPrice();
     				
-    				//判断起始价格是否为空
-    				if(startPrice == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
-    				}
-    				
-    				//判断起始价格格式是否正确
-    				if(!pattern.matcher(startPrice.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
-    				}
-    				
     				//获取增量
     				BigDecimal incrementQuantity = logisticsMethodForm.getIncrementQuantity();
-    				
-    				//判断增量是否为空
-    				if(incrementQuantity == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
-    				}
-    				
-    				//判断增量格式是否正确
-    				if(!pattern.matcher(incrementQuantity.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
-    				}
     				
     				//获取增加价格
     				BigDecimal incrementPrice = logisticsMethodForm.getIncrementPrice();
     				
-    				//判断增加价格是否为空
-    				if(incrementPrice == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
-    				}
-    				
-    				//判断郑家价格格式是否正确
-    				if(!pattern.matcher(incrementPrice.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增量格式不正确
+    				//判断计价方式
+    				if(form.getPricingMethod().equals(PricingMethod.NUMBER)){
+    					
+    					Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+    					
+        				//验证非0正整数，取值范围1-99999
+        				Pattern amountPattern = Pattern.compile("^[1-9]([0-9]{0,4})$");
+    					
+        				//判断起始量是否为空
+        				if(startQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        				}
+        				
+        				//判断起始量格式是否正确
+        				if(!pricePattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        				}
+        				
+        				//判断起始价格是否为空
+        				if(startPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        				}
+        				
+        				//判断起始价格格式是否正确
+        				if(!amountPattern.matcher(startPrice.toString()).matches()){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        				}
+        				
+        				
+        				//判断增量是否为空
+        				if(incrementQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        				}
+        				
+        				//判断增量格式是否正确
+        				if(!amountPattern.matcher(incrementQuantity.toString()).matches()){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        				}
+        				
+        				//判断增加价格是否为空
+        				if(incrementPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        				}
+        				
+        				//判断增加价格格式是否正确
+        				if(!pricePattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        				}
+    				}else{
+    					
+    					Pattern pattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+    					
+        				//判断起始量是否为空
+        				if(startQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        				}
+        				
+        				//判断起始量格式是否正确
+        				if(!pattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        				}
+        				
+        				//判断起始价格是否为空
+        				if(startPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        				}
+        				
+        				//判断起始价格格式是否正确
+        				if(!pattern.matcher(startPrice.toString()).matches() || startPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        				}
+        				
+        				
+        				//判断增量是否为空
+        				if(incrementQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        				}
+        				
+        				//判断增量格式是否正确
+        				if(!pattern.matcher(incrementQuantity.toString()).matches() || incrementQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        				}
+        				
+        				//判断增加价格是否为空
+        				if(incrementPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        				}
+        				
+        				//判断增加价格格式是否正确
+        				if(!pattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        				}
     				}
 
     				//获取物流方式“是否默认”属性
@@ -399,59 +450,110 @@ public class FreightController extends BaseController{
     					return EntryError.EMPTY(LOGISTICS_METHOD_TYPE);
     				}
     				
-    				//验证非0正整数，取值范围1-9999
-    				Pattern pattern = Pattern.compile("^[1-9]([0-9]{0,3})$");
-    				
     				//获取起始量
     				BigDecimal startQuantity = logisticsMethodForm.getStartQuantity();
-    				
-    				//判断起始量是否为空
-    				if(startQuantity == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
-    				}
-    				
-    				//判断起始量格式是否正确
-    				if(!pattern.matcher(startQuantity.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
-    				}
     				
     				//获取起始金额
     				BigDecimal startPrice = logisticsMethodForm.getStartPrice();
     				
-    				//判断起始价格是否为空
-    				if(startPrice == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
-    				}
-    				
-    				//判断起始价格格式是否正确
-    				if(!pattern.matcher(startPrice.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
-    				}
-    				
     				//获取增量
     				BigDecimal incrementQuantity = logisticsMethodForm.getIncrementQuantity();
-    				
-    				//判断增量是否为空
-    				if(incrementQuantity == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
-    				}
-    				
-    				//判断增量格式是否正确
-    				if(!pattern.matcher(incrementQuantity.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
-    				}
     				
     				//获取增加价格
     				BigDecimal incrementPrice = logisticsMethodForm.getIncrementPrice();
     				
-    				//判断增加价格是否为空
-    				if(incrementPrice == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
-    				}
-    				
-    				//判断郑家价格格式是否正确
-    				if(!pattern.matcher(incrementPrice.toString()).matches()){
-    					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增量格式不正确
+    				//判断计价方式
+    				if(form.getPricingMethod().equals(PricingMethod.NUMBER)){
+    					
+    					Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+    					
+        				//验证非0正整数，取值范围1-99999
+        				Pattern amountPattern = Pattern.compile("^[1-9]([0-9]{0,4})$");
+    					
+        				//判断起始量是否为空
+        				if(startQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        				}
+        				
+        				//判断起始量格式是否正确
+        				if(!pricePattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        				}
+        				
+        				//判断起始价格是否为空
+        				if(startPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        				}
+        				
+        				//判断起始价格格式是否正确
+        				if(!amountPattern.matcher(startPrice.toString()).matches()){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        				}
+        				
+        				
+        				//判断增量是否为空
+        				if(incrementQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        				}
+        				
+        				//判断增量格式是否正确
+        				if(!amountPattern.matcher(incrementQuantity.toString()).matches()){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        				}
+        				
+        				//判断增加价格是否为空
+        				if(incrementPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        				}
+        				
+        				//判断增加价格格式是否正确
+        				if(!pricePattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        				}
+    				}else{
+    					
+    					Pattern pattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+    					
+        				//判断起始量是否为空
+        				if(startQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        				}
+        				
+        				//判断起始量格式是否正确
+        				if(!pattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        				}
+        				
+        				//判断起始价格是否为空
+        				if(startPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        				}
+        				
+        				//判断起始价格格式是否正确
+        				if(!pattern.matcher(startPrice.toString()).matches() || startPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        				}
+        				
+        				
+        				//判断增量是否为空
+        				if(incrementQuantity == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        				}
+        				
+        				//判断增量格式是否正确
+        				if(!pattern.matcher(incrementQuantity.toString()).matches() || incrementQuantity.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        				}
+        				
+        				//判断增加价格是否为空
+        				if(incrementPrice == null){
+        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        				}
+        				
+        				//判断增加价格格式是否正确
+        				if(!pattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        				}
     				}
 
     				//获取物流方式“是否默认”属性

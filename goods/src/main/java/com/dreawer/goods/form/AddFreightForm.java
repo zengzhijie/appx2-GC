@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class AddFreightForm {
 
     @NotEmpty(message=ENTRY_ERROR_EMPTY)
-    @Length(min=1, max=40, message=ENTRY_ERROR_OVERRANGE)
+    @Length(min=1, max=50, message=ENTRY_ERROR_OVERRANGE)
 	private String name = null; // 名称
 	
     @Length(min=1, max=255, message=ENTRY_ERROR_OVERRANGE)

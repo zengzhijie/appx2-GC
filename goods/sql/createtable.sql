@@ -179,10 +179,10 @@ CREATE TABLE godsi_log_meth (
 	frt_id    CHAR(32) NOT NULL COMMENT '运费模板ID',
 	is_dflt   TINYINT(1) DEFAULT '0' NOT NULL COMMENT '是否默认',
 	type      CHAR(32) NOT NULL COMMENT '类型（DELIVERY-快递）',
-	strt_qty  DECIMAL(6,2) COMMENT '起始量',
-	strt_pr   DECIMAL(7,2) COMMENT '起始价格',
-	inc_qty   DECIMAL(6,2) COMMENT '增量',
-	inc_pr    DECIMAL(7,2) COMMENT '增加价格',
+	strt_qty  DECIMAL(10,2) COMMENT '起始量',
+	strt_pr   DECIMAL(10,2) COMMENT '起始价格',
+	inc_qty   DECIMAL(10,2) COMMENT '增量',
+	inc_pr    DECIMAL(10,2) COMMENT '增加价格',
 	crer_id   CHAR(32) NOT NULL COMMENT '创建者用户ID号',
 	cre_tim   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	PRIMARY KEY (id)
@@ -213,7 +213,7 @@ DROP TABLE IF EXISTS godsi_frt_par;
 CREATE TABLE godsi_frt_par (
 	gods_id  CHAR(32) NOT NULL COMMENT '商品ID',
 	type     CHAR(32) NOT NULL COMMENT '运费类型（FIXED-固定、NOFIXED-不固定）',
-	price    DECIMAL(6,2) COMMENT '价格(固定运费需要填写)',
+	price    DECIMAL(10,2) COMMENT '价格(固定运费需要填写)',
 	frt_id   CHAR(32) COMMENT '运费模板ID',
 	amount   VARCHAR(255) COMMENT '量（体积或重量）',
 	crer_id  CHAR(32) NOT NULL COMMENT '创建者用户ID号',
