@@ -6,6 +6,7 @@
 	<!-- ================================================================================== -->
 	<!-- SQL新增																				-->
 	<!-- ================================================================================== -->
+	
 	<!-- 新增类目信息 -->
 	<insert id="save" parameterType="Group">
 		INSERT INTO godsi_group(id, sto_id, name, par_id, is_par, squence, logo, intro, status, url, gods_qty, crer_id, cre_tim, remark)

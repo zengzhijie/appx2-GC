@@ -321,14 +321,16 @@ public class GoodsService extends BaseService{
     		
 		}
     	
-    	//批量删除分组、商品关系
-    	groupDao.deleteBatchGroupGoods(goodsIds);
-    	
-		//批量减少分组中的商品数量
-		groupDao.reduceBatchGoodsQuantity(goodsIds);
-    	
-    	//执行更新
-    	goodsDao.updateBatchStatus(goodses);
+    	if(goodsIds.size()>0){
+        	//批量删除分组、商品关系
+        	groupDao.deleteBatchGroupGoods(goodsIds);
+        	
+    		//批量减少分组中的商品数量
+    		groupDao.reduceBatchGoodsQuantity(goodsIds);
+        	
+        	//执行更新
+        	goodsDao.updateBatchStatus(goodses);
+    	}
     	
     	//返回更新结果
     	return Success.SUCCESS;
