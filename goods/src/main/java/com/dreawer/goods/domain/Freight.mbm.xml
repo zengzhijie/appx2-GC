@@ -65,7 +65,7 @@
 	<!-- 根据店铺ID分页查询运费模板详情列表(按照创建时间倒叙) -->
 	<select id="findFreightDetails"  parameterType="Map" resultMap="freightResultMap">
 	  SELECT frt.id, frt.name, frt.dlvr_add, frt.dlvr_tim, frt.payer, frt.pr_meth, frt.cre_tim, 
-	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr,
+	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr, log_meth.squence AS log_meth_squence,
 	  		 city.id AS log_meth_city_id, city.name AS log_meth_city_name, city.cty_id AS log_meth_city_cty_id, city.par_id AS log_meth_city_par_id
 	  FROM (SELECT * FROM godsi_freight
 	  WHERE sto_id = #{storeId}
@@ -86,7 +86,7 @@
 	<!-- 根据ID查询运费模板信息  -->
 	<select id="findFreightById" parameterType="String" resultMap="freightResultMap">
 	  SELECT frt.id, frt.name, frt.dlvr_add, frt.dlvr_tim, frt.payer, frt.pr_meth, frt.cre_tim, 
-	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr,
+	   		 log_meth.id AS log_meth_id, log_meth.is_dflt AS log_meth_is_dflt, log_meth.type AS log_meth_type, log_meth.strt_qty AS log_meth_strt_qty, log_meth.strt_pr AS log_meth_strt_pr, log_meth.inc_qty AS log_meth_inc_qty, log_meth.inc_pr AS log_meth_inc_pr, log_meth.squence AS log_meth_squence,
 	  		 city.id AS log_meth_city_id, city.name AS log_meth_city_name, city.cty_id AS log_meth_city_cty_id, city.par_id AS log_meth_city_par_id
 	  FROM godsi_freight AS frt 
 	  LEFT JOIN godsi_log_meth AS log_meth ON frt.id = log_meth.frt_id

@@ -266,6 +266,11 @@ public class FreightController extends BaseController{
     				logisticsMethod.setCreaterId(freight.getCreaterId());
     				logisticsMethod.setCreateTime(getNow());
     				logisticsMethod.setCities(cities);
+    				if(logisticsMethodForm.getSquence() == null){
+    					logisticsMethod.setSquence(0);
+    				}else{
+    					logisticsMethod.setSquence(logisticsMethodForm.getSquence());
+    				}
     				
     				//添加物流参数到集合中
     				logisticsMethods.add(logisticsMethod);
@@ -588,6 +593,11 @@ public class FreightController extends BaseController{
     				logisticsMethod.setCreaterId(freight.getUpdaterId());
     				logisticsMethod.setCreateTime(getNow());
     				logisticsMethod.setCities(cities);
+    				if(logisticsMethodForm.getSquence() == null){
+    					logisticsMethod.setSquence(0);
+    				}else{
+    					logisticsMethod.setSquence(logisticsMethodForm.getSquence());
+    				}
     				
     				//添加物流参数到集合中
     				logisticsMethods.add(logisticsMethod);

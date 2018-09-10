@@ -23,6 +23,8 @@ public class ViewLogisticsMethod {
 	
 	private BigDecimal incrementPrice = null; // 增加价格
 
+	private Integer squence = null; // 排列序号
+	
 	private List<ViewCity> cities= null; // 城市信息列表
 
 	public String getId() {
@@ -79,6 +81,14 @@ public class ViewLogisticsMethod {
 
 	public void setIncrementPrice(BigDecimal incrementPrice) {
 		this.incrementPrice = incrementPrice;
+	}
+
+	public Integer getSquence() {
+		return squence;
+	}
+
+	public void setSquence(Integer squence) {
+		this.squence = squence;
 	}
 
 	public List<ViewCity> getCities() {

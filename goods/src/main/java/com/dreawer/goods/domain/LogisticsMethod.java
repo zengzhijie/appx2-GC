@@ -31,6 +31,8 @@ public class LogisticsMethod extends BaseDomain{
 	
 	private BigDecimal incrementPrice = null; // 增加价格
 	
+	private Integer squence = null; // 排列序号
+	
 	private String createrId = null; // 创建者ID
 	
 	private Date createTime = null; // 创建时间
@@ -106,6 +108,14 @@ public class LogisticsMethod extends BaseDomain{
 
 	public void setIncrementPrice(BigDecimal incrementPrice) {
 		this.incrementPrice = incrementPrice;
+	}
+
+	public Integer getSquence() {
+		return squence;
+	}
+
+	public void setSquence(Integer squence) {
+		this.squence = squence;
 	}
 
 	public String getCreaterId() {

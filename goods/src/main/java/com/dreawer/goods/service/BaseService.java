@@ -77,6 +77,23 @@ public class BaseService {
 	}
     
 	/**
+	 * 物流方式列表排序（根据排列序号正序）
+	 * @param viewLogisticsMethods 待排序的物流方式视图列表。
+	 * @return viewGoodses 排序后的物流方式视图列表。
+	 */
+	protected List<ViewLogisticsMethod> sortViewLogisticsMethodsBySquenceAsc(List<ViewLogisticsMethod> viewLogisticsMethods){
+		
+		Collections.sort(viewLogisticsMethods, new Comparator<ViewLogisticsMethod>(){
+			@Override
+			public int compare(ViewLogisticsMethod viewLogisticsMethod1, ViewLogisticsMethod viewLogisticsMethod2) {
+				return viewLogisticsMethod1.getSquence().compareTo(viewLogisticsMethod2.getSquence());
+			}
+		});
+		
+		return viewLogisticsMethods;
+	}
+	
+	/**
 	 * 递归删除分组信息
 	 * @param id 分组ID。
 	 * @param storeId 店铺ID。
@@ -158,7 +175,7 @@ public class BaseService {
         	viewFreight.setPricingMethod(freight.getPricingMethod());
         	viewFreight.setCreaterId(freight.getCreaterId());
         	viewFreight.setCreateTime(freight.getCreateTime());
-        	viewFreight.setLogisticsMethods(viewLogisticsMethods);
+        	
         	
         	//判断物流方式信息列表是否为空
         	if(freight.getLogisticsMethods() != null && freight.getLogisticsMethods().size() > 0){
@@ -180,7 +197,7 @@ public class BaseService {
             		viewLogisticsMethod.setStartQuantity(logisticsMethod.getStartQuantity());
             		viewLogisticsMethod.setIncrementPrice(logisticsMethod.getIncrementPrice());
             		viewLogisticsMethod.setIncrementQuantity(logisticsMethod.getIncrementQuantity());
-            		viewLogisticsMethod.setCities(viewCities);
+            		
             		
             		//添加到视图列表
             		viewLogisticsMethods.add(viewLogisticsMethod);
@@ -203,8 +220,11 @@ public class BaseService {
                 			//添加到视图列表
                 			viewCities.add(viewCity);
             			}
+                		viewLogisticsMethod.setCities(viewCities);
             		}
         		}
+            	viewLogisticsMethods = sortViewLogisticsMethodsBySquenceAsc(viewLogisticsMethods);
+            	viewFreight.setLogisticsMethods(viewLogisticsMethods);
         	}
     	}
     	
@@ -242,7 +262,6 @@ public class BaseService {
             	viewFreight.setPricingMethod(freight.getPricingMethod());
             	viewFreight.setCreaterId(freight.getCreaterId());
             	viewFreight.setCreateTime(freight.getCreateTime());
-            	viewFreight.setLogisticsMethods(viewLogisticsMethods);
             	
             	//添加到视图列表
             	viewFreights.add(viewFreight);
@@ -267,7 +286,6 @@ public class BaseService {
                 		viewLogisticsMethod.setStartQuantity(logisticsMethod.getStartQuantity());
                 		viewLogisticsMethod.setIncrementPrice(logisticsMethod.getIncrementPrice());
                 		viewLogisticsMethod.setIncrementQuantity(logisticsMethod.getIncrementQuantity());
-                		viewLogisticsMethod.setCities(viewCities);
                 		
                 		//添加到视图列表
                 		viewLogisticsMethods.add(viewLogisticsMethod);
@@ -290,8 +308,11 @@ public class BaseService {
                     			//添加到视图列表
                     			viewCities.add(viewCity);
                 			}
+                    		viewLogisticsMethod.setCities(viewCities);
                 		}
             		}
+                	viewLogisticsMethods = sortViewLogisticsMethodsBySquenceAsc(viewLogisticsMethods);
+                	viewFreight.setLogisticsMethods(viewLogisticsMethods);
             	}
 			}
     	}

@@ -183,6 +183,7 @@ CREATE TABLE godsi_log_meth (
 	strt_pr   DECIMAL(10,2) COMMENT '起始价格',
 	inc_qty   DECIMAL(10,2) COMMENT '增量',
 	inc_pr    DECIMAL(10,2) COMMENT '增加价格',
+	squence   INT(3) NOT NULL COMMENT '排列序号',
 	crer_id   CHAR(32) NOT NULL COMMENT '创建者用户ID号',
 	cre_tim   TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	PRIMARY KEY (id)

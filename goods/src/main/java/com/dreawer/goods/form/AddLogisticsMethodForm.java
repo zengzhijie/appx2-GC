@@ -31,6 +31,8 @@ public class AddLogisticsMethodForm {
 	@NotEmpty(message=ENTRY_ERROR_EMPTY)
 	private BigDecimal incrementPrice = null; // 增加价格
 	
+	private Integer squence = null; // 排列序号
+	
 	private List<AddCityForm> addCities= null; // 添加城市信息表单列表
 	
     // --------------------------------------------------------------------------------
@@ -83,6 +85,14 @@ public class AddLogisticsMethodForm {
 
 	public void setIncrementPrice(BigDecimal incrementPrice) {
 		this.incrementPrice = incrementPrice;
+	}
+
+	public Integer getSquence() {
+		return squence;
+	}
+
+	public void setSquence(Integer squence) {
+		this.squence = squence;
 	}
 
 	public List<AddCityForm> getAddCities() {

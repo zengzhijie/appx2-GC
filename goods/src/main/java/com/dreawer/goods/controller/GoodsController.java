@@ -34,6 +34,7 @@ import com.dreawer.goods.lang.SourceType;
 import com.dreawer.goods.service.GoodsService;
 import com.dreawer.goods.service.SkuService;
 import com.dreawer.responsecode.rcdt.EntryError;
+import com.dreawer.responsecode.rcdt.Error;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.ResponseCodeRepository;
 import com.dreawer.responsecode.rcdt.RuleError;
@@ -50,7 +51,6 @@ import javax.validation.Valid;
 import static com.dreawer.goods.constants.ControllerConstants.*;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import static com.dreawer.responsecode.rcdt.Error.APPSERVER;
-import static com.dreawer.responsecode.rcdt.Error.ENTRY;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -85,7 +85,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_ADD, method=RequestMethod.POST)
     public @ResponseBody ResponseCode add(HttpServletRequest req, @RequestBody @Valid AddGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -684,7 +684,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_EDIT, method=RequestMethod.POST)
     public @ResponseBody ResponseCode edit(HttpServletRequest req, @RequestBody @Valid EditGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1296,7 +1296,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_DELETE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode delete(HttpServletRequest req, @RequestBody @Valid DeleteGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1330,7 +1330,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_SHELVE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode shelve(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1384,7 +1384,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_APPLY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode apply(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1438,7 +1438,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_REMOVE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode remove(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1492,7 +1492,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_RECOVER, method=RequestMethod.POST)
     public @ResponseBody ResponseCode recover(HttpServletRequest req, @RequestBody @Valid GoodsRecoverForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1546,7 +1546,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_UPDATE_RECOMMEND, method=RequestMethod.POST)
     public @ResponseBody ResponseCode updateRecommend(HttpServletRequest req, @RequestBody @Valid UpdateGoodsRecommendForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1599,7 +1599,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode list(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1636,7 +1636,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_REMOVED_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode removedList(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1673,7 +1673,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_NORMAL_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode normalList(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1710,7 +1710,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_SELLING_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode sellingList(HttpServletRequest req, @RequestBody @Valid QuerySellingGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1769,7 +1769,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode purchaseDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1831,7 +1831,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_CART_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode cartDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1893,7 +1893,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_LOCK_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode lockInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1963,7 +1963,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_RELEASE_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode releaseInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -2033,7 +2033,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_DEDUCTION_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode deductionInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
