@@ -197,7 +197,7 @@ public class BaseService {
             		viewLogisticsMethod.setStartQuantity(logisticsMethod.getStartQuantity());
             		viewLogisticsMethod.setIncrementPrice(logisticsMethod.getIncrementPrice());
             		viewLogisticsMethod.setIncrementQuantity(logisticsMethod.getIncrementQuantity());
-            		
+            		viewLogisticsMethod.setSquence(logisticsMethod.getSquence());
             		
             		//添加到视图列表
             		viewLogisticsMethods.add(viewLogisticsMethod);
@@ -286,6 +286,7 @@ public class BaseService {
                 		viewLogisticsMethod.setStartQuantity(logisticsMethod.getStartQuantity());
                 		viewLogisticsMethod.setIncrementPrice(logisticsMethod.getIncrementPrice());
                 		viewLogisticsMethod.setIncrementQuantity(logisticsMethod.getIncrementQuantity());
+                		viewLogisticsMethod.setSquence(logisticsMethod.getSquence());
                 		
                 		//添加到视图列表
                 		viewLogisticsMethods.add(viewLogisticsMethod);
