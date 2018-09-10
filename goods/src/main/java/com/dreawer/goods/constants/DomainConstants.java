@@ -339,4 +339,7 @@ public abstract class DomainConstants {
     /** 锁定库存 */
     public static final String DEDUCTION_INVENTORY = "deductionInventory";
     
+    /** 总库存低于起售量 */
+    public static final String INVENTORY_BELOW_SALES_VOLUME = "inventoryBelowSalesVolume";
+    
 }

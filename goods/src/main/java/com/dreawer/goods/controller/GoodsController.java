@@ -36,6 +36,8 @@ import com.dreawer.goods.service.SkuService;
 import com.dreawer.responsecode.rcdt.EntryError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.ResponseCodeRepository;
+import com.dreawer.responsecode.rcdt.RuleError;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -454,6 +456,11 @@ public class GoodsController extends BaseController{
     				}
     			}else{
     				salesVolume = 1; // 默认起售量为1
+    			}
+    			
+    			//判断库存是否大于起售量
+    			if(inventory < salesVolume){
+    				return RuleError.LESS_LEAST(INVENTORY_BELOW_SALES_VOLUME);
     			}
     			
     			//创建SKU实体类封装SKU信息
@@ -1065,6 +1072,11 @@ public class GoodsController extends BaseController{
     				sku.setId(generateUUID());
     			}else{
     				sku.setId(skuForm.getId());
+    			}
+    			
+    			//判断库存是否大于起售量
+    			if(inventory < salesVolume){
+    				return RuleError.LESS_LEAST(INVENTORY_BELOW_SALES_VOLUME);
     			}
     			
     			sku.setGoodsId(goodsId);
