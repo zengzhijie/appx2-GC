@@ -57,7 +57,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_ADD, method=RequestMethod.POST)
     public @ResponseBody ResponseCode add(HttpServletRequest req, @RequestBody @Valid AddGroupForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -96,13 +96,13 @@ public class GroupController extends BaseController{
     			
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
-    				return EntryError.EMPTY(URL); // 跳转地址为空
+    				return EntryError.EMPTY(GROUP_+URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
     		}else if(form.getSource().equals(SourceType.RETAIL)){
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getLogo())){
-    				return EntryError.EMPTY(LOGO); // 跳转地址为空
+    				return EntryError.EMPTY(GROUP_+LOGO); // 跳转地址为空
     			}
     		}
     		group.setGoodsQuantity(0);
@@ -132,7 +132,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_ADD_GOODSES, method=RequestMethod.POST)
     public @ResponseBody ResponseCode addGoodses(HttpServletRequest req, @RequestBody @Valid AddGroupGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -191,7 +191,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_DELETE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode delete(HttpServletRequest req, @RequestBody @Valid DeleteGroupForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -235,7 +235,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_UPDATE_GOODSES, method=RequestMethod.POST)
     public @ResponseBody ResponseCode updateGoodses(HttpServletRequest req, @RequestBody @Valid UpdateGroupGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -263,17 +263,17 @@ public class GroupController extends BaseController{
     			
     			//判断当前分组ID是否为空
     			if(StringUtils.isEmpty(currentGroupId)){
-    				return EntryError.EMPTY(CURRENT_GROUP_ID);
+    				return EntryError.EMPTY(GROUP_+CURRENT_GROUP_ID);
     			}
     			
     			//判断原分组ID是否为空
     			if(StringUtils.isEmpty(originalGroupId)){
-    				return EntryError.EMPTY(ORIGINAL_GROUP_ID);
+    				return EntryError.EMPTY(GROUP_+ORIGINAL_GROUP_ID);
     			}
     			
     			//判断商品ID是否为空
     			if(StringUtils.isEmpty(goodsId)){
-    				return EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(GROUP_+GOODS_ID);
     			}
     			
     			//创建Map集合接收请求参数
@@ -308,7 +308,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_UPDATE_SQUENCE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode updateSquence(HttpServletRequest req, @RequestBody @Valid UpdateGroupSquenceForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -349,7 +349,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_UPDATE_STATUS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode updateStatus(HttpServletRequest req, @RequestBody @Valid UpdateGroupStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -403,7 +403,7 @@ public class GroupController extends BaseController{
     @RequestMapping(value=REQ_EDIT, method=RequestMethod.POST)
     public @ResponseBody ResponseCode edit(HttpServletRequest req, @RequestBody @Valid 	EditGroupForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GROUP_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -442,13 +442,13 @@ public class GroupController extends BaseController{
     			
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getUrl())&&form.getParentId().equals("0")){
-    				return EntryError.EMPTY(URL); // 跳转地址为空
+    				return EntryError.EMPTY(GROUP_+URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
     		}else if(form.getSource().equals(SourceType.RETAIL)){
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getLogo())){
-    				return EntryError.EMPTY(LOGO); // 跳转地址为空
+    				return EntryError.EMPTY(GROUP_+LOGO); // 跳转地址为空
     			}
     		}
     		group.setUpdaterId(userId);

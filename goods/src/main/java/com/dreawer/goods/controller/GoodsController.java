@@ -85,7 +85,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_ADD, method=RequestMethod.POST)
     public @ResponseBody ResponseCode add(HttpServletRequest req, @RequestBody @Valid AddGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -142,102 +142,102 @@ public class GoodsController extends BaseController{
         			//判断属性名ID是否为空
         			String propertyNameId = goodsPropertyNameForm.getPropertyNameId();
         			if(StringUtils.isBlank(propertyNameId)){
-        				return EntryError.EMPTY(PROPERTY_NAME_ID);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_ID);
         			}
         			
         			//判断属性名称是否为空
         			String name = goodsPropertyNameForm.getName();
         			if(StringUtils.isBlank(name)){
-        				return EntryError.EMPTY(PROPERTY_NAME);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME);
         			}
         			
         			//判断属性名称长度是否合规
         			if(name.length() > 40){
-        				return EntryError.TOO_LONG(PROPERTY_NAME);
+        				return EntryError.TOO_LONG(GOODS_+PROPERTY_NAME);
         			}
         			
         			//判断属性名类型是否为空
         			PropertyNameType type = goodsPropertyNameForm.getType();
         			if(type == null){
-        				return EntryError.EMPTY(PROPERTY_NAME_TYPE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_TYPE);
         			}
         			
         			//判断排列序号是否为空
         			Integer squence = goodsPropertyNameForm.getSquence();
         			if(squence == null){
-        				return EntryError.EMPTY(PROPERTY_NAME_SQUENCE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_SQUENCE);
         			}
         			
         			//判断“是否搜索属性”是否为空
         			Boolean isSearch = goodsPropertyNameForm.getIsSearch();
         			if(isSearch == null){
-        				return EntryError.EMPTY(IS_SEARCH);
+        				return EntryError.EMPTY(GOODS_+IS_SEARCH);
         			}
         			
         			//判断是“是否单选框”是否为空
         			Boolean isRadio = goodsPropertyNameForm.getIsRadio();
         			if(isRadio == null){
-        				return EntryError.EMPTY(IS_RADIO);
+        				return EntryError.EMPTY(GOODS_+IS_RADIO);
         			}
         			
         			//判断是“是否多选框”是否为空
         			Boolean isCheckbox = goodsPropertyNameForm.getIsCheckbox();
         			if(isCheckbox == null){
-        				return EntryError.EMPTY(IS_CHECKBOX);
+        				return EntryError.EMPTY(GOODS_+IS_CHECKBOX);
         			}
         			
         			//判断是“是否输入框”是否为空
         			Boolean isInput = goodsPropertyNameForm.getIsInput();
         			if(isInput == null){
-        				return EntryError.EMPTY(IS_INPUT);
+        				return EntryError.EMPTY(GOODS_+IS_INPUT);
         			}
         			
         			//判断是“是否下拉框”是否为空
         			Boolean isSelect = goodsPropertyNameForm.getIsSelect();
         			if(isSelect == null){
-        				return EntryError.EMPTY(IS_SELECT);
+        				return EntryError.EMPTY(GOODS_+IS_SELECT);
         			}
         			
         			//判断是“是否文本编辑器”是否为空
         			Boolean isVisualEditor = goodsPropertyNameForm.getIsVisualEditor();
         			if(isVisualEditor == null){
-        				return EntryError.EMPTY(IS_VISUAL_EDITOR);
+        				return EntryError.EMPTY(GOODS_+IS_VISUAL_EDITOR);
         			}
         			
         			//判断是“是否颜色属性”是否为空
         			Boolean isColor = goodsPropertyNameForm.getIsColor();
         			if(isColor == null){
-        				return EntryError.EMPTY(IS_COLOR);
+        				return EntryError.EMPTY(GOODS_+IS_COLOR);
         			}
         			
         			//判断是“是否必须属性”是否为空
         			Boolean isRequired = goodsPropertyNameForm.getIsRequired();
         			if(isRequired == null){
-        				return EntryError.EMPTY(IS_REQUIRED);
+        				return EntryError.EMPTY(GOODS_+IS_REQUIRED);
         			}
         			
         			//判断是“是否销售属性”是否为空
         			Boolean isSales = goodsPropertyNameForm.getIsSales();
         			if(isSales == null){
-        				return EntryError.EMPTY(IS_SALES);
+        				return EntryError.EMPTY(GOODS_+IS_SALES);
         			}
         			
         			//判断是“是否基础属性”是否为空
         			Boolean isBasic = goodsPropertyNameForm.getIsBasic();
         			if(isBasic == null){
-        				return EntryError.EMPTY(IS_BASIC);
+        				return EntryError.EMPTY(GOODS_+IS_BASIC);
         			}
         			
         			//判断是“是否关键属性”是否为空
         			Boolean isKey = goodsPropertyNameForm.getIsKey();
         			if(isKey == null){
-        				return EntryError.EMPTY(IS_KEY);
+        				return EntryError.EMPTY(GOODS_+IS_KEY);
         			}
         			
         			//判断是“是否图片属性”是否为空
         			Boolean isImage = goodsPropertyNameForm.getIsImage();
         			if(isImage == null){
-        				return EntryError.EMPTY(IS_IMAGE);
+        				return EntryError.EMPTY(GOODS_+IS_IMAGE);
         			}
         			
         			//创建商品属性值列表
@@ -276,7 +276,7 @@ public class GoodsController extends BaseController{
     			
         			//判断属性值表单列表是否为空
         			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <=0){
-        				return EntryError.EMPTY(PROPERTY_VALUE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE);
         			}
         			
         			//循环商品属性值表单列表
@@ -285,30 +285,30 @@ public class GoodsController extends BaseController{
         				//判断属性值ID是否为空
         				String propertyValueId = goodsPropertyValueForm.getPropertyValueId();
             			if(StringUtils.isBlank(propertyNameId)){
-            				return EntryError.EMPTY(PROPERTY_VALUE_ID);
+            				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_ID);
             			}
         				
             			//判断属性值名称是否为空
         				String propertyValueName = goodsPropertyValueForm.getName();
             			if(StringUtils.isBlank(propertyValueName)){
-            				return EntryError.EMPTY(PROPERTY_VALUE_NAME);
+            				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_NAME);
             			}
             			
             			//判断属性名称长度是否合规
             			if(name.length() > 255){
-            				return EntryError.TOO_LONG(PROPERTY_VALUE_NAME);
+            				return EntryError.TOO_LONG(GOODS_+PROPERTY_VALUE_NAME);
             			}
         				
             			//判断属性值类型是否为空
         				PropertyValueType propertyValueType = goodsPropertyValueForm.getType();
         				if(propertyValueType == null){
-        					return EntryError.EMPTY(PROPERTY_VALUE_TYPE);
+        					return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_TYPE);
         				}
         				
         				//判断属性值排列序号是否为空
         				Integer propertyValueSquence = goodsPropertyValueForm.getSquence();
         				if(propertyValueSquence == null){
-        					return EntryError.EMPTY(PROPERTY_VALUE_SQUENCE);
+        					return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_SQUENCE);
         				}
         				
         				//判断图片地址是否为空，为空则为默认图片。
@@ -324,7 +324,7 @@ public class GoodsController extends BaseController{
         				String remark = goodsPropertyValueForm.getRemark();
             			if(!StringUtils.isEmpty(remark)){
             				if(remark.length()>255){
-            					return EntryError.TOO_LONG(PROPERTY_VALUE_REMARK);
+            					return EntryError.TOO_LONG(GOODS_+PROPERTY_VALUE_REMARK);
             				}
             			}
             			
@@ -355,7 +355,7 @@ public class GoodsController extends BaseController{
     		
     		//判断SKU表单列表是否为空
     		if(skuForms == null || skuForms.size()<=0){
-    			return EntryError.EMPTY(SKU);
+    			return EntryError.EMPTY(GOODS_+SKU);
     		}
     		
     		//创建Set集合接收SKU描述
@@ -367,7 +367,7 @@ public class GoodsController extends BaseController{
     			//判断SKU描述长度是否合规
     			String description = addSkuForm.getDescription();
     			if(StringUtils.isNotEmpty(description) && description.length() > 270){
-    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
+    				return EntryError.TOO_LONG(GOODS_+SALES_PROPERTY); // 销售属性过多
     			}
     			
     			//将SKU描述保存到Set集合中
@@ -377,14 +377,14 @@ public class GoodsController extends BaseController{
     			Integer inventory = addSkuForm.getInventory();
     			if(inventory == null){
         			if(form.getInventoryType().equals(InventoryType.LIMITED)){
-        				return EntryError.EMPTY(INVENTORY);
+        				return EntryError.EMPTY(GOODS_+INVENTORY);
         			}
         			inventory = 0;
     			}else{
     				
     				//判断SKU库存取值范围
     				if(inventory > 99999999 || inventory<0){
-    					return EntryError.OVERRANGE(INVENTORY);
+    					return EntryError.OVERRANGE(GOODS_+INVENTORY);
     				}
     			}
     			
@@ -394,30 +394,30 @@ public class GoodsController extends BaseController{
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
     			if(originalPrice == null){
-    				return EntryError.EMPTY(ORIGINAL_PRICE);
+    				return EntryError.EMPTY(GOODS_+ORIGINAL_PRICE);
     			}
     			
     			//判断SKU原价格式是否正确
     			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
+    				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
     			}
     			
     			//判断SKU售价是否为空
     			BigDecimal price = addSkuForm.getPrice();
     			if(price == null){
-    				return EntryError.EMPTY(PRICE);
+    				return EntryError.EMPTY(GOODS_+PRICE);
     			}
     			
     			//判断SKU原价格式是否正确
     			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
+    				return EntryError.FORMAT(GOODS_+PRICE); // SKU售价格式不正确
     			}
     			
     			//判断备注长度是否合规
     			String remark = addSkuForm.getRemark();
     			if(!StringUtils.isEmpty(remark)){
     				if(remark.length()>255){
-    					return EntryError.TOO_LONG(REMARK);
+    					return EntryError.TOO_LONG(GOODS_+REMARK);
     				}
     			}
     			
@@ -428,11 +428,11 @@ public class GoodsController extends BaseController{
     			String barcode = addSkuForm.getBarcode();
     			if(!StringUtils.isEmpty(barcode)){
         			if(!codePattern.matcher(barcode).matches()){
-        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
+        				return EntryError.FORMAT(GOODS_+BARCODE); // 商品条码格式不正确
         			}
         			
         			if(barcode.length() > 255){
-        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
+        				return EntryError.TOO_LONG(GOODS_+BARCODE); // 商品条码过长
         			}
     			}
 
@@ -440,11 +440,11 @@ public class GoodsController extends BaseController{
     			String code = addSkuForm.getCode();
     			if(!StringUtils.isEmpty(code)){
         			if(!codePattern.matcher(code).matches()){
-        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
+        				return EntryError.FORMAT(GOODS_+CODE); // 商品条码格式不正确
         			}
         			
         			if(code.length() > 255){
-        				return EntryError.TOO_LONG(CODE); // 商品条码过长
+        				return EntryError.TOO_LONG(GOODS_+CODE); // 商品条码过长
         			}
     			}
     			
@@ -452,15 +452,15 @@ public class GoodsController extends BaseController{
     			Integer salesVolume = addSkuForm.getSalesVolume();
     			if(salesVolume != null){
     				if(salesVolume > 9999 || salesVolume <=0){
-    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
+    					return EntryError.OVERRANGE(GOODS_+SALES_VOLUME); // 起售量长度不合规
     				}
     			}else{
     				salesVolume = 1; // 默认起售量为1
     			}
     			
     			//判断库存是否大于起售量
-    			if(inventory < salesVolume){
-    				return RuleError.LESS_LEAST(INVENTORY_BELOW_SALES_VOLUME);
+    			if(form.getInventoryType().equals(InventoryType.LIMITED) && inventory < salesVolume){
+    				return RuleError.LESS_LEAST(GOODS_+INVENTORY_BELOW_SALES_VOLUME);
     			}
     			
     			//创建SKU实体类封装SKU信息
@@ -503,7 +503,7 @@ public class GoodsController extends BaseController{
     		
     		//判断有无重复的SKU描述
     		if(descSet.size() != skus.size()){
-    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
+    			return EntryError.DUPLICATE(GOODS_+SKU_DESCRIPTION);
     		}
     		
     		//对sku排序（按照原价正序），获取最低原价
@@ -529,12 +529,12 @@ public class GoodsController extends BaseController{
     			
     			//判断商品详情是否为空
     			if(StringUtils.isEmpty(form.getDetail())){
-    				return EntryError.EMPTY(DETAIL);
+    				return EntryError.EMPTY(GOODS_+DETAIL);
     			}
     			
     			//判断商品售后服务是否为空
     			if(StringUtils.isEmpty(form.getService())){
-    				return EntryError.EMPTY(SERVICE);
+    				return EntryError.EMPTY(GOODS_+SERVICE);
     			}
     		}
     		goods.setDetail(form.getDetail());
@@ -579,11 +579,11 @@ public class GoodsController extends BaseController{
         			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
-        				return EntryError.EMPTY(PRICE);
+        				return EntryError.EMPTY(GOODS_+PRICE);
         			}
         			
         			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(PRICE);
+        				return EntryError.FORMAT(GOODS_+PRICE);
         			}
         			
         			//设置运费价格
@@ -592,7 +592,7 @@ public class GoodsController extends BaseController{
         			
         			//判断运费模板ID是否为空
         			if(StringUtils.isEmpty(freightParamForm.getFreightId())){
-        				return EntryError.EMPTY(FREIGHT_ID);
+        				return EntryError.EMPTY(GOODS_+FREIGHT_ID);
         			}
         			
         			//设置运费模板ID
@@ -605,7 +605,7 @@ public class GoodsController extends BaseController{
         				//创建匹配正则（0.01-99.99）
         				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(AMOUNT);
+        					return EntryError.FORMAT(GOODS_+AMOUNT);
         				}
         				
             			//设置重量或体积
@@ -622,31 +622,31 @@ public class GoodsController extends BaseController{
     			
     			//判断小程序应用信息是否为空
     			if(appForm == null){
-    				return EntryError.EMPTY(APP);
+    				return EntryError.EMPTY(GOODS_+APP);
     			}
     			
     			//判断小程序模板ID是否为空
     			String templetId = appForm.getTempletId();
     			if(StringUtils.isEmpty(templetId)){
-    				return EntryError.EMPTY(TEMPLET_ID);
+    				return EntryError.EMPTY(GOODS_+TEMPLET_ID);
     			}
     			
     			//判断小程序码是否为空并且长度是否合规
     			String appCode = appForm.getAppCode();
     			if(StringUtils.isEmpty(appCode)){
-    				return EntryError.EMPTY(APP_CODE);
+    				return EntryError.EMPTY(GOODS_+APP_CODE);
     			}
     			if(appCode.length()>255){
-    				return EntryError.TOO_LONG(APP_CODE);
+    				return EntryError.TOO_LONG(GOODS_+APP_CODE);
     			}
     			
     			//判断小程序首页配图是否为空并且长度是否合规
     			String image = appForm.getImage();
     			if(StringUtils.isEmpty(image)){
-    				return EntryError.EMPTY(IMAGE);
+    				return EntryError.EMPTY(GOODS_+APP_IMAGE);
     			}
     			if(image.length()>255){
-    				return EntryError.TOO_LONG(IMAGE);
+    				return EntryError.TOO_LONG(GOODS_+APP_IMAGE);
     			}
     			
     			//创建小程序应用信息实体类封装小程序应用信息
@@ -684,7 +684,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_EDIT, method=RequestMethod.POST)
     public @ResponseBody ResponseCode edit(HttpServletRequest req, @RequestBody @Valid EditGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -741,102 +741,102 @@ public class GoodsController extends BaseController{
         			//判断属性名ID是否为空
         			String propertyNameId = goodsPropertyNameForm.getPropertyNameId();
         			if(StringUtils.isBlank(propertyNameId)){
-        				return EntryError.EMPTY(PROPERTY_NAME_ID);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_ID);
         			}
         			
         			//判断属性名称是否为空
         			String name = goodsPropertyNameForm.getName();
         			if(StringUtils.isBlank(name)){
-        				return EntryError.EMPTY(PROPERTY_NAME);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME);
         			}
         			
         			//判断属性名称长度是否合规
         			if(name.length() > 40){
-        				return EntryError.TOO_LONG(PROPERTY_NAME);
+        				return EntryError.TOO_LONG(GOODS_+PROPERTY_NAME);
         			}
         			
         			//判断属性名类型是否为空
         			PropertyNameType type = goodsPropertyNameForm.getType();
         			if(type == null){
-        				return EntryError.EMPTY(PROPERTY_NAME_TYPE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_TYPE);
         			}
         			
         			//判断排列序号是否为空
         			Integer squence = goodsPropertyNameForm.getSquence();
         			if(squence == null){
-        				return EntryError.EMPTY(PROPERTY_NAME_SQUENCE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_NAME_SQUENCE);
         			}
         			
         			//判断“是否搜索属性”是否为空
         			Boolean isSearch = goodsPropertyNameForm.getIsSearch();
         			if(isSearch == null){
-        				return EntryError.EMPTY(IS_SEARCH);
+        				return EntryError.EMPTY(GOODS_+IS_SEARCH);
         			}
         			
         			//判断是“是否单选框”是否为空
         			Boolean isRadio = goodsPropertyNameForm.getIsRadio();
         			if(isRadio == null){
-        				return EntryError.EMPTY(IS_RADIO);
+        				return EntryError.EMPTY(GOODS_+IS_RADIO);
         			}
         			
         			//判断是“是否多选框”是否为空
         			Boolean isCheckbox = goodsPropertyNameForm.getIsCheckbox();
         			if(isCheckbox == null){
-        				return EntryError.EMPTY(IS_CHECKBOX);
+        				return EntryError.EMPTY(GOODS_+IS_CHECKBOX);
         			}
         			
         			//判断是“是否输入框”是否为空
         			Boolean isInput = goodsPropertyNameForm.getIsInput();
         			if(isInput == null){
-        				return EntryError.EMPTY(IS_INPUT);
+        				return EntryError.EMPTY(GOODS_+IS_INPUT);
         			}
         			
         			//判断是“是否下拉框”是否为空
         			Boolean isSelect = goodsPropertyNameForm.getIsSelect();
         			if(isSelect == null){
-        				return EntryError.EMPTY(IS_SELECT);
+        				return EntryError.EMPTY(GOODS_+IS_SELECT);
         			}
         			
         			//判断是“是否文本编辑器”是否为空
         			Boolean isVisualEditor = goodsPropertyNameForm.getIsVisualEditor();
         			if(isVisualEditor == null){
-        				return EntryError.EMPTY(IS_VISUAL_EDITOR);
+        				return EntryError.EMPTY(GOODS_+IS_VISUAL_EDITOR);
         			}
         			
         			//判断是“是否颜色属性”是否为空
         			Boolean isColor = goodsPropertyNameForm.getIsColor();
         			if(isColor == null){
-        				return EntryError.EMPTY(IS_COLOR);
+        				return EntryError.EMPTY(GOODS_+IS_COLOR);
         			}
         			
         			//判断是“是否必须属性”是否为空
         			Boolean isRequired = goodsPropertyNameForm.getIsRequired();
         			if(isRequired == null){
-        				return EntryError.EMPTY(IS_REQUIRED);
+        				return EntryError.EMPTY(GOODS_+IS_REQUIRED);
         			}
         			
         			//判断是“是否销售属性”是否为空
         			Boolean isSales = goodsPropertyNameForm.getIsSales();
         			if(isSales == null){
-        				return EntryError.EMPTY(IS_SALES);
+        				return EntryError.EMPTY(GOODS_+IS_SALES);
         			}
         			
         			//判断是“是否基础属性”是否为空
         			Boolean isBasic = goodsPropertyNameForm.getIsBasic();
         			if(isBasic == null){
-        				return EntryError.EMPTY(IS_BASIC);
+        				return EntryError.EMPTY(GOODS_+IS_BASIC);
         			}
         			
         			//判断是“是否关键属性”是否为空
         			Boolean isKey = goodsPropertyNameForm.getIsKey();
         			if(isKey == null){
-        				return EntryError.EMPTY(IS_KEY);
+        				return EntryError.EMPTY(GOODS_+IS_KEY);
         			}
         			
         			//判断是“是否图片属性”是否为空
         			Boolean isImage = goodsPropertyNameForm.getIsImage();
         			if(isImage == null){
-        				return EntryError.EMPTY(IS_IMAGE);
+        				return EntryError.EMPTY(GOODS_+IS_IMAGE);
         			}
         			
         			//创建商品属性值列表
@@ -880,7 +880,7 @@ public class GoodsController extends BaseController{
     			
         			//判断属性值表单列表是否为空
         			if(goodsPropertyValueForms == null || goodsPropertyValueForms.size() <= 0){
-        				return EntryError.EMPTY(PROPERTY_VALUE);
+        				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE);
         			}
         			
         			//循环商品属性值表单列表
@@ -889,30 +889,30 @@ public class GoodsController extends BaseController{
         				//判断属性值ID是否为空
         				String propertyValueId = goodsPropertyValueForm.getPropertyValueId();
             			if(StringUtils.isBlank(propertyNameId)){
-            				return EntryError.EMPTY(PROPERTY_VALUE_ID);
+            				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_ID);
             			}
         				
             			//判断属性值名称是否为空
         				String propertyValueName = goodsPropertyValueForm.getName();
             			if(StringUtils.isBlank(propertyValueName)){
-            				return EntryError.EMPTY(PROPERTY_VALUE_NAME);
+            				return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_NAME);
             			}
             			
             			//判断属性名称长度是否合规
             			if(name.length() > 255){
-            				return EntryError.TOO_LONG(PROPERTY_VALUE_NAME);
+            				return EntryError.TOO_LONG(GOODS_+PROPERTY_VALUE_NAME);
             			}
         				
             			//判断属性值类型是否为空
         				PropertyValueType propertyValueType = goodsPropertyValueForm.getType();
         				if(propertyValueType == null){
-        					return EntryError.EMPTY(PROPERTY_VALUE_TYPE);
+        					return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_TYPE);
         				}
         				
         				//判断属性值排列序号是否为空
         				Integer propertyValueSquence = goodsPropertyValueForm.getSquence();
         				if(propertyValueSquence == null){
-        					return EntryError.EMPTY(PROPERTY_VALUE_SQUENCE);
+        					return EntryError.EMPTY(GOODS_+PROPERTY_VALUE_SQUENCE);
         				}
         				
         				//判断图片地址是否为空，为空则为默认图片。
@@ -928,7 +928,7 @@ public class GoodsController extends BaseController{
         				String remark = goodsPropertyValueForm.getRemark();
             			if(!StringUtils.isEmpty(remark)){
             				if(remark.length()>255){
-            					EntryError.TOO_LONG(PROPERTY_VALUE_REMARK);
+            					EntryError.TOO_LONG(GOODS_+PROPERTY_VALUE_REMARK);
             				}
             			}
             			
@@ -962,7 +962,7 @@ public class GoodsController extends BaseController{
     		
     		//判断SKU表单列表是否为空
     		if(skuForms == null || skuForms.size()<=0){
-    			return EntryError.EMPTY(SKU);
+    			return EntryError.EMPTY(GOODS_+SKU);
     		}
     		
     		//创建Set集合接收SKU描述
@@ -974,7 +974,7 @@ public class GoodsController extends BaseController{
     			//判断SKU描述长度是否合规
     			String description = skuForm.getDescription();
     			if(StringUtils.isNotEmpty(description) && description.length() > 270){
-    				return EntryError.TOO_LONG(SALES_PROPERTY); // 销售属性过多
+    				return EntryError.TOO_LONG(GOODS_+SALES_PROPERTY); // 销售属性过多
     			}
     			
     			//将SKU描述保存到Set集合中
@@ -984,14 +984,14 @@ public class GoodsController extends BaseController{
     			Integer inventory = skuForm.getInventory();
     			if(inventory == null){
         			if(form.getInventoryType().equals(InventoryType.LIMITED)){
-        				return EntryError.EMPTY(INVENTORY);
+        				return EntryError.EMPTY(GOODS_+INVENTORY);
         			}
         			inventory = 0;
     			}else{
     				
     				//判断SKU库存取值范围
     				if(inventory > 99999999 || inventory<0){
-    					return EntryError.OVERRANGE(INVENTORY);
+    					return EntryError.OVERRANGE(GOODS_+INVENTORY);
     				}
     			}
     			
@@ -1001,30 +1001,30 @@ public class GoodsController extends BaseController{
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = skuForm.getOriginalPrice();
     			if(originalPrice == null){
-    				return EntryError.EMPTY(ORIGINAL_PRICE);
+    				return EntryError.EMPTY(GOODS_+ORIGINAL_PRICE);
     			}
     			
     			//判断SKU原价格式是否正确
     			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(ORIGINAL_PRICE); // SKU原价格式不正确
+    				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
     			}
     			
     			//判断SKU售价是否为空
     			BigDecimal price = skuForm.getPrice();
     			if(price == null){
-    				return EntryError.EMPTY(PRICE);
+    				return EntryError.EMPTY(GOODS_+PRICE);
     			}
     			
     			//判断SKU原价格式是否正确
     			if(!pricePattern.matcher(price.toString()).matches() || price.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(PRICE); // SKU售价格式不正确
+    				return EntryError.FORMAT(GOODS_+PRICE); // SKU售价格式不正确
     			}
     			
     			//判断备注长度是否合规
     			String remark = skuForm.getRemark();
     			if(!StringUtils.isEmpty(remark)){
     				if(remark.length()>255){
-    					return EntryError.TOO_LONG(REMARK);
+    					return EntryError.TOO_LONG(GOODS_+REMARK);
     				}
     			}
     			
@@ -1035,11 +1035,11 @@ public class GoodsController extends BaseController{
     			String barcode = skuForm.getBarcode();
     			if(!StringUtils.isEmpty(barcode)){
         			if(!codePattern.matcher(barcode).matches()){
-        				return EntryError.FORMAT(BARCODE); // 商品条码格式不正确
+        				return EntryError.FORMAT(GOODS_+BARCODE); // 商品条码格式不正确
         			}
         			
         			if(barcode.length() > 255){
-        				return EntryError.TOO_LONG(BARCODE); // 商品条码过长
+        				return EntryError.TOO_LONG(GOODS_+BARCODE); // 商品条码过长
         			}
     			}
 
@@ -1047,11 +1047,11 @@ public class GoodsController extends BaseController{
     			String code = skuForm.getCode();
     			if(!StringUtils.isEmpty(code)){
         			if(!codePattern.matcher(code).matches()){
-        				return EntryError.FORMAT(CODE); // 商品条码格式不正确
+        				return EntryError.FORMAT(GOODS_+CODE); // 商品条码格式不正确
         			}
         			
         			if(code.length() > 255){
-        				return EntryError.TOO_LONG(CODE); // 商品条码过长
+        				return EntryError.TOO_LONG(GOODS_+CODE); // 商品条码过长
         			}
     			}
     			
@@ -1059,7 +1059,7 @@ public class GoodsController extends BaseController{
     			Integer salesVolume = skuForm.getSalesVolume();
     			if(salesVolume != null){
     				if(salesVolume > 9999 || salesVolume <=0){
-    					return EntryError.OVERRANGE(SALES_VOLUME); // 起售量长度不合规
+    					return EntryError.OVERRANGE(GOODS_+SALES_VOLUME); // 起售量长度不合规
     				}
     			}else{
     				salesVolume = 1; // 默认起售量为1
@@ -1075,8 +1075,8 @@ public class GoodsController extends BaseController{
     			}
     			
     			//判断库存是否大于起售量
-    			if(inventory < salesVolume){
-    				return RuleError.LESS_LEAST(INVENTORY_BELOW_SALES_VOLUME);
+    			if(form.getInventoryType().equals(InventoryType.LIMITED) && inventory < salesVolume){
+    				return RuleError.LESS_LEAST(GOODS_+INVENTORY_BELOW_SALES_VOLUME);
     			}
     			
     			sku.setGoodsId(goodsId);
@@ -1116,7 +1116,7 @@ public class GoodsController extends BaseController{
     		
     		//判断有无重复的SKU描述
     		if(descSet.size() != skus.size()){
-    			return EntryError.DUPLICATE(SKU_DESCRIPTION);
+    			return EntryError.DUPLICATE(GOODS_+SKU_DESCRIPTION);
     		}
     		
     		//对sku排序（按照原价正序），获取最低原价
@@ -1142,12 +1142,12 @@ public class GoodsController extends BaseController{
     			
     			//判断商品详情是否为空
     			if(StringUtils.isEmpty(form.getDetail())){
-    				return EntryError.EMPTY(DETAIL);
+    				return EntryError.EMPTY(GOODS_+DETAIL);
     			}
     			
     			//判断商品售后服务是否为空
     			if(StringUtils.isEmpty(form.getService())){
-    				return EntryError.EMPTY(SERVICE);
+    				return EntryError.EMPTY(GOODS_+SERVICE);
     			}
     		}
     		goods.setDetail(form.getDetail());
@@ -1192,11 +1192,11 @@ public class GoodsController extends BaseController{
         			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
-        				return EntryError.EMPTY(PRICE);
+        				return EntryError.EMPTY(GOODS_+PRICE);
         			}
         			
         			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
-        				return EntryError.FORMAT(PRICE);
+        				return EntryError.FORMAT(GOODS_+PRICE);
         			}
         			
         			//设置运费价格
@@ -1205,7 +1205,7 @@ public class GoodsController extends BaseController{
         			
         			//判断运费模板ID是否为空
         			if(StringUtils.isEmpty(freightParamForm.getFreightId())){
-        				return EntryError.EMPTY(FREIGHT_ID);
+        				return EntryError.EMPTY(GOODS_+FREIGHT_ID);
         			}
         			
         			//设置运费模板ID
@@ -1218,7 +1218,7 @@ public class GoodsController extends BaseController{
         				//创建匹配正则（0.01-99.99）
         				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(AMOUNT);
+        					return EntryError.FORMAT(GOODS_+AMOUNT);
         				}
         				
             			//设置重量或体积
@@ -1235,13 +1235,13 @@ public class GoodsController extends BaseController{
     			
     			//判断小程序应用信息是否为空
     			if(appForm == null){
-    				return EntryError.EMPTY(APP);
+    				return EntryError.EMPTY(GOODS_+APP);
     			}
     			
     			//判断小程序模板ID是否为空
     			String templetId = appForm.getTempletId();
     			if(StringUtils.isEmpty(templetId)){
-    				return EntryError.EMPTY(TEMPLET_ID);
+    				return EntryError.EMPTY(GOODS_+TEMPLET_ID);
     			}
     			
     			//判断小程序码是否为空并且长度是否合规
@@ -1250,16 +1250,16 @@ public class GoodsController extends BaseController{
     				return EntryError.EMPTY(APP_CODE);
     			}
     			if(appCode.length()>255){
-    				return EntryError.TOO_LONG(APP_CODE);
+    				return EntryError.TOO_LONG(GOODS_+APP_CODE);
     			}
     			
     			//判断小程序首页配图是否为空并且长度是否合规
     			String image = appForm.getImage();
     			if(StringUtils.isEmpty(image)){
-    				return EntryError.EMPTY(IMAGE);
+    				return EntryError.EMPTY(GOODS_+APP_IMAGE);
     			}
     			if(image.length()>255){
-    				return EntryError.TOO_LONG(IMAGE);
+    				return EntryError.TOO_LONG(GOODS_+APP_IMAGE);
     			}
     			
     			//创建小程序应用信息实体类封装小程序应用信息
@@ -1296,7 +1296,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_DELETE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode delete(HttpServletRequest req, @RequestBody @Valid DeleteGoodsForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1330,7 +1330,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_SHELVE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode shelve(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1384,7 +1384,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_APPLY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode apply(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1438,7 +1438,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_REMOVE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode remove(HttpServletRequest req, @RequestBody @Valid UpdateGoodsStatusForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1492,7 +1492,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_RECOVER, method=RequestMethod.POST)
     public @ResponseBody ResponseCode recover(HttpServletRequest req, @RequestBody @Valid GoodsRecoverForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1546,7 +1546,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_UPDATE_RECOMMEND, method=RequestMethod.POST)
     public @ResponseBody ResponseCode updateRecommend(HttpServletRequest req, @RequestBody @Valid UpdateGoodsRecommendForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1599,7 +1599,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode list(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1636,7 +1636,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_REMOVED_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode removedList(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1673,7 +1673,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_NORMAL_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode normalList(HttpServletRequest req, @RequestBody @Valid QueryGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1710,7 +1710,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_SELLING_LIST, method=RequestMethod.POST)
     public @ResponseBody ResponseCode sellingList(HttpServletRequest req, @RequestBody @Valid QuerySellingGoodsesForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1769,7 +1769,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_PURCHASE_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode purchaseDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1785,19 +1785,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				return EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(GOODS_+GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				return EntryError.EMPTY(SKU_ID);
+    				return EntryError.EMPTY(GOODS_+SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				return EntryError.EMPTY(QUANTITY);
+    				return EntryError.EMPTY(GOODS_+QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
@@ -1831,7 +1831,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_CART_DETAILS, method=RequestMethod.POST)
     public @ResponseBody ResponseCode cartDetails(HttpServletRequest req, @RequestBody @Valid PurchaseInfosForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1847,19 +1847,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				return EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(GOODS_+GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				return EntryError.EMPTY(SKU_ID);
+    				return EntryError.EMPTY(GOODS_+SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				return  EntryError.EMPTY(QUANTITY);
+    				return  EntryError.EMPTY(GOODS_+QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
@@ -1893,7 +1893,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_LOCK_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode lockInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1917,19 +1917,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				EntryError.EMPTY(GOODS_ID);
+    				EntryError.EMPTY(GOODS_+GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				EntryError.EMPTY(SKU_ID);
+    				EntryError.EMPTY(GOODS_+SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				EntryError.EMPTY(QUANTITY);
+    				EntryError.EMPTY(GOODS_+QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
@@ -1963,7 +1963,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_RELEASE_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode releaseInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -1987,19 +1987,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				EntryError.EMPTY(GOODS_ID);
+    				EntryError.EMPTY(GOODS_+GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				EntryError.EMPTY(SKU_ID);
+    				EntryError.EMPTY(GOODS_+SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				EntryError.EMPTY(QUANTITY);
+    				EntryError.EMPTY(GOODS_+QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息
@@ -2033,7 +2033,7 @@ public class GoodsController extends BaseController{
     @RequestMapping(value=REQ_DEDUCTION_INVENTORY, method=RequestMethod.POST)
     public @ResponseBody ResponseCode deductionInventory(HttpServletRequest req, @RequestBody @Valid InventoryOperationForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), Error.ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), GOODS_+result.getFieldError().getField(), Error.ENTRY);
         }
     	try {
     		
@@ -2057,19 +2057,19 @@ public class GoodsController extends BaseController{
     			//判断商品ID是否为空
     			String goodsId = purchaseInfoForm.getSpuId();
     			if(StringUtils.isEmpty(goodsId)){
-    				EntryError.EMPTY(GOODS_ID);
+    				EntryError.EMPTY(GOODS_+GOODS_ID);
     			}
     			
     			//判断SKUID是否为空
     			String skuId = purchaseInfoForm.getSkuId();
     			if(StringUtils.isEmpty(skuId)){
-    				EntryError.EMPTY(SKU_ID);
+    				EntryError.EMPTY(GOODS_+SKU_ID);
     			}
     			
     			//判断购买数量是否为空
     			Integer quantity = purchaseInfoForm.getQuantity();
     			if(quantity == null){
-    				EntryError.EMPTY(QUANTITY);
+    				EntryError.EMPTY(GOODS_+QUANTITY);
     			}
     			
     			//创建购买信息实体类封装购买信息

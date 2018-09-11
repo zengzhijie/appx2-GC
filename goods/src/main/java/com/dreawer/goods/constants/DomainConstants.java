@@ -295,6 +295,9 @@ public abstract class DomainConstants {
 	/** 运费模板名称 */
     public static final String FREIGHT_NAME = "freightName";
     
+	/** 小程序图片 */
+    public static final String APP_IMAGE = "appImage";
+    
     // --------------------------------------------------------------------------------
     // 分页属性
     // --------------------------------------------------------------------------------

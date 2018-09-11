@@ -62,7 +62,7 @@ public class FreightController extends BaseController{
     @RequestMapping(value=REQ_ADD, method=RequestMethod.POST)
     public @ResponseBody ResponseCode add(HttpServletRequest req, @RequestBody @Valid AddFreightForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), FREIGHT_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -108,7 +108,7 @@ public class FreightController extends BaseController{
     			
     			//判断计价方式是否为空
     			if(pricingMethod == null){
-    				return EntryError.EMPTY(PRICING_METHOD);
+    				return EntryError.EMPTY(FREIGHT_+PRICING_METHOD);
     			}
     			
     			//获取运送方式表单列表
@@ -116,7 +116,7 @@ public class FreightController extends BaseController{
     			
     			//判断运送方式表单列表是否为空
     			if(addLogisticsMethods == null || addLogisticsMethods.size() <= 0){
-    				return EntryError.EMPTY(LOGISTICS_METHODS);
+    				return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHODS);
     			}
     			
     			//创建Map集合接收城市信息
@@ -133,7 +133,7 @@ public class FreightController extends BaseController{
     				
     				//判断运送方式类型是否为空
     				if(type == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_TYPE);
+    					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_TYPE);
     				}
     				
     				//获取起始量
@@ -158,43 +158,43 @@ public class FreightController extends BaseController{
     					
         				//判断起始量是否为空
         				if(startQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
         				}
         				
         				//判断起始量格式是否正确
         				if(!pricePattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
         				}
         				
         				//判断起始价格是否为空
         				if(startPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价为空
         				}
         				
         				//判断起始价格格式是否正确
         				if(!amountPattern.matcher(startPrice.toString()).matches()){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
         				}
         				
         				
         				//判断增量是否为空
         				if(incrementQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
         				}
         				
         				//判断增量格式是否正确
         				if(!amountPattern.matcher(incrementQuantity.toString()).matches()){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
         				}
         				
         				//判断增加价格是否为空
         				if(incrementPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
         				}
         				
         				//判断增加价格格式是否正确
         				if(!pricePattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
         				}
     				}else{
     					
@@ -202,43 +202,43 @@ public class FreightController extends BaseController{
     					
         				//判断起始量是否为空
         				if(startQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
         				}
         				
         				//判断起始量格式是否正确
         				if(!pattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
         				}
         				
         				//判断起始价格是否为空
         				if(startPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价为空
         				}
         				
         				//判断起始价格格式是否正确
         				if(!pattern.matcher(startPrice.toString()).matches() || startPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
         				}
         				
         				
         				//判断增量是否为空
         				if(incrementQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
         				}
         				
         				//判断增量格式是否正确
         				if(!pattern.matcher(incrementQuantity.toString()).matches() || incrementQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
         				}
         				
         				//判断增加价格是否为空
         				if(incrementPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
         				}
         				
         				//判断增加价格格式是否正确
         				if(!pattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
         				}
     				}
 
@@ -247,7 +247,7 @@ public class FreightController extends BaseController{
     				
     				//判断运“是否默认”属性是否为空
     				if(isDefault == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_IS_DEFAULT);
+    					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_IS_DEFAULT);
     				}
     				
     				//List集合接收城市信息
@@ -279,7 +279,7 @@ public class FreightController extends BaseController{
     				if(isDefault){
     					//判断循环数大小
     					if(i>=1){
-    						return EntryError.DUPLICATE(LOGISTICS_METHOD_IS_DEFAULT);
+    						return EntryError.DUPLICATE(FREIGHT_+LOGISTICS_METHOD_IS_DEFAULT);
     					}
     					
     					//循环数加一
@@ -292,7 +292,7 @@ public class FreightController extends BaseController{
         				//添加城市表单列表为空
         				if(addCities == null || addCities.size() <= 0){
         					
-        					return EntryError.EMPTY(CITIES);
+        					return EntryError.EMPTY(FREIGHT_+CITIES);
         				}
         				
         				//循环城市列表
@@ -303,7 +303,7 @@ public class FreightController extends BaseController{
         					
         					//判断城市ID是否为空
         					if(cityId == null){
-        						return EntryError.EMPTY(CITY_ID); // 城市ID为空
+        						return EntryError.EMPTY(FREIGHT_+CITY_ID); // 城市ID为空
         					}
         					
         					//获取城市名称
@@ -311,16 +311,16 @@ public class FreightController extends BaseController{
         					
         					//判断城市名称是否为空
         					if(name == null){
-        						return EntryError.EMPTY(CITY_NAME); // 城市名称为空
+        						return EntryError.EMPTY(FREIGHT_+CITY_NAME); // 城市名称为空
         					}
         					
         					//判断城市名称长度
         					if(name.length() <= 0){
-        						return EntryError.TOO_SHORT(CITY_NAME); // 城市名称长度过短
+        						return EntryError.TOO_SHORT(FREIGHT_+CITY_NAME); // 城市名称长度过短
         					}
         					
         					if(name.length() > 40){
-        						return EntryError.TOO_LONG(CITY_NAME); // 城市名称长度过长
+        						return EntryError.TOO_LONG(FREIGHT_+CITY_NAME); // 城市名称长度过长
         					}
         					
         					//获取城市父ID
@@ -335,7 +335,7 @@ public class FreightController extends BaseController{
         						
         						//判断城市ID是否存在
         						if(cityIds.toString().contains(cityId)){
-        							return EntryError.DUPLICATE(CITY);
+        							return EntryError.DUPLICATE(FREIGHT_+CITY);
         						}
         						
         						//添加城市ID到Map集合中
@@ -381,7 +381,7 @@ public class FreightController extends BaseController{
     @RequestMapping(value=REQ_EDIT, method=RequestMethod.POST)
     public @ResponseBody ResponseCode edit(HttpServletRequest req, @RequestBody @Valid EditFreightForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), FREIGHT_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -427,7 +427,7 @@ public class FreightController extends BaseController{
     			
     			//判断计价方式是否为空
     			if(pricingMethod == null){
-    				return EntryError.EMPTY(PRICING_METHOD);
+    				return EntryError.EMPTY(FREIGHT_+PRICING_METHOD);
     			}
     			
     			//获取运送方式表单列表
@@ -435,7 +435,7 @@ public class FreightController extends BaseController{
     			
     			//判断运送方式表单列表是否为空
     			if(editLogisticsMethods == null || editLogisticsMethods.size() <= 0){
-    				return EntryError.EMPTY(LOGISTICS_METHODS);
+    				return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHODS);
     			}
     			
     			//创建Map集合接收城市信息
@@ -452,7 +452,7 @@ public class FreightController extends BaseController{
     				
     				//判断运送方式类型是否为空
     				if(type == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_TYPE);
+    					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_TYPE);
     				}
     				
     				//获取起始量
@@ -477,43 +477,43 @@ public class FreightController extends BaseController{
     					
         				//判断起始量是否为空
         				if(startQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
         				}
         				
         				//判断起始量格式是否正确
         				if(!pricePattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
         				}
         				
         				//判断起始价格是否为空
         				if(startPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价为空
         				}
         				
         				//判断起始价格格式是否正确
         				if(!amountPattern.matcher(startPrice.toString()).matches()){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
         				}
         				
         				
         				//判断增量是否为空
         				if(incrementQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
         				}
         				
         				//判断增量格式是否正确
         				if(!amountPattern.matcher(incrementQuantity.toString()).matches()){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
         				}
         				
         				//判断增加价格是否为空
         				if(incrementPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
         				}
         				
         				//判断增加价格格式是否正确
         				if(!pricePattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
         				}
     				}else{
     					
@@ -521,43 +521,43 @@ public class FreightController extends BaseController{
     					
         				//判断起始量是否为空
         				if(startQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量为空 
         				}
         				
         				//判断起始量格式是否正确
         				if(!pattern.matcher(startQuantity.toString()).matches() || startQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_QUANTITY); // 起始量格式不正确
         				}
         				
         				//判断起始价格是否为空
         				if(startPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_START_PRICE); // 起始价为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价为空
         				}
         				
         				//判断起始价格格式是否正确
         				if(!pattern.matcher(startPrice.toString()).matches() || startPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_START_PRICE); // 起始价格格式不正确
         				}
         				
         				
         				//判断增量是否为空
         				if(incrementQuantity == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量为空
         				}
         				
         				//判断增量格式是否正确
         				if(!pattern.matcher(incrementQuantity.toString()).matches() || incrementQuantity.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_QUANTITY); // 增量格式不正确
         				}
         				
         				//判断增加价格是否为空
         				if(incrementPrice == null){
-        					return EntryError.EMPTY(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
+        					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格为空
         				}
         				
         				//判断增加价格格式是否正确
         				if(!pattern.matcher(incrementPrice.toString()).matches() || incrementPrice.compareTo(new BigDecimal("0.00")) <= 0){
-        					return EntryError.FORMAT(LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
+        					return EntryError.FORMAT(FREIGHT_+LOGISTICS_METHOD_INCREMENT_PRICE); // 增加价格格式不正确
         				}
     				}
 
@@ -566,7 +566,7 @@ public class FreightController extends BaseController{
     				
     				//判断运“是否默认”属性是否为空
     				if(isDefault == null){
-    					return EntryError.EMPTY(LOGISTICS_METHOD_IS_DEFAULT);
+    					return EntryError.EMPTY(FREIGHT_+LOGISTICS_METHOD_IS_DEFAULT);
     				}
     				
     				//List集合接收城市信息
@@ -606,7 +606,7 @@ public class FreightController extends BaseController{
     				if(isDefault){
     					//判断循环数大小
     					if(i>=1){
-    						return EntryError.DUPLICATE(LOGISTICS_METHOD_IS_DEFAULT);
+    						return EntryError.DUPLICATE(FREIGHT_+LOGISTICS_METHOD_IS_DEFAULT);
     					}
     					
     					//循环数加一
@@ -619,7 +619,7 @@ public class FreightController extends BaseController{
         				//城市表单列表为空
         				if(editCities == null || editCities.size() <= 0){
         					
-        					return EntryError.EMPTY(CITIES);
+        					return EntryError.EMPTY(FREIGHT_+CITIES);
         				}
         				
         				//循环城市列表
@@ -630,7 +630,7 @@ public class FreightController extends BaseController{
         					
         					//判断城市ID是否为空
         					if(cityId == null){
-        						return EntryError.EMPTY(CITY_ID); // 城市ID为空
+        						return EntryError.EMPTY(FREIGHT_+CITY_ID); // 城市ID为空
         					}
         					
         					//获取城市名称
@@ -638,16 +638,16 @@ public class FreightController extends BaseController{
         					
         					//判断城市名称是否为空
         					if(name == null){
-        						return EntryError.EMPTY(CITY_NAME); // 城市名称为空
+        						return EntryError.EMPTY(FREIGHT_+CITY_NAME); // 城市名称为空
         					}
         					
         					//判断城市名称长度
         					if(name.length() <= 0){
-        						return EntryError.TOO_SHORT(CITY_NAME); // 城市名称长度过短
+        						return EntryError.TOO_SHORT(FREIGHT_+CITY_NAME); // 城市名称长度过短
         					}
         					
         					if(name.length() > 40){
-        						return EntryError.TOO_LONG(CITY_NAME); // 城市名称长度过长
+        						return EntryError.TOO_LONG(FREIGHT_+CITY_NAME); // 城市名称长度过长
         					}
         					
         					//获取城市父ID
@@ -662,7 +662,7 @@ public class FreightController extends BaseController{
         						
         						//判断城市ID是否存在
         						if(cityIds.toString().contains(cityId)){
-        							return EntryError.DUPLICATE(CITY);
+        							return EntryError.DUPLICATE(FREIGHT_+CITY);
         						}
         						
         						//添加城市ID到Map集合中
@@ -716,7 +716,7 @@ public class FreightController extends BaseController{
     @RequestMapping(value=REQ_DELETE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode delete(HttpServletRequest req, @RequestBody @Valid DeleteFreightForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), FREIGHT_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -920,7 +920,7 @@ public class FreightController extends BaseController{
     @RequestMapping(value=REQ_CACULATE, method=RequestMethod.POST)
     public @ResponseBody ResponseCode calculate(HttpServletRequest req, @RequestBody @Valid CalculateFreightForm form, BindingResult result) {
         if (result.hasErrors()) {
-            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), result.getFieldError().getField(), ENTRY);
+            return ResponseCodeRepository.fetch(result.getFieldError().getDefaultMessage(), FREIGHT_+result.getFieldError().getField(), ENTRY);
         }
     	try {
     		
@@ -932,12 +932,12 @@ public class FreightController extends BaseController{
 				
     			//判断商品ID是否为空
     			if(purchaseInfo.getGoodsId() == null){
-    				return EntryError.EMPTY(GOODS_ID);
+    				return EntryError.EMPTY(FREIGHT_+GOODS_ID);
     			}
     			
     			//判断购买数量是否为空
     			if(purchaseInfo.getQuantity() == null){
-    				return EntryError.EMPTY(QUANTITY);
+    				return EntryError.EMPTY(FREIGHT_+QUANTITY);
     			}
 			}
     		

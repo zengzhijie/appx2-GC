@@ -119,4 +119,16 @@ public final class ControllerConstants {
     /** 请求“购物车商品详情” */
     public static final String REQ_CART_DETAILS = "/cartDetails";
     
+    // --------------------------------------------------------------------------------
+    // 子模块名
+    // --------------------------------------------------------------------------------
+    
+    /** 商品 */
+    public static final String GOODS_ = "goods.";
+    
+    /** 分组 */
+    public static final String GROUP_ = "group.";
+    
+    /** 运费模板 */
+    public static final String FREIGHT_ = "freight.";
 }

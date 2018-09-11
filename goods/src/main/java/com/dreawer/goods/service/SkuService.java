@@ -1,5 +1,6 @@
 package com.dreawer.goods.service;
 
+import static com.dreawer.goods.constants.ControllerConstants.GOODS_;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class SkuService extends BaseService{
     		
     		//判断SKU信息是否存在
 			if(sku == null){
-				return StatusError.DELETED(SKU_ID+":"+purchaseInfo.getSkuId()); // SKU已删除
+				return StatusError.DELETED(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // SKU已删除
 			}
     		
     		//查询商品信息
@@ -92,7 +93,7 @@ public class SkuService extends BaseService{
     					//判断是否达到起售量
     					if(purchaseInfo.getQuantity() < sku.getSalesVolume()){
     						
-    						return GCRuleError.BELOW_MOQ(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
+    						return GCRuleError.BELOW_MOQ(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
     					}
     					
     					//判断sku库存是否充足
@@ -112,16 +113,16 @@ public class SkuService extends BaseService{
         						sku.setLockedInventory(sku.getLockedInventory()+purchaseInfo.getQuantity());
         						updateSkus.add(sku);
     						}else{
-        						return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+        						return GCRuleError.SHORT_INVENTORY(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
         					}
     					}	
             		}else if(goods.getStatus().equals(GoodsStatus.APPLIED)){
-            			return StatusError.APPLIED(GOODS_ID+":"+sku.getGoodsId()); // 商品已下架
+            			return StatusError.APPLIED(GOODS_+GOODS_ID+":"+sku.getGoodsId()); // 商品已下架
             		}else{
-            			return StatusError.DELETED(GOODS_ID+":"+sku.getGoodsId()); // 商品已移除
+            			return StatusError.DELETED(GOODS_+GOODS_ID+":"+sku.getGoodsId()); // 商品已移除
             		}
     			}else{
-    				return RuleError.NON_EXISTENT(GOODS_ID+":"+sku.getGoodsId()); // 商品不存在或已删除
+    				return RuleError.NON_EXISTENT(GOODS_+GOODS_ID+":"+sku.getGoodsId()); // 商品不存在或已删除
     			}
     		}
     	}	
@@ -247,7 +248,7 @@ public class SkuService extends BaseService{
 					sku.setInventory(sku.getInventory() - inventoryOperationDetail.getInventory());
 					updateSkus.add(sku);
 				}else{
-					return RuleError.NON_EXISTENT(SKU_ID+":"+purchaseInfo.getSkuId()); // SKU不存在
+					return RuleError.NON_EXISTENT(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // SKU不存在
 				}
     		}
     	}	

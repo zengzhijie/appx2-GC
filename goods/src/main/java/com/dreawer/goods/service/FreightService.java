@@ -1,6 +1,7 @@
 package com.dreawer.goods.service;
 
 import static com.dreawer.goods.constants.DomainConstants.*;
+import static com.dreawer.goods.constants.ControllerConstants.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.dreawer.goods.domain.City;
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
@@ -60,7 +60,7 @@ public class FreightService extends BaseService{
 		//查询是否存在名称相同的运费模板
 		Freight findFreight = freightDao.findFreightByNameForUpdate(freight.getName(), freight.getStoreId());
 		if(findFreight != null){
-			return RuleError.EXISTED(FREIGHT_NAME+":"+freight.getName()); // 运费模板名称已存在
+			return RuleError.EXISTED(FREIGHT_+FREIGHT_NAME+":"+freight.getName()); // 运费模板名称已存在
 		}
 		
 		//添加运费模板信息
@@ -109,13 +109,13 @@ public class FreightService extends BaseService{
 		//判断运费模板信息是否存在
 		Freight oldFreight = freightDao.findFreightById(freight.getId());
 		if(oldFreight == null){
-			return RuleError.NON_EXISTENT(FREIGHT_ID+":"+freight.getId()); // 运费模板信息不存在
+			return RuleError.NON_EXISTENT(FREIGHT_+FREIGHT_ID+":"+freight.getId()); // 运费模板信息不存在
 		}
 		
 		//查询是否存在名称相同的运费模板
 		Freight findFreight = freightDao.findFreightByNameForUpdate(freight.getName(), freight.getStoreId());
 		if(findFreight != null && !findFreight.getId().equals(freight.getId())){
-			return RuleError.EXISTED(FREIGHT_NAME+":"+freight.getName()); // 运费模板名称已存在
+			return RuleError.EXISTED(FREIGHT_+FREIGHT_NAME+":"+freight.getName()); // 运费模板名称已存在
 		}
 		
 		//更新运费模板信息
@@ -307,7 +307,7 @@ public class FreightService extends BaseService{
 					
 					//判断运费模板信息是否存在
 					if(freight == null){
-						return RuleError.NON_EXISTENT(FREIGHT_ID+":"+freightId);
+						return RuleError.NON_EXISTENT(FREIGHT_+FREIGHT_ID+":"+freightId);
 					}
 					
 					//获取运费支付方

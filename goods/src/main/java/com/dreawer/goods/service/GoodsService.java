@@ -1,5 +1,6 @@
 package com.dreawer.goods.service;
 
+import static com.dreawer.goods.constants.ControllerConstants.GOODS_;
 import static com.dreawer.goods.constants.DomainConstants.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -102,7 +103,7 @@ public class GoodsService extends BaseService{
         		//判断该分组是否存在
         		Group findGroup = groupDao.findGroup(group.getId());
         		if(findGroup == null){
-        			return RuleError.NON_EXISTENT(GROUP_ID+":"+group.getId());
+        			return RuleError.NON_EXISTENT(GOODS_+GROUP_ID+":"+group.getId());
         		}
         		
     			//创建集合封装分组、商品信息
@@ -175,12 +176,12 @@ public class GoodsService extends BaseService{
     			Freight freight = freightDao.findFreightById(freightParam.getFreightId());
         		
         		if(freight == null){
-        			return RuleError.NON_EXISTENT(FREIGHT_ID+":"+freightParam.getFreightId());
+        			return RuleError.NON_EXISTENT(GOODS_+FREIGHT_ID+":"+freightParam.getFreightId());
         		}
         		
         		//判断运费模板计价方式
         		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-        			return EntryError.EMPTY(AMOUNT);
+        			return EntryError.EMPTY(GOODS_+AMOUNT);
         		}
     		}
     		
@@ -223,7 +224,7 @@ public class GoodsService extends BaseService{
     		
     		//判断商品是否为REMOVED状态或下架状态
     		if(!goods.getStatus().equals(GoodsStatus.REMOVED)){
-    			return GCRuleError.NOTALLOW_DELETE_NON_RECOVERY(GOODS_ID+":"+id); // 未进入回收站的商品不允许删除
+    			return GCRuleError.NOTALLOW_DELETE_NON_RECOVERY(GOODS_+GOODS_ID+":"+id); // 未进入回收站的商品不允许删除
     		}
     		
     		//获取SKU列表
@@ -234,7 +235,7 @@ public class GoodsService extends BaseService{
     			
     			//判断sku库存状态
     			if(sku.getLockedInventory() != 0){
-    				return GCRuleError.NOTALLOW_DELETE_LOCKED(GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
+    				return GCRuleError.NOTALLOW_DELETE_LOCKED(GOODS_+GOODS_ID+":"+id); // 有锁定库存的商品不允许删除
     			}
 			}
 		}
@@ -305,13 +306,13 @@ public class GoodsService extends BaseService{
     		
     		//判断商品信息是否存在
     		if(findGoods == null){
-    			return RuleError.NON_EXISTENT(GOODS_ID+":"+goods.getId());
+    			return RuleError.NON_EXISTENT(GOODS_+GOODS_ID+":"+goods.getId());
     		}
     		
     		//判断商品是否为状态或下架状态
     		if(findGoods.getStatus().equals(GoodsStatus.DEFAULT)){
     			
-    			return GCRuleError.NOTALLOW_RECOVERY_NON_DOWN(GOODS_ID+":"+goods.getId()); // 未下架的商品不允许移除
+    			return GCRuleError.NOTALLOW_RECOVERY_NON_DOWN(GOODS_+GOODS_ID+":"+goods.getId()); // 未下架的商品不允许移除
     		}else if(findGoods.getStatus().equals(GoodsStatus.APPLIED)){
     			
     			//封装商品ID
@@ -349,7 +350,7 @@ public class GoodsService extends BaseService{
     	//判断分组是否存在
     	Group group = groupDao.findGroup(groupId);
     	if(group == null){
-    		return RuleError.NON_EXISTENT(GROUP_ID+":"+groupId);
+    		return RuleError.NON_EXISTENT(GOODS_+GROUP_ID+":"+groupId);
     	}
     	
     	//封装请求参数
@@ -359,7 +360,7 @@ public class GoodsService extends BaseService{
     		//判断商品是否存在
     		Goods findGoods = goodsDao.findGoodsById(goods.getId());
     		if(findGoods == null){
-    			return RuleError.NON_EXISTENT(GOODS_ID+":"+goods.getId());
+    			return RuleError.NON_EXISTENT(GOODS_+GOODS_ID+":"+goods.getId());
     		}
     		
 			Map<String, Object> groupGoods = new HashMap<>();
@@ -434,7 +435,7 @@ public class GoodsService extends BaseService{
             		//判断该分组是否存在
             		Group findGroup = groupDao.findGroup(group.getId());
             		if(findGroup == null){
-            			return RuleError.NON_EXISTENT(GROUP_ID+":"+group.getId());
+            			return RuleError.NON_EXISTENT(GOODS_+GROUP_ID+":"+group.getId());
             		}
             		
         			//创建集合封装分组、商品信息
@@ -482,7 +483,7 @@ public class GoodsService extends BaseService{
         					//比对两集合中SKU的库存(当前SKU库存小于原SKU库存，并且小于锁定库存数)
         					if(sku.getInventory() < orginalSku.getLockedInventory()){
         						
-        						return GCRuleError.LOWER_LOCKING_NUMBER(SKU_ID+":"+sku.getId()); // 修改后的库存小于锁定库存数，不允许修改
+        						return GCRuleError.LOWER_LOCKING_NUMBER(GOODS_+SKU_ID+":"+sku.getId()); // 修改后的库存小于锁定库存数，不允许修改
         					}
         					
         					CommonSkuSet.add(orginalSku);
@@ -507,7 +508,7 @@ public class GoodsService extends BaseService{
         			//判断被删除的SKU是否还有锁定库存
         			if(orginalSku.getLockedInventory() != 0){
         				
-						return GCRuleError.NOTALLOW_DELETE_LOCKED(SKU_ID+":"+orginalSku.getId()); // 有锁定库存，不允许删除
+						return GCRuleError.NOTALLOW_DELETE_LOCKED(GOODS_+SKU_ID+":"+orginalSku.getId()); // 有锁定库存，不允许删除
         			}
 				}
         		
@@ -563,12 +564,12 @@ public class GoodsService extends BaseService{
     			Freight freight = freightDao.findFreightById(freightParam.getFreightId());
         		
         		if(freight == null){
-        			return RuleError.NON_EXISTENT(FREIGHT_ID+":"+freightParam.getFreightId());
+        			return RuleError.NON_EXISTENT(GOODS_+FREIGHT_ID+":"+freightParam.getFreightId());
         		}
         		
         		//判断运费模板计价方式
         		if(!freight.getPricingMethod().equals(PricingMethod.NUMBER) && amount == null){
-        			return EntryError.EMPTY(AMOUNT);
+        			return EntryError.EMPTY(GOODS_+AMOUNT);
         		}
     		}
     		
@@ -772,7 +773,7 @@ public class GoodsService extends BaseService{
     		
     		//判断SKU信息是否存在
 			if(sku == null){
-				return StatusError.DELETED(SKU_ID+":"+purchaseInfo.getSkuId()); // SKU已删除
+				return StatusError.DELETED(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // SKU已删除
 			}
     		
     		//查询商品信息
@@ -780,30 +781,30 @@ public class GoodsService extends BaseService{
     		
     		//判断商品是否存在
     		if(goods == null){
-    			return RuleError.NON_EXISTENT(GOODS_ID+":"+sku.getGoodsId()); //商品不存在或已删除
+    			return RuleError.NON_EXISTENT(GOODS_+GOODS_ID+":"+sku.getGoodsId()); //商品不存在或已删除
     		}
     				
     		//判断商品是否下架
 			if(goods.getStatus().equals(GoodsStatus.APPLIED)){
-				return StatusError.APPLIED(GOODS_ID+":"+sku.getGoodsId());
+				return StatusError.APPLIED(GOODS_+GOODS_ID+":"+sku.getGoodsId());
 			}
     		
 			//判断商品是否被删除
 			if(goods.getStatus().equals(GoodsStatus.REMOVED)){
-				return StatusError.DELETED(GOODS_ID+":"+sku.getGoodsId());
+				return StatusError.DELETED(GOODS_+GOODS_ID+":"+sku.getGoodsId());
 			}
 			
 			//判断是否达到起售量
 			if(purchaseInfo.getQuantity() < sku.getSalesVolume()){
 				
-				return GCRuleError.BELOW_MOQ(SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
+				return GCRuleError.BELOW_MOQ(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // 未达到起售量
 			}
     				
 			//判断sku库存是否充足
 			if(goods.getInventoryType().equals(InventoryType.LIMITED)){
 				if((sku.getInventory() - sku.getLockedInventory()) >= purchaseInfo.getQuantity()){
 					
-					return GCRuleError.SHORT_INVENTORY(SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
+					return GCRuleError.SHORT_INVENTORY(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
 				}	
 			}
 			
@@ -943,8 +944,6 @@ public class GoodsService extends BaseService{
 						if(descriptionStringBuffer.length() >0 && descriptionStringBuffer.toString().contains(";")){
 							cartDetail.setDescription(descriptionStringBuffer.substring(0, descriptionStringBuffer.lastIndexOf(";")).toString());
 						}
-						
-						
 					}
 					
 			    	//添加购买详情到详情列表中
