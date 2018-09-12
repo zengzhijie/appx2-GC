@@ -422,7 +422,7 @@
 	  <if test="type != null">
 	  	AND gods.type = #{type}
 	  </if>
-	  ORDER BY gpn.squence ASC, gpn.squence ASC
+	  ORDER BY gpn.squence ASC, gpv.name ASC
 	</select>
 	
 	<!-- ================================================================================== -->
