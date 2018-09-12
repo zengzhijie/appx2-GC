@@ -12,7 +12,7 @@
 		INSERT INTO godsi_log_meth(id, frt_id, is_dflt, type, strt_qty, strt_pr, inc_qty, inc_pr, squence, crer_id)
         VALUES
 	    <foreach collection="logisticsMethods" item="log_meth" index="index" separator=",">
-            (#{log_meth.id}, #{log_meth.freightId}, #{log_meth.isDefault}, #{log_meth.type}, #{log_meth.startQuantity}, #{log_meth.startPrice}, #{log_meth.squence}, #{log_meth.incrementPrice}, #{log_meth.incrementPrice}, #{log_meth.createrId})
+            (#{log_meth.id}, #{log_meth.freightId}, #{log_meth.isDefault}, #{log_meth.type}, #{log_meth.startQuantity}, #{log_meth.startPrice}, #{log_meth.incrementPrice}, #{log_meth.incrementPrice}, #{log_meth.squence}, #{log_meth.createrId})
         </foreach>
 	</insert>
 	

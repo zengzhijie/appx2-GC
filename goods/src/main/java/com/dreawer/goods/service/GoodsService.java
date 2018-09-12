@@ -802,7 +802,7 @@ public class GoodsService extends BaseService{
     				
 			//判断sku库存是否充足
 			if(goods.getInventoryType().equals(InventoryType.LIMITED)){
-				if((sku.getInventory() - sku.getLockedInventory()) >= purchaseInfo.getQuantity()){
+				if((sku.getInventory() - sku.getLockedInventory()) < purchaseInfo.getQuantity()){
 					
 					return GCRuleError.SHORT_INVENTORY(GOODS_+SKU_ID+":"+purchaseInfo.getSkuId()); // 库存不足
 				}	
