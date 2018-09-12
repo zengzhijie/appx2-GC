@@ -97,7 +97,7 @@ CREATE TABLE godsi_sku (
   	inventory	 INT(8) COMMENT '库存数量',
   	lock_inv	 INT(8) DEFAULT 0 COMMENT '锁定库存数',
   	sal_vol		 INT(8) COMMENT '起售量',
-  	ori_pr		 DECIMAL(10,2) NOT NULL COMMENT '原价',
+  	ori_pr		 DECIMAL(10,2) COMMENT '原价',
 	price		 DECIMAL(10,2) NOT NULL COMMENT '售价',
 	description	 VARCHAR(270) COMMENT '描述（属性名:属性值;...）',
 	code		 VARCHAR(255) COMMENT '编码',

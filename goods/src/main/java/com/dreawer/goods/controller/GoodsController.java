@@ -393,13 +393,11 @@ public class GoodsController extends BaseController{
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = addSkuForm.getOriginalPrice();
-    			if(originalPrice == null){
-    				return EntryError.EMPTY(GOODS_+ORIGINAL_PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
+    			if(originalPrice != null){
+        			//判断SKU原价格式是否正确
+        			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
+        			}
     			}
     			
     			//判断SKU售价是否为空
@@ -1000,13 +998,11 @@ public class GoodsController extends BaseController{
     			
     			//判断SKU原价是否为空
     			BigDecimal originalPrice = skuForm.getOriginalPrice();
-    			if(originalPrice == null){
-    				return EntryError.EMPTY(GOODS_+ORIGINAL_PRICE);
-    			}
-    			
-    			//判断SKU原价格式是否正确
-    			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
-    				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
+    			if(originalPrice != null){
+        			//判断SKU原价格式是否正确
+        			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
+        			}
     			}
     			
     			//判断SKU售价是否为空
