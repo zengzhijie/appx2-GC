@@ -99,12 +99,12 @@ public class GroupController extends BaseController{
     				return EntryError.EMPTY(GROUP_+URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
-    		}else if(form.getSource().equals(SourceType.RETAIL)){
+    		}/*else if(form.getSource().equals(SourceType.RETAIL)){
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getLogo())){
-    				return EntryError.EMPTY(GROUP_+LOGO); // 跳转地址为空
+    				return EntryError.EMPTY(GROUP_+LOGO); // LOGO为空
     			}
-    		}
+    		}*/
     		group.setGoodsQuantity(0);
     		group.setCreaterId(userId);
     		group.setCreateTime(getNow());
@@ -445,12 +445,12 @@ public class GroupController extends BaseController{
     				return EntryError.EMPTY(GROUP_+URL); // 跳转地址为空
     			}
     			group.setUrl(form.getUrl());
-    		}else if(form.getSource().equals(SourceType.RETAIL)){
+    		}/*else if(form.getSource().equals(SourceType.RETAIL)){
     			//判断跳转地址是否为空
     			if(StringUtils.isEmpty(form.getLogo())){
     				return EntryError.EMPTY(GROUP_+LOGO); // 跳转地址为空
     			}
-    		}
+    		}*/
     		group.setUpdaterId(userId);
     		group.setUpdateTime(getNow());
     		group.setRemark(form.getRemark());

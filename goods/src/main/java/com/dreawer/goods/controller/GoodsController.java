@@ -523,7 +523,7 @@ public class GoodsController extends BaseController{
     		goods.setMainDiagram(form.getMainDiagram());
     		
     		//判断来源
-    		if(!form.getSource().equals(SourceType.APPX)){
+/*    		if(!form.getSource().equals(SourceType.APPX)){
     			
     			//判断商品详情是否为空
     			if(StringUtils.isEmpty(form.getDetail())){
@@ -534,7 +534,7 @@ public class GoodsController extends BaseController{
     			if(StringUtils.isEmpty(form.getService())){
     				return EntryError.EMPTY(GOODS_+SERVICE);
     			}
-    		}
+    		}*/
     		goods.setDetail(form.getDetail());
     		goods.setService(form.getService());
     		goods.setType(GoodsType.DEFAULT);
@@ -1134,7 +1134,7 @@ public class GoodsController extends BaseController{
     		goods.setMainDiagram(form.getMainDiagram());
     		
     		//判断来源
-    		if(!form.getSource().equals(SourceType.APPX)){
+/*    		if(!form.getSource().equals(SourceType.APPX)){
     			
     			//判断商品详情是否为空
     			if(StringUtils.isEmpty(form.getDetail())){
@@ -1145,7 +1145,7 @@ public class GoodsController extends BaseController{
     			if(StringUtils.isEmpty(form.getService())){
     				return EntryError.EMPTY(GOODS_+SERVICE);
     			}
-    		}
+    		}*/
     		goods.setDetail(form.getDetail());
     		goods.setService(form.getService());
     		goods.setType(GoodsType.DEFAULT);
