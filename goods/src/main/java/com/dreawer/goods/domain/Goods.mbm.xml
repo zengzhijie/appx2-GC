@@ -367,7 +367,7 @@
 	  	AND gods.status = #{status}
 	  </if>	
 	  <if test="status == null">
-	  	AND goods.status != 'REMOVED'
+	  	AND gods.status != 'REMOVED'
 	  </if>
 	  <if test="isRecommend != null">
 	  	AND gods.is_rcd = #{isRecommend}
