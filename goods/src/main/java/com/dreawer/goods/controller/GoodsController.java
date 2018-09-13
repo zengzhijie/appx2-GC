@@ -1686,7 +1686,7 @@ public class GoodsController extends BaseController{
     		}
     		
     		//执行查询
-    		ResponseCode responseCode = goodsService.findGoodses(form.getStoreId(), null, GoodsType.DEFAULT, form.getStatus(), null, null, form.getKeyword(), null, start, pageSize);
+    		ResponseCode responseCode = goodsService.findNormalGoodses(form.getStoreId(), null, GoodsType.DEFAULT, form.getStatus(), null, null, form.getKeyword(), null, start, pageSize);
         	
             //返回查询结果
             return responseCode;
