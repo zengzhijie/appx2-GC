@@ -305,8 +305,8 @@
 	        		 <if test="type != null">
 	  					AND goods.type = #{type}
 	  				 </if>
-	  				 <if test="type == null">
-	  					AND goods.type != 'REMOVED'
+	  				 <if test="status == null">
+	  					AND goods.status != 'REMOVED'
 	  				 </if>	
 	 				 <if test="status != null">
 	  					AND goods.status = #{status}
@@ -366,9 +366,9 @@
 	  <if test="status != null">
 	  	AND gods.status = #{status}
 	  </if>	
-	  <if test="type == null">
-	  	AND goods.type != 'REMOVED'
-	  </if>	
+	  <if test="status == null">
+	  	AND goods.status != 'REMOVED'
+	  </if>
 	  <if test="isRecommend != null">
 	  	AND gods.is_rcd = #{isRecommend}
 	  </if>
