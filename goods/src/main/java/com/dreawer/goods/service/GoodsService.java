@@ -614,7 +614,7 @@ public class GoodsService extends BaseService{
     							   Boolean isSoldOut, Integer start, Integer pageSize) {
     	
     	//查询商品列表
-    	List<Goods> goodses = goodsDao.findGoodses(storeId, groupId, type, status, isRecommend, categoryId, keyword, isSoldOut, start, pageSize);
+    	List<Goods> goodses = goodsDao.findNormalGoodses(storeId, groupId, type, status, isRecommend, categoryId, keyword, isSoldOut, start, pageSize);
     	
     	//转换查询结果为视图列表
     	List<ViewGoods> viewGoodses = convertGoodsViews(goodses);
