@@ -573,7 +573,7 @@ public class GoodsController extends BaseController{
         		//判断运费类型为固定运费或不固定运费
         		if(type.equals(FreightType.FIXED)){
         			
-        			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        			Pattern pricePattern = Pattern.compile("(^[0-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
@@ -601,7 +601,7 @@ public class GoodsController extends BaseController{
         			if(amount != null){
         				
         				//创建匹配正则（0.01-99.99）
-        				Pattern amountPattern = Pattern.compile("(^[0-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
         					return EntryError.FORMAT(GOODS_+AMOUNT);
         				}
@@ -1184,7 +1184,7 @@ public class GoodsController extends BaseController{
         		//判断运费类型为固定运费或不固定运费
         		if(type.equals(FreightType.FIXED)){
         			
-        			Pattern pricePattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        			Pattern pricePattern = Pattern.compile("(^[0-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         			
         			//判断运费价格是否为空
         			if(freightParamForm.getPrice() == null){
@@ -1212,7 +1212,7 @@ public class GoodsController extends BaseController{
         			if(amount != null){
         				
         				//创建匹配正则（0.01-99.99）
-        				Pattern amountPattern = Pattern.compile("(^[0-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
+        				Pattern amountPattern = Pattern.compile("(^[1-9]\\d{0,7}$)|(^0\\.\\d{2}$)|(^[1-9]\\d{0,7}\\.\\d{2}$)");
         				if(!amountPattern.matcher(amount.toString()).matches()|| new BigDecimal(amount).compareTo(new BigDecimal("0.00")) <= 0){
         					return EntryError.FORMAT(GOODS_+AMOUNT);
         				}
