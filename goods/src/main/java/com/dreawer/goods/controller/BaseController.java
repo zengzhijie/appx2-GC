@@ -5,10 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
-
-import org.junit.Test;
-
 import com.dreawer.goods.domain.GoodsPropertyName;
 import com.dreawer.goods.domain.Sku;
 
