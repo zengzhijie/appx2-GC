@@ -580,7 +580,7 @@ public class GoodsController extends BaseController{
         				return EntryError.EMPTY(GOODS_+PRICE);
         			}
         			
-        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) < 0){
         				return EntryError.FORMAT(GOODS_+PRICE);
         			}
         			
@@ -1000,7 +1000,7 @@ public class GoodsController extends BaseController{
     			BigDecimal originalPrice = skuForm.getOriginalPrice();
     			if(originalPrice != null){
         			//判断SKU原价格式是否正确
-        			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!pricePattern.matcher(originalPrice.toString()).matches() || originalPrice.compareTo(new BigDecimal("0.00")) < 0){
         				return EntryError.FORMAT(GOODS_+ORIGINAL_PRICE); // SKU原价格式不正确
         			}
     			}
