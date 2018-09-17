@@ -1191,7 +1191,7 @@ public class GoodsController extends BaseController{
         				return EntryError.EMPTY(GOODS_+PRICE);
         			}
         			
-        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) <= 0){
+        			if(!pricePattern.matcher(freightParamForm.getPrice().toString()).matches() || freightParamForm.getPrice().compareTo(new BigDecimal("0.00")) < 0){
         				return EntryError.FORMAT(GOODS_+PRICE);
         			}
         			
