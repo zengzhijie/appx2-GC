@@ -168,7 +168,7 @@ public class FreightService extends BaseService{
     	for (String id : ids) {
     		List<FreightParam> freightParams = freightParamDao.findFreightParams(id);
     		if(freightParams != null && freightParams.size()>0){
-    			return PermissionsError.DATA_NO_ALLOW(FREIGHT_+FREIGHT_HAS_BEING_USED+";"+FREIGHT_ID+":"+id); //运费模板正在被商品使用，不允许删除
+    			return PermissionsError.DATA_NO_ALLOW(FREIGHT_+FREIGHT_HAS_BEING_USED+";"+FREIGHT_ID+":"+id+";"+GOODS_ID+freightParams.get(0).getGoodsId()); //运费模板正在被商品使用，不允许删除
     		}
 		}
     	
