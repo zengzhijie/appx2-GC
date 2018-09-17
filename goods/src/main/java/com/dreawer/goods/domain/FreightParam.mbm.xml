@@ -43,6 +43,14 @@
 	  WHERE gods_id = #{goodsId}
 	</select>
 	
+	<!-- 通过商品ID查询运费参数信息  -->
+	<select id="findFreightParams" parameterType="String" resultMap="freightParamResultMap">
+	  SELECT <include refid="basicFields"/>
+	  FROM godsi_frt_par 
+	  WHERE frt_id = #{freightId}
+	  FOR UPDATE
+	</select>
+	
 	<!-- ================================================================================== -->
 	<!-- 公用SQL定义																			-->
 	<!-- ================================================================================== -->

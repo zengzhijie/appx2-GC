@@ -345,4 +345,7 @@ public abstract class DomainConstants {
     /** 总库存低于起售量 */
     public static final String INVENTORY_BELOW_SALES_VOLUME = "inventoryBelowSalesVolume";
     
+    /** 有商品正在使用该运费模板 */
+    public static final String FREIGHT_HAS_BEING_USED = "freightHasBeingUsed";
+    
 }

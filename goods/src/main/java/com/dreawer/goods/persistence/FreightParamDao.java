@@ -1,5 +1,7 @@
 package com.dreawer.goods.persistence;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 import com.dreawer.goods.domain.FreightParam;
 import com.dreawer.persistence.mybatis.MyBatisBaseDao;
@@ -50,4 +52,12 @@ public class FreightParamDao extends MyBatisBaseDao<FreightParam> {
 		return selectOne("findFreightParam", goodsId);
 	}
 	
+	/**
+	 * 通过商品ID查询运费参数信息列表。
+	 * @param goodsId 商品ID
+	 * @return 查询结果：查询到结果返回运费参数信息列表，未查询到结果返回NULL。
+	 */
+	public List<FreightParam> findFreightParams(String freightId){
+		return selectList("findFreightParams", freightId);
+	}
 }

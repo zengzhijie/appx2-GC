@@ -24,6 +24,7 @@ import com.dreawer.goods.view.ViewFreight;
 import com.dreawer.goods.view.ViewFreightParam;
 import com.dreawer.goods.lang.Payer;
 import com.dreawer.goods.lang.PricingMethod;
+import com.dreawer.responsecode.rcdt.PermissionsError;
 import com.dreawer.responsecode.rcdt.ResponseCode;
 import com.dreawer.responsecode.rcdt.RuleError;
 import com.dreawer.responsecode.rcdt.Success;
@@ -164,6 +165,13 @@ public class FreightService extends BaseService{
     @Transactional
 	public ResponseCode deleteBatch(List<String> ids){
 		
+    	for (String id : ids) {
+    		List<FreightParam> freightParams = freightParamDao.findFreightParams(id);
+    		if(freightParams != null && freightParams.size()>0){
+    			return PermissionsError.DATA_NO_ALLOW(FREIGHT_+FREIGHT_HAS_BEING_USED+";"+FREIGHT_ID+":"+id); //运费模板正在被商品使用，不允许删除
+    		}
+		}
+    	
 		//执行删除
 		freightDao.deleteBatch(ids);
 		
