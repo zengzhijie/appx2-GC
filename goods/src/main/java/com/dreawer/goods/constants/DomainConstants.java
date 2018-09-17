@@ -82,6 +82,9 @@ public abstract class DomainConstants {
     /** 商品ID */
     public static final String GOODS_ID = "goodsId";
     
+    /** 商品名称 */
+    public static final String GOODS_NAME = "goodsName";
+    
     /** 商品ID列表 */
     public static final String GOODS_IDS = "goodsIds";
     

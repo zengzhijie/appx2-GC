@@ -13,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dreawer.goods.domain.City;
 import com.dreawer.goods.domain.Freight;
 import com.dreawer.goods.domain.FreightParam;
+import com.dreawer.goods.domain.Goods;
 import com.dreawer.goods.domain.LogisticsMethod;
 import com.dreawer.goods.lang.FreightType;
 import com.dreawer.goods.lang.PurchaseInfo;
 import com.dreawer.goods.persistence.CityDao;
 import com.dreawer.goods.persistence.FreightDao;
 import com.dreawer.goods.persistence.FreightParamDao;
+import com.dreawer.goods.persistence.GoodsDao;
 import com.dreawer.goods.persistence.LogisticsMethodDao;
 import com.dreawer.goods.view.ViewFreight;
 import com.dreawer.goods.view.ViewFreightParam;
@@ -49,6 +51,9 @@ public class FreightService extends BaseService{
     
     @Autowired
     private FreightParamDao freightParamDao; // 运费参数信息DAO
+    
+    @Autowired
+    private GoodsDao goodsDao; // 商品信息DAO
     
 	/**
 	 * 添加运费模板信息。
@@ -168,7 +173,8 @@ public class FreightService extends BaseService{
     	for (String id : ids) {
     		List<FreightParam> freightParams = freightParamDao.findFreightParams(id);
     		if(freightParams != null && freightParams.size()>0){
-    			return PermissionsError.DATA_NO_ALLOW(FREIGHT_+FREIGHT_HAS_BEING_USED+";"+FREIGHT_ID+":"+id+";"+GOODS_ID+freightParams.get(0).getGoodsId()); //运费模板正在被商品使用，不允许删除
+    			Goods goods = goodsDao.findGoodsByIdForUpdate(freightParams.get(0).getGoodsId());
+    			return PermissionsError.DATA_NO_ALLOW(FREIGHT_+FREIGHT_HAS_BEING_USED+";"+FREIGHT_ID+":"+id+";"+GOODS_NAME+goods.getName()); //运费模板正在被商品使用，不允许删除
     		}
 		}
     	
