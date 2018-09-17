@@ -185,10 +185,10 @@
 	  WHERE gods.sto_id = #{storeId}
 	  <if test="isSoldOut != null">
 	  	<if test="isSoldOut != true">
-	  		AND (goods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
+	  		AND (gods.inv_typ = 'UNLIMITED' OR (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) != 0)
 	  	</if>	
 	  	<if test="isSoldOut != false">
-	  		AND (goods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
+	  		AND (gods.inv_typ = 'LIMITED' AND (SELECT SUM(godsi_sku.Inventory)-SUM(godsi_sku.lock_inv) FROM godsi_sku AS godsi_sku WHERE godsi_sku.gods_id = goods.id) = 0)
 	  	</if>	
 	  </if>	
 	  <if test="groupId != null">
@@ -210,7 +210,7 @@
 	  	AND gods.name LIKE CONCAT('%',#{keyword},'%')
 	  </if>
 	  <if test="goodsIds != null">
-	  	AND goods.id IN
+	  	AND gods.id IN
 		<foreach collection="ids" item="id" open="(" close=")" index="index" separator=",">
         	#{id}
         </foreach>
