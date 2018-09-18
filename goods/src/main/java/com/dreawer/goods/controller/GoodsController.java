@@ -504,13 +504,23 @@ public class GoodsController extends BaseController{
     			return EntryError.DUPLICATE(GOODS_+SKU_DESCRIPTION);
     		}
     		
-    		//对sku排序（按照原价正序），获取最低原价
+    		//对sku排序（按照原价正序），获取最低售价
     		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
     		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
     		
-    		//对sku排序（按照售价正序），获取最低售价
-    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
-    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		//对sku排序（按照售价正序），获取最低原价
+    		List<Sku> sortOriginalPriceSkus = new ArrayList<>();
+    		for (Sku sku : skus) {
+				if(sku.getOriginalPrice() != null){
+					sortOriginalPriceSkus.add(sku);
+				}
+			}
+    		sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(sortOriginalPriceSkus);
+    		BigDecimal minOriginalPrice = null;
+    		if(sortOriginalPriceSkus.size() > 0){
+    			minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		}
+    		
     		
     		//封装商品信息
     		goods.setId(goodsId);
@@ -1115,13 +1125,22 @@ public class GoodsController extends BaseController{
     			return EntryError.DUPLICATE(GOODS_+SKU_DESCRIPTION);
     		}
     		
-    		//对sku排序（按照原价正序），获取最低原价
+    		//对sku排序（按照原价正序），获取最低售价
     		List<Sku> sortPriceSkus = sortSkuByPriceAsc(skus);
     		BigDecimal minPrice = sortPriceSkus.get(0).getPrice();
     		
-    		//对sku排序（按照售价正序），获取最低售价
-    		List<Sku> sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(skus);
-    		BigDecimal minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		//对sku排序（按照售价正序），获取最低原价
+    		List<Sku> sortOriginalPriceSkus = new ArrayList<>();
+    		for (Sku sku : skus) {
+				if(sku.getOriginalPrice() != null){
+					sortOriginalPriceSkus.add(sku);
+				}
+			}
+    		sortOriginalPriceSkus = sortSkuByOriginalPriceAsc(sortOriginalPriceSkus);
+    		BigDecimal minOriginalPrice = null;
+    		if(sortOriginalPriceSkus.size() > 0){
+    			minOriginalPrice = sortOriginalPriceSkus.get(0).getOriginalPrice();
+    		}
     		
     		//封装商品信息
     		goods.setId(goodsId);
