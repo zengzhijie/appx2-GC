@@ -82,36 +82,16 @@
 	<update id="update" parameterType="Goods">
 		UPDATE godsi_goods
 		SET updr_id = #{updaterId}, upd_tim = #{updateTime}
-		<if test="name != null">
 			,name = #{name}
-		</if>
-		<if test="minPrice != null">
 			,min_pr = #{minPrice}
-		</if>
-		<if test="minOriginalPrice != null">
 			,min_orig_pr = #{minOriginalPrice}
-		</if>
-		<if test="inventoryType != null">
 			,inv_typ = #{inventoryType}
-		</if>
-		<if test="mainDiagram != null">
 			,main_dig = #{mainDiagram}
-		</if>
-		<if test="detail != null">
 			,detail = #{detail}
-		</if>
-		<if test="service != null">
 			,service = #{service}
-		</if>
-		<if test="status != null">
 			,status = #{status}
-		</if>
-		<if test="isRecommend != null">
 			,is_rcd = #{isRecommend}
-		</if>
-		<if test="remark != null">
 			,remark = #{remark}
-		</if>
 		WHERE id = #{id}
 	</update>
 	
